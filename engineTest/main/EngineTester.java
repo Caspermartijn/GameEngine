@@ -6,7 +6,7 @@ import engine.Display;
 import engine.DisplayBuilder;
 import objects.Camera;
 import renderer.textRendering.TextMaster;
-import texts.FontType;
+import texts.Fonts;
 import texts.Text;
 import utils.SourceFile;
 
@@ -18,9 +18,9 @@ public class EngineTester {
 
 		Camera cam = new Camera();
 
-		FontType type = new FontType(new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
+		Fonts.addFont("candara", new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
 
-		Text testText = new Text("Test Casper is amazing", 5, type, new Vector2f(0, 0), 10, false);
+		Text testText = new Text("Test Casper is amazing", 5, "candara", new Vector2f(0, 0), 10, false);
 		testText.setColor(1, 1, 1);
 		TextMaster.addText(testText);
 
