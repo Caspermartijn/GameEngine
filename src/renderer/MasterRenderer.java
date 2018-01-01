@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 
 import entities.Entity;
+import entities.Light;
 import objects.Camera;
 import objects.Model_3D;
 import renderer.entityRenderer.EntityRenderer;
@@ -33,24 +35,36 @@ public class MasterRenderer {
 		entityRenderer.setProjectionMatrix(matrix);
 	}
 
-	public void render(Camera camera, List<Entity> entities) {
-		for(Entity ent : entities){
+	public void render(Camera camera, List<Light> lights, List<Entity> entities) {
+		for (Entity ent : entities) {
 			processEntity(ent);
 		}
-		
+		render(lights, camera, new Vector4f(0, 0, 1, 0));
 	}
-	
-	 public void processEntity(Entity entity) {
-	        Model_3D entityModel = entity.getModel();
-	        List<Entity> batch = entities.get(entityModel);
-	        if (batch != null) {
-	            batch.add(entity);
-	        } else {
-	            List<Entity> newBatch = new ArrayList<Entity>();
-	            newBatch.add(entity);
-	            entities.put(entityModel, newBatch);
-	        }
-	    }
+
+	public void render(List<Light> lights, Camera camera, Vector4f clipPlane) {
+		prepare();
+		entityShader.start();
+		shader.loadClipPlane(clipPlane);
+		shader.loadSkyColour(RED, GREEN, BLUE);
+		shader.loadLights(lights);
+		shader.loadViewMatrix(camera);
+		renderer.render(entities);
+		entityShader.stop();
+		entities.clear();
+	}
+
+	public void processEntity(Entity entity) {
+		Model_3D entityModel = entity.getModel();
+		List<Entity> batch = entities.get(entityModel);
+		if (batch != null) {
+			batch.add(entity);
+		} else {
+			List<Entity> newBatch = new ArrayList<Entity>();
+			newBatch.add(entity);
+			entities.put(entityModel, newBatch);
+		}
+	}
 
 	public static void enableCulling() {
 		GL11.glEnable(GL11.GL_CULL_FACE);
