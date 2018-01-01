@@ -25,7 +25,7 @@ public class Vao {
 	private Vao(int id) {
 		this.id = id;
 	}
-	
+
 	public int getVertexCount() {
 		return vertexCount;
 	}
@@ -171,5 +171,27 @@ public class Vao {
 
 	public static Vao getBoundVao() {
 		return bound;
+	}
+
+	public Vao loadToVAO(float[] verticesArray, float[] texturesArray, float[] normalsArray, int[] indicesArray,
+			float[] tangentsArray) {
+		bind();
+		createIndexBuffer(indicesArray.length);
+		createStaticAttribute(0, verticesArray, 3);
+		createStaticAttribute(1, texturesArray, 2);
+		createStaticAttribute(2, normalsArray, 3);
+		createStaticAttribute(3, tangentsArray, 3);
+		unbind();
+		return this;
+	}
+
+	public Vao loadToVAO(float[] verticesArray, float[] texturesArray, float[] normalsArray, int[] indicesArray) {
+		bind();
+		createIndexBuffer(indicesArray.length);
+		createStaticAttribute(0, verticesArray, 3);
+		createStaticAttribute(1, texturesArray, 2);
+		createStaticAttribute(2, normalsArray, 3);
+		unbind();
+		return this;
 	}
 }
