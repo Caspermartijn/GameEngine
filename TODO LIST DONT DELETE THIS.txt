@@ -1,19 +1,31 @@
 TODO LIST:
+___________________________________________________________________________________________________________________________
 
+-----Priority-----------
+
+	- Thinking of what type of game engine this will be.
+
+------------------------
+___________________________________________________________________________________________________________________________
 
 -----Caspermartijn------
 
 	- Hitboxes
 
+------------------------
+___________________________________________________________________________________________________________________________
+
 -----IceRise------------
 
 	- Water renderer
 	- Animations
+	
+------------------------
+___________________________________________________________________________________________________________________________
 
------not assigned-------
+-----Not assigned-------
 
 	- Terrain renderer
-	- Thinking of what type of game engine this will be.
 	- Easy model loaders. (1 for in engine models, and the other for modded models etc)
 	- NPC
 	- Video player
@@ -22,7 +34,16 @@ TODO LIST:
 	- Particles
 	- Text particles
 	- 3D UI (Canvas with children, Text image etc)
-	- Perhaps -> DAE loader
 	- 3d and first person controlls
-	- Perhaps -> controller input
 	- Audio system
+	
+------------------------
+___________________________________________________________________________________________________________________________
+
+-----Random Ideas-------
+
+	- Perhaps -> controller input
+	- Perhaps -> DAE loader
+	
+------------------------
+___________________________________________________________________________________________________________________________

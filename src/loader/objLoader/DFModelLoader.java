@@ -11,16 +11,14 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import animation.Joint;
-import components.ArmatureComponent;
 import jdk.nashorn.internal.runtime.GlobalConstants;
+import objects.Model_3D;
 import objects.Vao;
-import scene.Model;
 import utils.SourceFile;
 
 public class DFModelLoader {
 
-	public static Model loadDFMeshModel(SourceFile file, boolean loadJointData) {
+	public static Model_3D loadDFMeshModel(SourceFile file, boolean loadJointData) {
 		try {
 			BufferedReader br = file.openFileReader();
 
@@ -95,14 +93,14 @@ public class DFModelLoader {
 				Vertex v = vertices.get(i);
 				if (v.getWeights().size() == 0) 
 					System.out.println(v.getPos());
-				positions[i * 3] = v.getPos().getX();
-				positions[i * 3 + 1] = v.getPos().getY();
-				positions[i * 3 + 2] = v.getPos().getZ();
-				normals[i * 3] = v.getNormal().getX();
-				normals[i * 3 + 1] = v.getNormal().getY();
-				normals[i * 3 + 2] = v.getNormal().getZ();
-				textures[i * 2] = v.getTex().getX();
-				textures[i * 2 + 1] = v.getTex().getY();
+				positions[i * 3] = v.getPos().x;
+				positions[i * 3 + 1] = v.getPos().y;
+				positions[i * 3 + 2] = v.getPos().z;
+				normals[i * 3] = v.getNormal().x;
+				normals[i * 3 + 1] = v.getNormal().y;
+				normals[i * 3 + 2] = v.getNormal().z;
+				textures[i * 2] = v.getTex().x;
+				textures[i * 2 + 1] = v.getTex().y;
 			}
 
 			for (int i = 0; i < indicesList.size(); i++) {
@@ -147,7 +145,7 @@ public class DFModelLoader {
 		return null;
 	}
 	
-	public static void addArmatureComponent(SourceFile file, Model m) {
+	public static void addArmatureComponent(SourceFile file, Model_3D m) {
 		try {
 			BufferedReader br = file.openFileReader();
 			int numJoints = 0;
@@ -204,6 +202,7 @@ public class DFModelLoader {
 			floatValues[i] = Float.valueOf(stringValues[i]);
 		}
 		Matrix4f matrix = new Matrix4f();
+		//TODO matrix.m00("float variable")
 		matrix.m00 = floatValues[0];
 		matrix.m01 = floatValues[1];
 		matrix.m02 = floatValues[2];
