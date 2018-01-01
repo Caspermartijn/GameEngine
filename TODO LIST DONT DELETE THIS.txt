@@ -15,14 +15,14 @@ TODO LIST:
 	- Terrain renderer
 	- Thinking of what type of game engine this will be.
 	- Easy model loaders. (1 for in engine models, and the other for modded models etc)
-	- Npc
+	- NPC
 	- Video player
 	- Game launcher system
-	- 3d gui items (Should be easy as we already implemented 
-	- Patricles
-	- Text patricles
-	- 3d ui (Canvas with children, Text image etc)
-	- Parhaps -> Dae loader
-	- 3d and first pirson controlls
-	- Parhaps -> controller input
+	- 3d GUI items (Should be easy as we already implemented 
+	- Particles
+	- Text particles
+	- 3D UI (Canvas with children, Text image etc)
+	- Perhaps -> DAE loader
+	- 3d and first person controlls
+	- Perhaps -> controller input
 	- Audio system
