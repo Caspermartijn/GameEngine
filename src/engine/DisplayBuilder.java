@@ -1,4 +1,4 @@
-package display;
+package engine;
 
 public class DisplayBuilder {
 
@@ -38,6 +38,6 @@ public class DisplayBuilder {
 	}
 
 	public void create() {
-		EngineDisplay.createDisplay(this);
+		Display.createDisplay(this);
 	}
 }

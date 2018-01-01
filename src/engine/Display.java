@@ -1,4 +1,4 @@
-package display;
+package engine;
 
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.system.MemoryUtil;
 
-public class EngineDisplay {
+public class Display {
 
 	private static int WIDTH;
 	private static int HEIGHT;

@@ -1,4 +1,4 @@
-package display; 
+package engine; 
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
@@ -14,21 +14,21 @@ public class Mouse {
 	private static float oldX, oldY;
 
 	protected static void init() {
-		GLFW.glfwSetCursorPosCallback(EngineDisplay.getWindowID(), (window, x, y) -> {
+		GLFW.glfwSetCursorPosCallback(Display.getWindowID(), (window, x, y) -> {
 			if (oldX == 0 && oldY == 0) {
 				oldX=(float) x;
 				oldY=(float) y;
 			}
 			
-			mousePosX = (float) (x / EngineDisplay.getWidth() * 2 - 1);
-			mousePosY = (float) (y / EngineDisplay.getHeight() * 2 - 1);
-			mouseDX = (float) ((x-oldX) / EngineDisplay.getWidth() * 2);
-			mouseDY = (float) ((y-oldY) / EngineDisplay.getHeight() * 2);
+			mousePosX = (float) (x / Display.getWidth() * 2 - 1);
+			mousePosY = (float) (y / Display.getHeight() * 2 - 1);
+			mouseDX = (float) ((x-oldX) / Display.getWidth() * 2);
+			mouseDY = (float) ((y-oldY) / Display.getHeight() * 2);
 			oldX = (float) x;
 			oldY = (float) y;
 		});
 
-		GLFW.glfwSetScrollCallback(EngineDisplay.getWindowID(), (window, x, y) -> {
+		GLFW.glfwSetScrollCallback(Display.getWindowID(), (window, x, y) -> {
 			rotation = (float) y;
 			drotation = (float) (y-oldRotation);
 			oldRotation = (float) y;
@@ -42,18 +42,18 @@ public class Mouse {
 	}
 	
 	public static boolean buttonPressed(int button) {
-		return GLFW.glfwGetMouseButton(EngineDisplay.getWindowID(), button) == GL11.GL_TRUE;
+		return GLFW.glfwGetMouseButton(Display.getWindowID(), button) == GL11.GL_TRUE;
 	}
 
 	public static void setMouseEnabled(boolean value) {
 		cursor = value;
-		GLFW.glfwSetInputMode(EngineDisplay.getWindowID(), GLFW.GLFW_CURSOR,
+		GLFW.glfwSetInputMode(Display.getWindowID(), GLFW.GLFW_CURSOR,
 				(value) ? GLFW.GLFW_CURSOR_NORMAL : GLFW.GLFW_CURSOR_DISABLED);
 	}
 
 	public static void setCursorPosition(float x, float y) {
-		GLFW.glfwSetCursorPos(EngineDisplay.getWindowID(), (x / 2 + 0.5f) * EngineDisplay.getWidth(),
-				(y / 2 + 0.5f) * EngineDisplay.getHeight());
+		GLFW.glfwSetCursorPos(Display.getWindowID(), (x / 2 + 0.5f) * Display.getWidth(),
+				(y / 2 + 0.5f) * Display.getHeight());
 	}
 
 	public static float getMouseX() {
