@@ -4,6 +4,7 @@ import org.joml.Vector2f;
 
 import engine.Display;
 import engine.DisplayBuilder;
+import loader.modelLoader.ModelMaster;
 import objects.Camera;
 import renderer.textRendering.TextMaster;
 import texts.Fonts;
@@ -23,6 +24,8 @@ public class EngineTester {
 		Text testText = new Text("We are the best", 5, "candara", new Vector2f(0, 0), 10, false);
 		testText.setColor(1, 1, 1);
 		TextMaster.addText(testText);
+		System.out.println("test");
+		ModelMaster.loadModels("");
 
 		while (!Display.isCloseRequested()) {
 			TextMaster.renderAll();
