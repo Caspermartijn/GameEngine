@@ -1,4 +1,4 @@
-package loader.objLoader;
+package loader.dfmeshLoader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
