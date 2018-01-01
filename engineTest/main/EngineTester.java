@@ -20,16 +20,15 @@ public class EngineTester {
 
 		FontType type = new FontType(new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
 
-		Text testText = new Text("Test Casper is amazing", 10, type, new Vector2f(0, 0), 1000, true);
-
-		testText.setColor(0, 0, 0);
-		
+		Text testText = new Text("Test Casper is amazing", 10, type, new Vector2f(-1, -1), 10, true);
+		testText.setColor(1, 1, 1);
 		TextMaster.addText(testText);
 
 		while (!Display.isCloseRequested()) {
-			System.out.println("test");
 			TextMaster.renderAll();
+
 			Display.update();
+			Display.swapBuffers();
 		}
 
 		Display.disposeDisplay();
