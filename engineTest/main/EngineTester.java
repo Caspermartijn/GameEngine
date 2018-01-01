@@ -20,7 +20,7 @@ public class EngineTester {
 
 		Fonts.addFont("candara", new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
 
-		Text testText = new Text("Test Casper is amazing", 5, "candara", new Vector2f(0, 0), 10, false);
+		Text testText = new Text("IceRise is the best", 5, "candara", new Vector2f(0, 0), 10, false);
 		testText.setColor(1, 1, 1);
 		TextMaster.addText(testText);
 
