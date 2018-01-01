@@ -34,5 +34,6 @@
 	<classpathentry kind="lib" path="lib/jars/lwjgl-opengles.jar"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl.jar"/>
+	<classpathentry kind="lib" path="lib/jars/PNGDecoder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
