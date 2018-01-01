@@ -1,8 +1,8 @@
 package engine;
 
-import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.util.vector.Vector4f;
 
 public class GLSettings {
 	private static boolean cullingBackFace = false;

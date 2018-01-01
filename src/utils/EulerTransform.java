@@ -1,7 +1,7 @@
 package utils;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class EulerTransform {
 
@@ -25,12 +25,12 @@ public class EulerTransform {
 	
 	public Matrix4f toMatrix() {
 		Matrix4f matrix = new Matrix4f();
-		matrix.identity();
-		matrix.translate(new Vector3f(posX, posY, posZ));
-		matrix.rotate((float) Math.toRadians(rotX), new Vector3f(1, 0, 0));
-		matrix.rotate((float) Math.toRadians(rotY), new Vector3f(0, 0, 1));
-		matrix.rotate((float) Math.toRadians(rotZ), new Vector3f(0, 1, 0));
-		matrix.scale(new Vector3f(scaleX, scaleY, scaleZ));
+		matrix.setIdentity();
+		Matrix4f.translate(new Vector3f(posX, posY, posZ), matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(rotX), new Vector3f(1, 0, 0), matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(rotY), new Vector3f(0, 0, 1), matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(rotZ), new Vector3f(0, 1, 0), matrix, matrix);
+		Matrix4f.scale(new Vector3f(scaleX, scaleY, scaleZ), matrix, matrix);
 		return matrix;
 	}
 	

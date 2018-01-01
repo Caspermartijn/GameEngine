@@ -2,11 +2,9 @@ package shaderObjects;
 
 import java.nio.FloatBuffer;
 
-import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
-
-import utils.MatrixUtils;
+import org.lwjgl.util.vector.Matrix4f;
 
 public class UniformMat4 extends Uniform{
 	
@@ -17,7 +15,7 @@ public class UniformMat4 extends Uniform{
 	}
 	
 	public void loadMatrix(Matrix4f matrix){
-		MatrixUtils.store(matrixBuffer, matrix);
+		matrix.store(matrixBuffer);
 		matrixBuffer.flip();
 		GL20.glUniformMatrix4fv(getLocation(), false, matrixBuffer);
 	}
