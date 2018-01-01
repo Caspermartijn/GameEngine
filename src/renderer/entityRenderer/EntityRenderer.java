@@ -12,17 +12,16 @@ import org.lwjgl.opengl.GL30;
 import entities.Entity;
 import objects.Model_3D;
 import objects.Vao;
-import renderer.MasterRenderer;
 import textures.Texture;
 
 public class EntityRenderer {
 
-	private StaticShader shader;
+	private EntityShader shader;
 
-	public EntityRenderer(StaticShader shader, Matrix4f projectionMatrix) {
+	public EntityRenderer(EntityShader shader, Matrix4f projectionMatrix) {
 		this.shader = shader;
 		shader.start();
-		shader.loadProjectionMatrix(projectionMatrix);
+		shader.projectionMatrix.loadMatrix(projectionMatrix);
 		shader.stop();
 	}
 
@@ -40,13 +39,13 @@ public class EntityRenderer {
 
 	private void prepareModel_3D(Model_3D model) {
 		Vao vao = model.getMesh();
-		vao.bind(0,1,2);
+		vao.bind(0, 1, 2);
 		Texture texture = model.getTexture();
-		shader.loadNumberOfRows(1);
-		shader.loadFakeLightingVariable(texture.isUseFakeLighting());
-		shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
+		shader.useFakeLighting.loadBoolean(false);
+		shader.reflectivity.loadFloat(0);
+		shader.shineDamper.loadFloat(1);
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture().id);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.id);
 	}
 
 	private void unbindModel_3D() {
@@ -57,8 +56,8 @@ public class EntityRenderer {
 	}
 
 	private void prepareInstance(Entity entity) {
-		shader.loadTransformationMatrix(entity.getTransformationMatrix());
-		shader.loadOffset(0, 0);
+		shader.transformationMatrix.loadMatrix(entity.getTransformationMatrix());
+		shader.offset.loadVec2(0, 0);
 	}
 
 }

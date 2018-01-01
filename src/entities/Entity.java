@@ -1,5 +1,6 @@
 package entities;
 
+import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 import objects.Model_3D;
@@ -22,9 +23,9 @@ public abstract class Entity implements IEntity {
 
 	@Override
 	public void update() {
-		
+
 	}
-	
+
 	public Vector3f getPosition() {
 		return position;
 	}
@@ -50,8 +51,14 @@ public abstract class Entity implements IEntity {
 	}
 
 	public Matrix4f getTransformationMatrix() {
-		// TODO Auto-generated method stub
-		return null;
+		Matrix4f matrix = new Matrix4f();
+		matrix.identity();
+		matrix.translate(position);
+		matrix.rotate((float) Math.toRadians(rotation.x), new Vector3f(1, 0, 0));
+		matrix.rotate((float) Math.toRadians(rotation.y), new Vector3f(0, 1, 0));
+		matrix.rotate((float) Math.toRadians(rotation.z), new Vector3f(0, 0, 1));
+		matrix.scale(new Vector3f(scale, scale, scale));
+		return matrix;
 	}
 
 }
