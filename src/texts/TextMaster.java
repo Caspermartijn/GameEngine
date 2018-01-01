@@ -2,6 +2,8 @@ package texts;
 
 import java.util.ArrayList;
 
+import renderer.textRendering.FontRenderer;
+
 public class TextMaster {
 
 	private static ArrayList<Text> texts = new ArrayList<>();

@@ -1,8 +1,8 @@
 package guis;
 
-import shaderObjects.ShaderProgram;
-import shaderObjects.UniformMat4;
-import shaderObjects.UniformVec4;
+import shaders.shaderObjects.ShaderProgram;
+import shaders.shaderObjects.UniformMat4;
+import shaders.shaderObjects.UniformVec4;
 import utils.SourceFile;
 
 public class QuadShader extends ShaderProgram {

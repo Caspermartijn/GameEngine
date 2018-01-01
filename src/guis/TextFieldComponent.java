@@ -1,8 +1,8 @@
 package guis;
 
+import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector4f;
 
 import engine.Keyboard;
 import engine.KeyboardListener;
@@ -11,6 +11,7 @@ import texts.Text;
 import texts.TextMaster;
 import utils.Collision;
 import utils.Switch;
+import utils.Vector;
 
 public class TextFieldComponent extends QuadComponent {
 	
@@ -67,14 +68,14 @@ public class TextFieldComponent extends QuadComponent {
 		
 		super.render();
 		
-		Vector2f position = Vector2f.add(new Vector2f(getX(), getY()), textPosition, null);
+		Vector2f position = Vector.add(new Vector2f(getX(), getY()), textPosition, null);
 		text.setPosition(position);
 		TextMaster.getRenderer().renderText(text);
 		
 		if (isActive()) {
 			showCurser.switchBoolean();
 			if (showCurser.getBooleanValue()) {
-				curser.setPosition(Vector2f.add(position, text.getCharacterPosition(textString.length()), null));
+				curser.setPosition(Vector.add(position, text.getCharacterPosition(textString.length()), null));
 				TextMaster.getRenderer().renderText(curser);
 			}
 		}

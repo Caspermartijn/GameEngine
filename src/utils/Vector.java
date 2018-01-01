@@ -47,4 +47,14 @@ public class Vector {
 			return dest;
 		}
 	}
+
+	public static Vector2f add(Vector2f left, Vector2f right, Vector2f dest) {
+		if (dest == null)
+			return new Vector2f(left.x + right.x, left.y + right.y);
+		else {
+			dest.set(left.x + right.x, left.y + right.y);
+			return dest;
+		}
+	}
+
 }

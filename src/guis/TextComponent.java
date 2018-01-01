@@ -1,9 +1,10 @@
 package guis;
 
-import org.lwjgl.util.vector.Vector2f;
+import org.joml.Vector2f;
 
 import texts.Text;
 import texts.TextMaster;
+import utils.Vector;
 
 public class TextComponent extends GUIComponent {
 	
@@ -26,7 +27,7 @@ public class TextComponent extends GUIComponent {
 	}
 	
 	public Vector2f getPosition() {
-		return Vector2f.add(container.getPosition(), textPosition, null);
+		return Vector.add(container.getPosition(), textPosition, null);
 	}
 	
 	public void setColor(float r, float g, float b, float a) {

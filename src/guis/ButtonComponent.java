@@ -1,14 +1,15 @@
 package guis;
 
+import org.joml.Vector2f;
+import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector4f;
 
 import engine.Mouse;
 import texts.Text;
 import texts.TextMaster;
 import utils.Collision;
 import utils.Delay;
+import utils.Vector;
 
 public class ButtonComponent extends QuadComponent {
 
@@ -34,7 +35,7 @@ public class ButtonComponent extends QuadComponent {
 		super.render();
 		
 		if (text != null) {
-			text.setPosition(Vector2f.add(new Vector2f(getX(), getY()), textPosition, null));
+			text.setPosition(Vector.add(new Vector2f(getX(), getY()), textPosition, null));
 			TextMaster.getRenderer().renderText(text);
 		}
 	}

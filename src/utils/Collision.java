@@ -1,7 +1,7 @@
 package utils;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 public class Collision {
 
