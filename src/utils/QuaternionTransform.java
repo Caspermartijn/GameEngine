@@ -1,7 +1,7 @@
 package utils;
 
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 public class QuaternionTransform {
 
@@ -13,9 +13,9 @@ public class QuaternionTransform {
 	}
 	
 	public QuaternionTransform(Matrix4f matrix) {
-		x = matrix.m03;
-		y = matrix.m13;
-		z = matrix.m23;
+		x = matrix.m03();
+		y = matrix.m13();
+		z = matrix.m23();
 		quaternion = new Quaternion(matrix);
 	}
 
@@ -53,10 +53,10 @@ public class QuaternionTransform {
 	
 	public Matrix4f toMatrix() {
 		Matrix4f matrix = new Matrix4f();
-		matrix.setIdentity();
-		Matrix4f.scale(new Vector3f(scaleX, scaleY, scaleZ), matrix, matrix);
-		Matrix4f.translate(new Vector3f(x, y, z), matrix, matrix);
-		Matrix4f.mul(matrix, quaternion.toRotationMatrix(), matrix);
+		matrix.identity();
+		matrix.scale(new Vector3f(scaleX, scaleY, scaleZ));
+		matrix.translate(new Vector3f(x, y, z));
+		matrix.mul( quaternion.toRotationMatrix());
 		return matrix;
 	}
 	

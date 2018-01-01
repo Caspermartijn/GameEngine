@@ -3,8 +3,8 @@ package objects;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 
+import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.util.vector.Vector2f;
 
 public class Controller {
 

@@ -1,4 +1,4 @@
-package texts.rendering;
+package renderer.textRendering;
 
 import org.lwjgl.opengl.GL11;
 
