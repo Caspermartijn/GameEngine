@@ -1,8 +1,7 @@
 package texts;
 
-
-import org.joml.Vector2f;
-import org.joml.Vector4f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import objects.Vao;
 
@@ -19,11 +18,11 @@ public class Text {
 	private float lineMaxSize;
 	private int numberOfLines;
 
-	private FontType font;
+	private String font;
 
 	private boolean centerText = false;
 
-	public Text(String text, float fontSize, FontType font, Vector2f position, float maxLineLength,
+	public Text(String text, float fontSize, String font, Vector2f position, float maxLineLength,
 			boolean centered) {
 		this.textString = text;
 		this.fontSize = fontSize;
@@ -37,7 +36,7 @@ public class Text {
 	private void buildMesh() {
 		if (textMeshVao != null)
 			textMeshVao.delete();
-		TextMeshData data = font.loadText(this);
+		TextMeshData data = Fonts.getFont(font).loadText(this);
 		textMeshVao = data.toVao();
 		vertexCount = data.getVertexCount();
 	}
@@ -47,7 +46,7 @@ public class Text {
 		textMeshVao = null;
 	}
 
-	public FontType getFont() {
+	public String getFont() {
 		return font;
 	}
 
@@ -107,7 +106,7 @@ public class Text {
 		this.lineMaxSize = length;
 	}
 	
-	public void setFont(FontType font) {
+	public void setFont(String font) {
 		this.font = font;
 	}
 	
@@ -127,11 +126,19 @@ public class Text {
 		position.set(x, y);
 	}
 	
-	public void setPositon(Vector2f v) {
+	public void setPosition(Vector2f v) {
 		position = v;
 	}
 	
 	public void applyChanges() {
 		buildMesh();
+	}
+	
+	public Vector2f getCharacterPosition(int character) {
+		return Fonts.getFont(font).getCharacterPosition(character, this);
+	}
+	
+	public String getText() {
+		return textString;
 	}
 }

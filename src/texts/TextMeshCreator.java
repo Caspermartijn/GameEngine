@@ -3,6 +3,8 @@ package texts;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.util.vector.Vector2f;
+
 import utils.SourceFile;
 
 public class TextMeshCreator {
@@ -131,6 +133,56 @@ public class TextMeshCreator {
 			array[i] = listOfFloats.get(i);
 		}
 		return array;
+	}
+
+	public Vector2f getCharacterPosition(int characterPosition, Text text) {
+		char[] chars = text.getTextString().toCharArray();
+		List<Line> lines = new ArrayList<Line>();
+		Line currentLine = new Line(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineSize());
+		Word currentWord = new Word(text.getFontSize());
+		for (char c : chars) {
+			int ascii = (int) c;
+			if (ascii == SPACE_ASCII) {
+				boolean added = currentLine.attemptToAddWord(currentWord);
+				if (!added) {
+					lines.add(currentLine);
+					currentLine = new Line(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineSize());
+					currentLine.attemptToAddWord(currentWord);
+				}
+				currentWord = new Word(text.getFontSize());
+				continue;
+			}
+			Character character = metaData.getCharacter(ascii);
+			currentWord.addCharacter(character);
+		}
+		completeStructure(lines, currentLine, currentWord, text);
+		
+		double curserX = 0, curserY = 0;
+		int counter = 0;
+		for (Line line : lines) {
+			if (text.isCentered()) {
+				curserX = (line.getMaxLength() - line.getLineLength()) / 2;
+			}
+			for (Word word : line.getWords()) {
+				for (Character c : word.getCharacters()) {
+					curserX += c.getxAdvance() * text.getFontSize();
+					counter++;
+					
+					if (counter == characterPosition) {
+						return new Vector2f((float) (curserX - metaData.getSpaceWidth() * text.getFontSize()), (float) curserY);
+					}
+
+				}
+				curserX += metaData.getSpaceWidth() * text.getFontSize();
+				counter++;
+				if (counter == characterPosition) {
+					return new Vector2f((float) curserX, (float) curserY);
+				}
+			}
+			curserY += LINE_HEIGHT * text.getFontSize();
+			curserX = 0;
+		}
+		return new Vector2f((float) curserX, (float) (curserY-LINE_HEIGHT * text.getFontSize()));
 	}
 
 }
