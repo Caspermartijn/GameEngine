@@ -46,10 +46,10 @@ public class MasterRenderer {
 		prepare();
 		entityShader.start();
 		entityShader.plane.loadVec4(clipPlane);
-		shader.loadSkyColour(RED, GREEN, BLUE);
-		shader.loadLights(lights);
-		shader.loadViewMatrix(camera);
-		renderer.render(entities);
+		entityShader.skyColour.loadVec3(RED, GREEN, BLUE);
+		entityShader.loadLights(lights);
+		entityShader.viewMatrix.loadMatrix(camera.getViewMatrix());
+		entityRenderer.render(entities);
 		entityShader.stop();
 		entities.clear();
 	}

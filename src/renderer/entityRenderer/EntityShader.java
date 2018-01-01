@@ -1,5 +1,8 @@
 package renderer.entityRenderer;
 
+import java.util.List;
+
+import entities.Light;
 import shaders.shaderObjects.*;
 import utils.SourceFile;
 
@@ -37,6 +40,19 @@ public class EntityShader extends ShaderProgram {
 			lightPosition[i] = new UniformVec3("lightPosition[" + i + "]");
 			lightColour[i] = new UniformVec3("lightColour[" + i + "]");
 			attenuation[i] = new UniformVec3("attenuation[" + i + "]");
+		}
+	}
+
+	public void loadLights(List<Light> lights) {
+		for (int i = 0; i < 4; i++) {
+			
+			if(lights.size() < i){
+				
+			}else{
+				
+			}
+	
+		
 		}
 	}
 
