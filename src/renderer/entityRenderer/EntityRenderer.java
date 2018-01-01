@@ -18,10 +18,13 @@ public class EntityRenderer {
 
 	private EntityShader shader;
 
-	public EntityRenderer(EntityShader shader, Matrix4f projectionMatrix) {
+	public EntityRenderer(EntityShader shader) {
 		this.shader = shader;
+	}
+	
+	public void setProjectionMatrix(Matrix4f matrix){
 		shader.start();
-		shader.projectionMatrix.loadMatrix(projectionMatrix);
+		shader.projectionMatrix.loadMatrix(matrix);
 		shader.stop();
 	}
 
