@@ -1,5 +1,7 @@
 package texts;
 
+import org.lwjgl.util.vector.Vector2f;
+
 import textures.Texture;
 import utils.SourceFile;
 
@@ -10,12 +12,12 @@ public class FontType {
 
 	private float width = 0.5f, smoothness = 0.1f;
 	
-	public FontType(SourceFile texture, SourceFile fontFile) {
+	protected FontType(SourceFile texture, SourceFile fontFile) {
 		this.textureAtlas = Texture.getTextureBuilder(texture).normalMipMap().create();
 		this.loader = new TextMeshCreator(fontFile);
 	}
 	
-	public FontType(SourceFile texture, SourceFile fontFile, float width, float smoothness) {
+	protected FontType(SourceFile texture, SourceFile fontFile, float width, float smoothness) {
 		this.textureAtlas = Texture.getTextureBuilder(texture).normalMipMap().create();
 		this.loader = new TextMeshCreator(fontFile);
 		this.width = width; 
@@ -45,5 +47,17 @@ public class FontType {
 
 	public float getSmoothness() {
 		return smoothness;
+	}
+
+	public Vector2f getCharacterPosition(int character, Text text) {
+		return loader.getCharacterPosition(character, text);
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public void setSmoothness(float smoothness) {
+		this.smoothness = smoothness;
 	}
 }
