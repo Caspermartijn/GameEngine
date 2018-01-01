@@ -10,7 +10,6 @@ This is our todolist of this engine(You can add any u want):
 	- Npc
 	- Video player
 	- Game launcher system
-	- Nice girls
 	- 3d gui items (Should be easy as we already implemented 
 	- Patricles
 	- Text patricles
