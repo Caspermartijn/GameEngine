@@ -8,8 +8,8 @@ public class ModelMaster {
 	private static HashMap<String, ModelData> models = new HashMap<String, ModelData>();
 
 	public static void loadModels(String modelsPath) {
-		InputStream inputStream = Class.class.getResourceAsStream("modelsPath");
-
+		InputStream inputStream = Class.class.getResourceAsStream("/res/models/modelNames.dat");
+		
 	}
 
 }

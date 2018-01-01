@@ -1,0 +1,21 @@
+This is our todolist of this engine(You can add any u want):
+
+	- Terrain renderer
+	- Thinking of what type of game engine this will be.
+	- Easy model loaders. (1 for in engine models, and the other for modded models etc)
+	- Plugin/Addon system.
+	- Water renderer. (IceRise could u do this. U had already made one before)
+	- Hitboxes (Caspermartijn)
+	- Animations (IceRise again u did this already. :D)
+	- Npc
+	- Video player
+	- Game launcher system
+	- Nice girls
+	- 3d gui items (Should be easy as we already implemented 
+	- Patricles
+	- Text patricles
+	- 3d ui (Canvas with children, Text image etc)
+	- Parhaps -> Dae loader
+	- 3d and first pirson controlls
+	- Parhaps -> controller input
+	- Audio system
