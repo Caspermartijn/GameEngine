@@ -14,5 +14,4 @@ public class ModelLoader {
 	 * public static Model_3D getNormalMappedModel(SourceFile model, SourceFile
 	 * texture){ Vao model = return new Model_3D(model, texture); }
 	 */
-
 }

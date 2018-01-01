@@ -49,4 +49,9 @@ public abstract class Entity implements IEntity {
 		return model;
 	}
 
+	public Matrix4f getTransformationMatrix() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
