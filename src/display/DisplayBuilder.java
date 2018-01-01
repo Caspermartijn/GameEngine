@@ -38,6 +38,6 @@ public class DisplayBuilder {
 	}
 
 	public void create() {
-		Display.createDisplay(this);
+		EngineDisplay.createDisplay(this);
 	}
 }

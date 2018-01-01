@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.system.MemoryUtil;
 
-public class Display {
+public class EngineDisplay {
 
 	private static int WIDTH;
 	private static int HEIGHT;
