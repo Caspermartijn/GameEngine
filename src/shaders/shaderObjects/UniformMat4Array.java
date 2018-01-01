@@ -1,4 +1,4 @@
-package shaderObjects;
+package shaders.shaderObjects;
 
 import org.joml.Matrix4f;
 

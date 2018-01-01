@@ -1,4 +1,4 @@
-package shaderObjects;
+package shaders.shaderObjects;
 
 import java.io.BufferedReader;
 import java.util.Map.Entry;

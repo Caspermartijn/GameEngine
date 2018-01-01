@@ -1,4 +1,4 @@
-package shaderObjects;
+package shaders.shaderObjects;
 
 import java.nio.FloatBuffer;
 

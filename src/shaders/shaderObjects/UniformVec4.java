@@ -1,4 +1,4 @@
-package shaderObjects;
+package shaders.shaderObjects;
 
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL20;

@@ -1,9 +1,9 @@
 package renderer.textRendering;
 
-import shaderObjects.ShaderProgram;
-import shaderObjects.UniformSampler;
-import shaderObjects.UniformVec2;
-import shaderObjects.UniformVec4;
+import shaders.shaderObjects.ShaderProgram;
+import shaders.shaderObjects.UniformSampler;
+import shaders.shaderObjects.UniformVec2;
+import shaders.shaderObjects.UniformVec4;
 import utils.SourceFile;
 
 public class FontShader extends ShaderProgram {
