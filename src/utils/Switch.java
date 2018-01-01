@@ -17,6 +17,10 @@ public class Switch {
 		this.switchCooldown = switchCooldownMS;
 	}
 	
+	public Switch(long l) {
+		this.switchCooldown = l;
+	}
+
 	public void setSwitchCooldown(long switchCooldownMS) {
 		this.switchCooldown = switchCooldownMS;
 	}
@@ -33,6 +37,10 @@ public class Switch {
 		else
 			value = true;
 		lastSwitch = System.currentTimeMillis();
+	}
+
+	public void setValue(boolean b) {
+		this.value = b;
 	}
 	
 }
