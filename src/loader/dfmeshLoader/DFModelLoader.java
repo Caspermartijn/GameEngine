@@ -91,7 +91,7 @@ public class DFModelLoader {
 
 			for (int i = 0; i < vertices.size(); i++) {
 				Vertex v = vertices.get(i);
-				if (v.getWeights().size() == 0) 
+				if (v.getWeights().size() == 0)
 					System.out.println(v.getPos());
 				positions[i * 3] = v.getPos().x;
 				positions[i * 3 + 1] = v.getPos().y;
@@ -144,7 +144,7 @@ public class DFModelLoader {
 		}
 		return null;
 	}
-	
+
 	public static void addArmatureComponent(SourceFile file, Model_3D m) {
 		try {
 			BufferedReader br = file.openFileReader();
@@ -170,7 +170,7 @@ public class DFModelLoader {
 				line = br.readLine();
 			}
 			br.close();
-			
+
 			if (joints.isEmpty()) {
 				System.err.println("No skeleton data found in: " + file.getPath());
 				return;
@@ -194,7 +194,7 @@ public class DFModelLoader {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static Matrix4f convertToMatrix(String matrixString, String regex) {
 		String[] stringValues = matrixString.split(regex);
 		float[] floatValues = new float[16];
@@ -202,23 +202,22 @@ public class DFModelLoader {
 			floatValues[i] = Float.valueOf(stringValues[i]);
 		}
 		Matrix4f matrix = new Matrix4f();
-		//TODO matrix.m00("float variable")
-		matrix.m00 = floatValues[0];
-		matrix.m01 = floatValues[1];
-		matrix.m02 = floatValues[2];
-		matrix.m03 = floatValues[3];
-		matrix.m10 = floatValues[4];
-		matrix.m11 = floatValues[5];
-		matrix.m12 = floatValues[6];
-		matrix.m13 = floatValues[7];
-		matrix.m20 = floatValues[8];
-		matrix.m21 = floatValues[9];
-		matrix.m22 = floatValues[10];
-		matrix.m23 = floatValues[11];
-		matrix.m30 = floatValues[12];
-		matrix.m31 = floatValues[13];
-		matrix.m32 = floatValues[14];
-		matrix.m33 = floatValues[15];
+		matrix.m00(floatValues[0]);
+		matrix.m01(floatValues[1]);
+		matrix.m02(floatValues[2]);
+		matrix.m03(floatValues[3]);
+		matrix.m10(floatValues[4]);
+		matrix.m11(floatValues[5]);
+		matrix.m12(floatValues[6]);
+		matrix.m13(floatValues[7]);
+		matrix.m20(floatValues[8]);
+		matrix.m21(floatValues[9]);
+		matrix.m22(floatValues[10]);
+		matrix.m23(floatValues[11]);
+		matrix.m30(floatValues[12]);
+		matrix.m31(floatValues[13]);
+		matrix.m32(floatValues[14]);
+		matrix.m33(floatValues[15]);
 		return matrix;
 	}
 
