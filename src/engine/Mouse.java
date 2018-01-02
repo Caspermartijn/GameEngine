@@ -22,8 +22,8 @@ public class Mouse {
 			
 			mousePosX = (float) (x / Display.getWidth() * 2 - 1);
 			mousePosY = (float) (y / Display.getHeight() * 2 - 1);
-			mouseDX = (float) ((x-oldX) / Display.getWidth() * 2) - 1;
-			mouseDY = (float) ((y-oldY) / Display.getHeight() * 2) - 1;
+			mouseDX = (float) ((x-oldX) / Display.getWidth() * 2);
+			mouseDY = (float) ((y-oldY) / Display.getHeight() * 2);
 			oldX = (float) x;
 			oldY = (float) y;
 		});
