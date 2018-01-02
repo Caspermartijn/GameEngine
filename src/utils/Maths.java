@@ -1,6 +1,6 @@
 package utils;
 
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class Maths {
 

@@ -1,6 +1,6 @@
 package shaders.shaderObjects;
 
-import org.joml.Matrix4f;
+import org.lwjgl.util.vector.Matrix4f;
 
 public class UniformMat4Array extends Uniform {
 

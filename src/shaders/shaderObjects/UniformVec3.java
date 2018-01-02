@@ -1,7 +1,7 @@
 package shaders.shaderObjects;
 
-import org.joml.Vector3f;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.util.vector.Vector3f;
 
 public class UniformVec3 extends Uniform {
 	private float currentX;

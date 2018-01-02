@@ -1,7 +1,7 @@
 package utils;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class Quaternion {
 
@@ -20,30 +20,30 @@ public class Quaternion {
 	}
 
 	public Quaternion(Matrix4f matrix) {
-		float diagonal = matrix.m00() + matrix.m11() + matrix.m22();
+		float diagonal = matrix.m00 + matrix.m11 + matrix.m22;
 		if (diagonal > 0) {
 			float w4 = (float) (Math.sqrt(diagonal + 1f) * 2f);
 			this.w = w4 / 4f;
-			this.x = (matrix.m21() - matrix.m12()) / w4;
-			this.y = (matrix.m02() - matrix.m20()) / w4;
-			this.z = (matrix.m10() - matrix.m01()) / w4;
-		} else if ((matrix.m00() > matrix.m11()) && (matrix.m00() > matrix.m22())) {
-			float x4 = (float) (Math.sqrt(1f + matrix.m00() - matrix.m11() - matrix.m22()) * 2f);
-			this.w = (matrix.m21() - matrix.m12()) / x4;
+			this.x = (matrix.m21 - matrix.m12) / w4;
+			this.y = (matrix.m02 - matrix.m20) / w4;
+			this.z = (matrix.m10 - matrix.m01) / w4;
+		} else if ((matrix.m00 > matrix.m11) && (matrix.m00 > matrix.m22)) {
+			float x4 = (float) (Math.sqrt(1f + matrix.m00 - matrix.m11 - matrix.m22) * 2f);
+			this.w = (matrix.m21 - matrix.m12) / x4;
 			this.x = x4 / 4f;
-			this.y = (matrix.m01() + matrix.m10()) / x4;
-			this.z = (matrix.m02() + matrix.m20()) / x4;
-		} else if (matrix.m11() > matrix.m22()) {
-			float y4 = (float) (Math.sqrt(1f + matrix.m11() - matrix.m00() - matrix.m22()) * 2f);
-			this.w = (matrix.m02() - matrix.m20()) / y4;
-			this.x = (matrix.m01() + matrix.m10()) / y4;
+			this.y = (matrix.m01 + matrix.m10) / x4;
+			this.z = (matrix.m02 + matrix.m20) / x4;
+		} else if (matrix.m11 > matrix.m22) {
+			float y4 = (float) (Math.sqrt(1f + matrix.m11 - matrix.m00 - matrix.m22) * 2f);
+			this.w = (matrix.m02 - matrix.m20) / y4;
+			this.x = (matrix.m01 + matrix.m10) / y4;
 			this.y = y4 / 4f;
-			this.z = (matrix.m12() + matrix.m21()) / y4;
+			this.z = (matrix.m12 + matrix.m21) / y4;
 		} else {
-			float z4 = (float) (Math.sqrt(1f + matrix.m22() - matrix.m00() - matrix.m11()) * 2f);
-			this.w = (matrix.m10() - matrix.m01()) / z4;
-			this.x = (matrix.m02() + matrix.m20()) / z4;
-			this.y = (matrix.m12() + matrix.m21()) / z4;
+			float z4 = (float) (Math.sqrt(1f + matrix.m22 - matrix.m00 - matrix.m11) * 2f);
+			this.w = (matrix.m10 - matrix.m01) / z4;
+			this.x = (matrix.m02 + matrix.m20) / z4;
+			this.y = (matrix.m12 + matrix.m21) / z4;
 			this.z = z4 / 4f;
 		}
 		this.normalize();
@@ -60,22 +60,22 @@ public class Quaternion {
 		final float xSquared = x * x;
 		final float ySquared = y * y;
 		final float zSquared = z * z;
-		matrix.m00(1 - 2 * (ySquared + zSquared));
-		matrix.m01(2 * (xy - zw));
-		matrix.m02(2 * (xz + yw));
-		matrix.m03(0);
-		matrix.m10(2 * (xy + zw));
-		matrix.m11(1 - 2 * (xSquared + zSquared));
-		matrix.m12(2 * (yz - xw));
-		matrix.m13(0);
-		matrix.m20(2 * (xz - yw));
-		matrix.m21(2 * (yz + xw));
-		matrix.m22(1 - 2 * (xSquared + ySquared));
-		matrix.m23(0);
-		matrix.m30(0);
-		matrix.m31(0);
-		matrix.m32(0);
-		matrix.m33(1);
+		matrix.m00 = 1 - 2 * (ySquared + zSquared);
+		matrix.m01 = 2 * (xy - zw);
+		matrix.m02 = 2 * (xz + yw);
+		matrix.m03 = 0;
+		matrix.m10 = 2 * (xy + zw);
+		matrix.m11 = 1 - 2 * (xSquared + zSquared);
+		matrix.m12 = 2 * (yz - xw);
+		matrix.m13 = 0;
+		matrix.m20 = 2 * (xz - yw);
+		matrix.m21 = 2 * (yz + xw);
+		matrix.m22 = 1 - 2 * (xSquared + ySquared);
+		matrix.m23 = 0;
+		matrix.m30 = 0;
+		matrix.m31 = 0;
+		matrix.m32 = 0;
+		matrix.m33 = 1;
 		return matrix;
 	}
 
@@ -91,35 +91,35 @@ public class Quaternion {
 		x = (float) Math.toRadians(x);
 		y = (float) Math.toRadians(y);
 		z = (float) Math.toRadians(z);
-
+		
 		float t0 = (float) Math.cos(x / 2f);
 		float t1 = (float) Math.cos(y / 2f);
 		float t2 = (float) Math.cos(z / 2f);
 		float t3 = (float) Math.sin(x / 2f);
 		float t4 = (float) Math.sin(y / 2f);
 		float t5 = (float) Math.sin(z / 2f);
-
+		
 		this.x = t3 * t1 * t2 + t0 * t4 * t5;
 		this.y = t0 * t4 * t2 - t3 * t1 * t5;
 		this.z = t0 * t1 * t5 + t3 * t4 * t2;
 		this.w = t0 * t1 * t2 - t3 * t4 * t5;
-
+		
 		this.normalize();
 	}
-
+	
 	public Vector3f toEulerAngles() {
 		this.normalize();
-
-		float t0 = -2f * (y * z - w * x);
-		float t1 = w * w - x * x - y * y + z * z;
-		float t2 = 2f * (x * z + w * y);
-		float t3 = -2f * (x * y - w * z);
-		float t4 = w * w + x * x - y * y - z * z;
-
+		
+		float t0 = -2f*(y*z - w*x);
+		float t1 = w*w - x*x - y*y + z*z;
+		float t2 = 2f*(x*z + w*y);
+		float t3 = -2f*(x*y - w*z);
+		float t4 = w*w + x*x - y*y - z*z;
+		
 		float x = (float) Math.toDegrees(Math.atan2(t0, t1));
 		float y = (float) Math.toDegrees(Math.asin(t2));
 		float z = (float) Math.toDegrees(Math.atan2(t3, t4));
-
+		
 		return new Vector3f(x, y, z);
 	}
 

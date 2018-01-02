@@ -3,8 +3,8 @@ package guis;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import org.joml.Vector2f;
-import org.joml.Vector4f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import texts.FontType;
 import texts.Fonts;

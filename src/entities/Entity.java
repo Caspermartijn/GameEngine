@@ -1,7 +1,7 @@
 package entities;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import objects.Model_3D;
 
@@ -52,12 +52,12 @@ public abstract class Entity implements IEntity {
 
 	public Matrix4f getTransformationMatrix() {
 		Matrix4f matrix = new Matrix4f();
-		matrix.identity();
-		matrix.translate(position);
-		matrix.rotate((float) Math.toRadians(rotation.x), new Vector3f(1, 0, 0));
-		matrix.rotate((float) Math.toRadians(rotation.y), new Vector3f(0, 1, 0));
-		matrix.rotate((float) Math.toRadians(rotation.z), new Vector3f(0, 0, 1));
-		matrix.scale(new Vector3f(scale, scale, scale));
+		matrix.setIdentity();
+		Matrix4f.translate(position, matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(rotation.x), new Vector3f(1, 0, 0), matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(rotation.y), new Vector3f(0, 1, 0), matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(rotation.z), new Vector3f(0, 0, 1), matrix, matrix);
+		Matrix4f.scale(new Vector3f(scale, scale, scale), matrix, matrix);
 		return matrix;
 	}
 

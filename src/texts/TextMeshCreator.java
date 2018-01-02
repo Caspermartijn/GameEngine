@@ -3,7 +3,7 @@ package texts;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joml.Vector2f;
+import org.lwjgl.util.vector.Vector2f;
 
 import utils.SourceFile;
 

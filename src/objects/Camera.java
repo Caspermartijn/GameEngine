@@ -1,7 +1,7 @@
 package objects;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import utils.Matrix;
 
@@ -14,11 +14,11 @@ public class Camera {
 
 	public Camera() {
 		camera = new Matrix4f();
-		camera.identity();
+		camera.setIdentity();
 		projection = new Matrix4f();
-		projection.identity();
+		projection.setIdentity();
 		view = new Matrix4f();
-		view.identity();
+		view.setIdentity();
 		setProjectionMatrix(projection);
 	}
 
@@ -41,12 +41,12 @@ public class Camera {
 		yaw = (yaw + 360) % 360;
 		pitch = (pitch + 180 + 360) % 360 - 180;
 		roll = (roll + 360) % 360;
-		view.identity();
-		view.rotate((float) Math.toRadians(pitch), new Vector3f(1, 0, 0));
-		view.rotate((float) Math.toRadians(yaw), new Vector3f(0, 1, 0));
-		view.rotate((float) Math.toRadians(roll), new Vector3f(0, 0, 1));
-		view.translate(new Vector3f(-x, -y, -z));
-		Matrix.mul(projection, view, camera);
+		view.setIdentity();
+		Matrix4f.rotate((float) Math.toRadians(pitch), new Vector3f(1, 0, 0), view, view);
+		Matrix4f.rotate((float) Math.toRadians(yaw), new Vector3f(0, 1, 0), view, view);
+		Matrix4f.rotate((float) Math.toRadians(roll), new Vector3f(0, 0, 1), view, view);
+		Matrix4f.translate(new Vector3f(-x, -y, -z), view, view);
+		Matrix4f.mul(projection, view, camera);
 	}
 
 }

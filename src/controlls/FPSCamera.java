@@ -1,7 +1,7 @@
 package controlls;
 
-import org.joml.Matrix4f;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.util.vector.Matrix4f;
 
 import engine.Display;
 import engine.Keyboard;
@@ -18,19 +18,18 @@ public class FPSCamera extends Camera {
 	private static final float MOUSE_SENSITY = 100;
 	private static final float SPEED = 20;
 
-	@Override
 	protected void setProjectionMatrix(Matrix4f projection) {
 		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
 		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio);
 		float x_scale = y_scale / aspectRatio;
 		float frustum_length = FAR_PLANE - NEAR_PLANE;
 
-		projection.m00(x_scale);
-		projection.m11(y_scale);
-		projection.m22(-((FAR_PLANE + NEAR_PLANE) / frustum_length));
-		projection.m23(-1);
-		projection.m32(-((2 * NEAR_PLANE * FAR_PLANE) / frustum_length));
-		projection.m33(0);
+		projection.m00 = x_scale;
+		projection.m11 = y_scale;
+		projection.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
+		projection.m23 = -1;
+		projection.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
+		projection.m33 = 0;
 	}
 
 	public void updateInputs() {
@@ -40,7 +39,6 @@ public class FPSCamera extends Camera {
 		super.pitch += dy;
 		pitch = Maths.clamp(-90, 90, pitch);
 
-		
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
 			super.x += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;
 			super.z -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;

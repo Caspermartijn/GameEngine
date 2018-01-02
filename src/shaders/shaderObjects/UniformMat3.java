@@ -2,9 +2,9 @@ package shaders.shaderObjects;
 
 import java.nio.FloatBuffer;
 
-import org.joml.Matrix3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.util.vector.Matrix3f;
 
 public class UniformMat3 extends Uniform {
 
@@ -15,7 +15,7 @@ public class UniformMat3 extends Uniform {
 	}
 
 	public void loadMatrix(Matrix3f matrix) {
-		matrix.get(matrixBuffer);
+		matrix.store(matrixBuffer);
 		matrixBuffer.flip();
 		GL20.glUniformMatrix3fv(getLocation(), false, matrixBuffer);
 	}

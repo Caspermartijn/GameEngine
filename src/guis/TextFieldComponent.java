@@ -1,8 +1,8 @@
 package guis;
 
-import org.joml.Vector2f;
-import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector4f;
 
 import engine.Keyboard;
 import engine.KeyboardListener;

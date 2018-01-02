@@ -1,6 +1,6 @@
 package texts;
 
-import org.joml.Vector2f;
+import org.lwjgl.util.vector.Vector2f;
 
 import textures.Texture;
 import utils.SourceFile;

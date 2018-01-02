@@ -1,8 +1,8 @@
 package guis;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import engine.Display;
 
@@ -74,12 +74,12 @@ public class QuadComponent extends GUIComponent {
 	
 	public Matrix4f getBackgroundTransform() {
 		Matrix4f matrix = new Matrix4f();
-		matrix.identity();
+		matrix.setIdentity();
 		
 		float posX = (getX()-0.5f)*2.0f + getWidth();
 		float posY = (getY()-0.5f)*-2.0f - getHeight();
-		matrix.translate(new Vector3f(posX, posY, 0));
-		matrix.scale(new Vector3f(width, height, 1));	
+		Matrix4f.translate(new Vector3f(posX, posY, 0),matrix,matrix);
+		Matrix4f.scale(new Vector3f(width, height, 1),matrix,matrix);	
 		return matrix;
 	}
 	
