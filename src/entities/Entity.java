@@ -61,4 +61,10 @@ public abstract class Entity implements IEntity {
 		return matrix;
 	}
 
+	public void increasePosition(float f, float g, float h) {
+		position.x += f;
+		position.y += g;
+		position.z += h;
+	}
+
 }

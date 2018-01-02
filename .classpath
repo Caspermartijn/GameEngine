@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="engineTest"/>
 	<classpathentry kind="src" path="recources"/>
+	<classpathentry kind="src" path="launcher"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl-egl-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/jars/lwjgl-egl-sources.jar"/>

@@ -27,7 +27,7 @@ public class EntityShader extends ShaderProgram {
 
 	public EntityShader() {
 		super(ShaderProgram.newShaderProgram(VERTEX_FILE, FRAGMENT_FILE).addInput(0, "position")
-				.addInput(1, "textureCoordinates").addInput(2, "normal").addOutput(0, "outColor"));
+				.addInput(1, "textureCoordinates").addInput(2, "normal").addOutput(0, "out_Color"));
 		initLights();
 		super.storeAllUniformLocations(offset, transformationMatrix, projectionMatrix, viewMatrix, lightPosition[0],
 				lightPosition[1], lightPosition[2], lightPosition[3], lightColour[0], lightColour[1], lightColour[2],
