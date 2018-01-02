@@ -1,8 +1,9 @@
-package guis;
+package renderer.quadRenderer;
 
 import org.lwjgl.opengl.GL11;
 
 import engine.GLSettings;
+import guis.QuadComponent;
 import objects.Vao;
 
 public class QuadRenderer {

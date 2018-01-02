@@ -2,6 +2,8 @@ package guis;
 
 import java.util.ArrayList;
 
+import renderer.quadRenderer.QuadRenderer;
+
 public class GUIMaster {
 
 	private static  ArrayList<GUI> guis = new ArrayList<>();

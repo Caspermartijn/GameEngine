@@ -1,4 +1,4 @@
-package guis;
+package renderer.quadRenderer;
 
 import shaders.shaderObjects.ShaderProgram;
 import shaders.shaderObjects.UniformMat4;
