@@ -3,7 +3,7 @@ package loader.objLoader.normalMappingObjConverter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Vector3f;
 
 import utils.Vector;
 
