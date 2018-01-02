@@ -1,4 +1,4 @@
-package textures;
+	package textures;
 
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -39,7 +39,7 @@ public class TextureLoader {
 	}
 
 	protected static int loadTextureToOpenGL(TextureData data, TextureBuilder builder) {
-		int texID = GL11.glGenTextures();
+		int texID = GL11.glGenTextures(); 
 		GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texID);
 		GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
@@ -78,6 +78,29 @@ public class TextureLoader {
         for (int i = 0; i < 6; i++) {
             GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL11.GL_RGBA8, size, size, 0, GL11.GL_RGBA,
                     GL11.GL_UNSIGNED_BYTE, (ByteBuffer)null);
+        }
+        GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+        GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);
+        GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
+        GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL12.GL_TEXTURE_WRAP_R, GL12.GL_CLAMP_TO_EDGE);
+        GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, 0);
+        return texID;
+	}
+	
+	protected static int createCubeMap(SourceFile[] textures, int size) {
+		if (textures.length != 6)
+			throw new IllegalArgumentException("Cubemap texture need exactly 6 textures");
+		
+	    int texID = GL11.glGenTextures();
+        GL11.glBindTexture(GL13.GL_TEXTURE_CUBE_MAP, texID);
+        for (int i = 0; i < 6; i++) {
+        	TextureData data = decodeTextureFile(textures[i]);
+        	if (data.getWidth() != size || data.getHeight() != size)
+        		throw new IllegalArgumentException("Invalid size at texture: " + i);
+        	
+            GL11.glTexImage2D(GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL11.GL_RGBA8, size, size, 0, GL11.GL_RGBA,
+                    GL11.GL_UNSIGNED_BYTE, data.getBuffer());
         }
         GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
         GL11.glTexParameteri(GL13.GL_TEXTURE_CUBE_MAP, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);

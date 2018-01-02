@@ -10,14 +10,19 @@ import org.lwjgl.opengl.GL30;
 
 public class Vao {
 
-	public final int id;
+	public int id;
 	private List<Vbo> dataVbos = new ArrayList<Vbo>();
 	private Vbo indexVbo;
 	private int indexCount;
 	private int vertexCount;
 	private static Vao bound;
 
+	private static int vaosCreated;
+	private static int vaosDeleted;
+	
 	public static Vao create() {
+		vaosCreated++;
+		
 		int id = GL30.glGenVertexArrays();
 		return new Vao(id);
 	}
@@ -25,7 +30,7 @@ public class Vao {
 	private Vao(int id) {
 		this.id = id;
 	}
-
+	
 	public int getVertexCount() {
 		return vertexCount;
 	}
@@ -145,7 +150,10 @@ public class Vao {
 	}
 
 	public void delete() {
+		vaosDeleted++;
+		
 		GL30.glDeleteVertexArrays(id);
+		id = 0;
 		for (Vbo vbo : dataVbos) {
 			vbo.delete();
 		}
@@ -172,26 +180,8 @@ public class Vao {
 	public static Vao getBoundVao() {
 		return bound;
 	}
-
-	public Vao loadToVAO(float[] verticesArray, float[] texturesArray, float[] normalsArray, int[] indicesArray,
-			float[] tangentsArray) {
-		bind();
-		createIndexBuffer(indicesArray.length);
-		createStaticAttribute(0, verticesArray, 3);
-		createStaticAttribute(1, texturesArray, 2);
-		createStaticAttribute(2, normalsArray, 3);
-		createStaticAttribute(3, tangentsArray, 3);
-		unbind();
-		return this;
-	}
-
-	public Vao loadToVAO(float[] verticesArray, float[] texturesArray, float[] normalsArray, int[] indicesArray) {
-		bind();
-		createIndexBuffer(indicesArray.length);
-		createStaticAttribute(0, verticesArray, 3);
-		createStaticAttribute(1, texturesArray, 2);
-		createStaticAttribute(2, normalsArray, 3);
-		unbind();
-		return this;
+	
+	public static void printLog() {
+		System.out.println("Vao_Log[created: " + vaosCreated + " , deleted: " + vaosDeleted + "]");
 	}
 }

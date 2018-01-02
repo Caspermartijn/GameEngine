@@ -10,16 +10,20 @@ import utils.SourceFile;
 public class Texture {
 
 	public int id;
+	
+	private static int created, deleted;
 
 	protected Texture(int id) {
 		this.id = id;
 	}
 
 	public static Texture createTextureObject(int id) {
+		created++;
 		return new Texture(id);
 	}
 
 	public static TextureBuilder getTextureBuilder(SourceFile textureFile) {
+		created++;
 		return new TextureBuilder(textureFile);
 	}
 
@@ -29,11 +33,19 @@ public class Texture {
 	}
 
 	public void delete() {
+		deleted++;
+		
 		GL11.glDeleteTextures(id);
 	}
 
 	public static void deleteTexture(int id) {
+		deleted++;
+		
 		GL11.glDeleteTextures(id);
 	}
 
+	
+	public static void printLog() {
+		System.out.println("Texture_Log[created: " + created + " , deleted:" + deleted + "]" );
+	}
 }

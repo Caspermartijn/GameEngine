@@ -3,6 +3,8 @@ package textures;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
+import utils.SourceFile;
+
 public class CubeMapTexture {
 
 	private int id;
@@ -45,6 +47,10 @@ public class CubeMapTexture {
 
 	public static CubeMapTexture createCubeMapTextureObject(int id, int size) {
 		return new CubeMapTexture(id, size);
+	}
+	
+	public static CubeMapTexture createCubeMap(SourceFile[] textures, int size) {
+		return new CubeMapTexture(TextureLoader.createCubeMap(textures, size), size);
 	}
 
 }

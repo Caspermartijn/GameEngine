@@ -13,9 +13,14 @@ public class ShaderProgram {
 
 	private int programID;
 
+	private static int created, deleted;
+	
 	protected ShaderProgram(ShaderProgramBuilder builder) {
 		int vertexShaderID = loadShader(builder.vertexFile, GL20.GL_VERTEX_SHADER);
 		int fragmentShaderID = loadShader(builder.fragmentFile, GL20.GL_FRAGMENT_SHADER);
+		
+		created++;
+		
 		programID = GL20.glCreateProgram();
 		GL20.glAttachShader(programID, vertexShaderID);
 		GL20.glAttachShader(programID, fragmentShaderID);
@@ -48,6 +53,8 @@ public class ShaderProgram {
 	}
 
 	public void delete() {
+		deleted++;
+		
 		stop();
 		GL20.glDeleteProgram(programID);
 	}
@@ -87,5 +94,9 @@ public class ShaderProgram {
 	
 	public static ShaderProgramBuilder newShaderProgram(SourceFile vertexFile, SourceFile fragmentFile) {
 		return new ShaderProgramBuilder(vertexFile, fragmentFile);
+	}
+	
+	public static void printLog() {
+		System.out.println("Shader_Log[created: " + created + " , deleted: " + deleted + "]");
 	}
 }

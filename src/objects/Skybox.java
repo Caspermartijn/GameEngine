@@ -1,5 +1,52 @@
 package objects;
 
-public class Skybox {
+import engine.Display;
+import textures.CubeMapTexture;
+import utils.SourceFile;
 
+public class Skybox {
+	
+	private final CubeMapTexture texture;
+	private int size;
+	private float rotation;
+	private float rotationSpeed;
+	
+	public Skybox(SourceFile[] textures, int textureSize) {
+		texture = CubeMapTexture.createCubeMap(textures, textureSize);
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public CubeMapTexture getTexture() {
+		return texture;
+	}
+	
+	public float getRotationSpeed() {
+		return rotationSpeed;
+	}
+
+	public void setRotationSpeed(float rotationSpeed) {
+		this.rotationSpeed = rotationSpeed;
+	}
+
+	public void updateRotation() {
+		rotation += Display.getFrameTime() * rotationSpeed;
+		rotation %= rotation;
+	}
+	
+	public void delete() {
+		texture.delete();
+	}
+
+	public float getRotation() {
+		return rotation;
+	}
+	
+	
 }
