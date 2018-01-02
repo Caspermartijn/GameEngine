@@ -8,8 +8,8 @@ import utils.SourceFile;
 
 public class SkyboxShader extends ShaderProgram {
 
-	private static final SourceFile VERTEX_FILE = new SourceFile("/shaders/skybox/vertex.glsl");
-	private static final SourceFile FRAGMENT_FILE = new SourceFile("/shaders/skybox/fragment.fragx");
+	private static final SourceFile VERTEX_FILE = new SourceFile("/shaders/skybox/shader.vsh");
+	private static final SourceFile FRAGMENT_FILE = new SourceFile("/shaders/skybox/shader.fsh");
 
 	public UniformCubeMap cubeMap = new UniformCubeMap("cubeMap");
 	public UniformMat4 projectionMatrix = new UniformMat4("projectionMatrix");

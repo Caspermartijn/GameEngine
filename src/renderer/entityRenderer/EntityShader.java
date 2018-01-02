@@ -8,8 +8,8 @@ import utils.SourceFile;
 
 public class EntityShader extends ShaderProgram {
 
-	private static final SourceFile VERTEX_FILE = new SourceFile("/shaders/entity/vertex.fragx");
-	private static final SourceFile FRAGMENT_FILE = new SourceFile("/shaders/entity/fragment.fragx");
+	private static final SourceFile VERTEX_FILE = new SourceFile("/shaders/entity/shader.vsh");
+	private static final SourceFile FRAGMENT_FILE = new SourceFile("/shaders/entity/shader.fsh");
 
 	public UniformVec2 offset = new UniformVec2("offset");
 	public UniformMat4 transformationMatrix = new UniformMat4("transformationMatrix");
