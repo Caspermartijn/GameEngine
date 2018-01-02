@@ -37,6 +37,7 @@ public class SkyboxRenderer {
 		shader.cubeMap.bindTexture(skybox.getTexture());
 		shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
 		Matrix4f viewMatrix = new Matrix4f(camera.getViewMatrix());
+		
 		viewMatrix.rotate((float) Math.toRadians(skybox.getRotation()), 0f, 1f, 0f, viewMatrix);
 		viewMatrix.m30(0f);
 		viewMatrix.m31(0f);

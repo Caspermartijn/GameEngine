@@ -13,7 +13,7 @@ public class FPSCamera extends Camera {
 
 	private final static float FOV = 90;
 	private final static float NEAR_PLANE = 0.1f;
-	private final static float FAR_PLANE = 800f;
+	private final static float FAR_PLANE = 2000;
 
 	private static final float MOUSE_SENSITY = 100;
 	private static final float SPEED = 20;
