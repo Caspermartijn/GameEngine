@@ -3,6 +3,8 @@ package launcher;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +13,16 @@ import javax.security.auth.login.Configuration;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-public abstract class Launcher extends JFrame implements ILauncher
-{
+public abstract class Launcher extends JFrame implements ILauncher {
 
 	private static final long serialVersionUID = 1593584962448100240L;
 
 	Configuration config = new Configuration() {
 		@Override
-		public AppConfigurationEntry[]getAppConfigurationEntry(String name){return null;}};
+		public AppConfigurationEntry[] getAppConfigurationEntry(String name) {
+			return null;
+		}
+	};
 	public int width = 805;
 	public int height = 395;
 	public String title;
@@ -65,17 +69,65 @@ public abstract class Launcher extends JFrame implements ILauncher
 		buttons.add(quit);
 		buttons.add(credits);
 
+		play.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				play();
+			}
+		});
+
+		options.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				options();
+			}
+		});
+
+		quit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				quit();
+			}
+		});
+
+		credits.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				credits();
+			}
+		});
+
 		if (true) {
 			for (JButton button : buttons) {
-				button.setFont(new Font("Arial", Font.PLAIN, 40));
+				int plain = Font.PLAIN;
+				String fonttype = "Arial";
+				int fontSize = 40;
+
+				Font font = new Font(fonttype, plain, fontSize);
+				button.setFont(font);
 				button.setForeground(Color.WHITE);
 				button.setOpaque(false);
 				button.setContentAreaFilled(false);
 				button.setBorderPainted(false);
+				button.setFocusPainted(false);
+
+				button.addMouseListener(new java.awt.event.MouseAdapter() {
+					public void mouseEntered(java.awt.event.MouseEvent evt) {
+						button.setFont(new Font(fonttype, Font.PLAIN, 42));
+					}
+
+					public void mouseExited(java.awt.event.MouseEvent evt) {
+						button.setFont(font);
+					}
+				});
+
 				window.add(button);
 			}
 		}
-
 	}
 
 	public void create() {

@@ -36,27 +36,29 @@ public class EngineTester {
 
 			@Override
 			public void play() {
-				
+				startGame();
 			}
 
 			@Override
 			public void credits() {
-				
+
 			}
 
 			@Override
 			public void options() {
-				
+
 			}
 
 			@Override
 			public void quit() {
-				
+
 			}
-			
-		}
-		;
+
+		};
 		l.create();
+	}
+
+	public static void startGame() {
 		Display.createDisplay(
 				new DisplayBuilder(1280, 720).setTitle("testEngine").setFullscreen(false).setVsync(false));
 
@@ -100,12 +102,12 @@ public class EngineTester {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-			camera.x+=4;
+			camera.x += 4;
 
 			camera.updateInputs();
 
 			skyboxRenderer.render(skybox, camera);
-			//master.render(camera, lights, entities);
+			// master.render(camera, lights, entities);
 
 			TextMaster.renderAll();
 
