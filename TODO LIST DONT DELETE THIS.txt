@@ -4,7 +4,8 @@ ________________________________________________________________________________
 -----Priority-----------
 
 	- Thinking of what type of game engine this will be.
-
+	- Entity renderer
+	
 ------------------------
 ___________________________________________________________________________________________________________________________
 
@@ -12,7 +13,8 @@ ________________________________________________________________________________
 
 	- Hitboxes
 	- Models/Artwork
-
+	- Game launcher system
+	
 ------------------------
 ___________________________________________________________________________________________________________________________
 
@@ -26,11 +28,12 @@ ________________________________________________________________________________
 
 -----Not assigned-------
 
+	- Entity renderer
+	- Normal mapped entity renderer
 	- Terrain renderer
 	- Easy model loaders. (1 for in engine models, and the other for modded models etc)
 	- NPC
 	- Video player
-	- Game launcher system
 	- 3d GUI items (Should be easy as we already implemented 
 	- Particles
 	- Text particles
