@@ -8,8 +8,8 @@ import utils.SourceFile;
 
 public class FontShader extends ShaderProgram {
 
-	private static final SourceFile VERTEX_FILE = new SourceFile("/shaders/font/shader.vsh");
-	private static final SourceFile FRAGMENT_FILE = new SourceFile("/shaders/font/shader.fsh");
+	private static final SourceFile VERTEX_FILE = new SourceFile("/shaders/font/vertex.fragx");
+	private static final SourceFile FRAGMENT_FILE = new SourceFile("/shaders/font/fragment.fragx");
 	
 	public UniformVec4 color = new UniformVec4("color");
 	public UniformSampler texture = new UniformSampler("sampler");
