@@ -9,8 +9,6 @@ uniform float scale;
 
 void main(void) {
 
-	//gl_Position = projectionMatrix * viewMatrix * vec4(scale * position, 1.0);
-	gl_Position = projectionMatrix * vec4(scale * position, 1.0);
 	textureCoords = position;
-
-}
+	gl_Position = projectionMatrix * viewMatrix * vec4(scale * position, 1.0);
+	}
