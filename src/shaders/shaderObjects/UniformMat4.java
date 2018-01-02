@@ -20,7 +20,6 @@ public class UniformMat4 extends Uniform {
 		Matrix.store(matrix, matrixBuffer);
 		matrixBuffer.flip();
 		GL20.glUniformMatrix4fv(getLocation(), false, matrixBuffer);
-		matrixBuffer.clear();
 	}
 
 }
