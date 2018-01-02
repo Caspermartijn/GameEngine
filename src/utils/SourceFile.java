@@ -2,7 +2,6 @@ package utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,7 +10,7 @@ import java.io.InputStreamReader;
 public class SourceFile {
 	
 	private String path;
-	private static final String FILE_SEPERATOR = File.separator;
+	private static final String FILE_SEPERATOR = "/";
 	
 	public SourceFile(String file) {
 		path = file;

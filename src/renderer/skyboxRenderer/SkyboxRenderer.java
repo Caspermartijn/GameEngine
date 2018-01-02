@@ -38,9 +38,9 @@ public class SkyboxRenderer {
 		shader.projectionMatrix.loadMatrix(camera.getProjectionMatrix());
 		Matrix4f viewMatrix = new Matrix4f(camera.getViewMatrix());
 		viewMatrix.rotate((float) Math.toRadians(skybox.getRotation()), 0f, 1f, 0f, viewMatrix);
-		viewMatrix.m30(0);
-		viewMatrix.m31(0);
-		viewMatrix.m32(0);
+		viewMatrix.m30(0f);
+		viewMatrix.m31(0f);
+		viewMatrix.m32(0f);
 		shader.viewMatrix.loadMatrix(viewMatrix);
 		shader.size.loadFloat(skybox.getSize());
 		

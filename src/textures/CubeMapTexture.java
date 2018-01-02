@@ -9,7 +9,7 @@ public class CubeMapTexture {
 
 	private int id;
 	private int size;
-	public static final int RIGHT = 0, LEFT = 1, DOWN = 2, UP = 3, BACK = 4, FRONT = 5;
+	public static final int RIGHT = 0, LEFT = 1, BOTTOM = 2, TOP = 3, BACK = 4, FRONT = 5;
 
 	protected CubeMapTexture(int id, int size) {
 		this.id = id;

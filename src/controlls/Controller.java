@@ -1,4 +1,4 @@
-package objects;
+package controlls;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;

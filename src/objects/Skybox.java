@@ -7,7 +7,7 @@ import utils.SourceFile;
 public class Skybox {
 	
 	private final CubeMapTexture texture;
-	private int size;
+	private float size = 1;
 	private float rotation;
 	private float rotationSpeed;
 	
@@ -15,11 +15,11 @@ public class Skybox {
 		texture = CubeMapTexture.createCubeMap(textures, textureSize);
 	}
 
-	public int getSize() {
+	public float getSize() {
 		return size;
 	}
 
-	public void setSize(int size) {
+	public void setSize(float size) {
 		this.size = size;
 	}
 
