@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public abstract class Launcher extends JFrame implements ILauncher {
 
@@ -32,6 +34,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 	private JButton play, options, quit, credits;
 
 	protected ImagePanel window = new ImagePanel("/launcher/res/spaceBox.png", width, height);
+	protected JPanel gamePanel = new JPanel();
 
 	public Launcher(int widht, int height, String title, int button_width, int button_height) throws HeadlessException {
 		this.width = widht;
@@ -73,7 +76,16 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				play();
+				Runnable r = new Runnable() {
+
+					@Override
+					public void run() {
+						play();
+					}
+				};
+				Thread t = new Thread(r);
+				t.start();
+				hideApp();
 			}
 		});
 
@@ -144,4 +156,15 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		setVisible(true);
 	}
 
+	public void hideApp() {
+		try {
+			this.setVisible(false);
+		} catch (Exception e) {
+			System.out.println("Error while hiding launcher.");
+		}
+	}
+
+	public void closeApp() {
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
 }

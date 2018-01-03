@@ -35,20 +35,21 @@ public class MasterRenderer {
 		entityRenderer.setProjectionMatrix(matrix);
 	}
 
-	public void render(Camera camera, List<Light> lights, List<Entity> entities) {
-		for (Entity ent : entities) {
-			processEntity(ent);
+	public void render(Camera camera, Light light, List<Entity> entities) {
+		if (true) {
+			for (Entity ent : entities) {
+				processEntity(ent);
+			}
 		}
-		render(lights, camera, new Vector4f(0, 0, 1, 0));
+		render(light, camera, new Vector4f(0, 0, 1, 0));
 	}
 
-	public void render(List<Light> lights, Camera camera, Vector4f clipPlane) {
+	public void render(Light light, Camera camera, Vector4f clipPlane) {
 		prepare();
 		entityShader.start();
-		entityShader.plane.loadVec4(clipPlane);
-		entityShader.skyColour.loadVec3(RED, GREEN, BLUE);
-		entityShader.loadLights(lights);
-		entityShader.viewMatrix.loadMatrix(camera.getViewMatrix());
+		entityShader.location_lightColour.loadVec3(light.getColour());
+		entityShader.location_lightPosition.loadVec3(light.getPosition());
+		entityShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());
 		entityRenderer.render(entities);
 		entityShader.stop();
 		entities.clear();
@@ -77,8 +78,9 @@ public class MasterRenderer {
 
 	public void prepare() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-		GL11.glClearColor(RED, GREEN, BLUE, 1);
+	}
+	public void unprepare() {
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 	}
 
 	public void delete() {

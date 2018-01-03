@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import objects.Model_3D;
 
-public abstract class Entity implements IEntity {
+public class Entity implements IEntity {
 
 	private Vector3f position;
 	private Vector3f rotation;
@@ -53,11 +53,11 @@ public abstract class Entity implements IEntity {
 	public Matrix4f getTransformationMatrix() {
 		Matrix4f matrix = new Matrix4f();
 		matrix.setIdentity();
-		Matrix4f.translate(position, matrix, matrix);
+		Matrix4f.scale(new Vector3f(scale, scale, scale), matrix, matrix);
 		Matrix4f.rotate((float) Math.toRadians(rotation.x), new Vector3f(1, 0, 0), matrix, matrix);
 		Matrix4f.rotate((float) Math.toRadians(rotation.y), new Vector3f(0, 1, 0), matrix, matrix);
 		Matrix4f.rotate((float) Math.toRadians(rotation.z), new Vector3f(0, 0, 1), matrix, matrix);
-		Matrix4f.scale(new Vector3f(scale, scale, scale), matrix, matrix);
+		Matrix4f.translate(position, matrix, matrix);
 		return matrix;
 	}
 
@@ -65,6 +65,18 @@ public abstract class Entity implements IEntity {
 		position.x += f;
 		position.y += g;
 		position.z += h;
+	}
+
+	public float getRotX() {
+		return rotation.x;
+	}
+
+	public float getRotY() {
+		return rotation.y;
+	}
+
+	public float getRotZ() {
+		return rotation.z;
 	}
 
 }

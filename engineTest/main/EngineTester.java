@@ -31,8 +31,12 @@ import utils.SourceFile;
 
 public class EngineTester {
 
+	public static Launcher l;
+
 	public static void main(String[] args) {
-		Launcher l = new Launcher("test") {
+		l = new Launcher("test") {
+
+			private static final long serialVersionUID = 001L;
 
 			@Override
 			public void play() {
@@ -84,18 +88,18 @@ public class EngineTester {
 		ModelMaster.loadModels("");
 
 		Model_3D testmdl = ModelLoader.getModel(new SourceFile("/res/models/human_1/model.obj"),
-				new SourceFile("/res/models/human_1/texture.png"));
+				new SourceFile("/res/models/timeship_1/texture.png"));
 
 		MasterRenderer master = new MasterRenderer();
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
-		Entity ent = new Entity(testmdl, new Vector3f(10, 0, 0), new Vector3f(0, 0, 0), 1) {
+		Entity ent = new Entity(testmdl, new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), 20) {
 		};
 
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 
-//		camera.z = -10;
-		
+		// camera.z = -10;
+		skybox.setRotationSpeed(20);
 		List<Light> lights = new ArrayList<Light>();
 		lights.add(sun);
 		List<Entity> entities = new ArrayList<Entity>();
@@ -104,13 +108,15 @@ public class EngineTester {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-			System.out.println(camera.x + " " + camera.y + camera.z);
+			System.out.println(camera.x + " " + camera.y + " " + camera.z);
 
 			camera.updateInputs();
-
+			
 			skyboxRenderer.render(skybox, camera);
-			master.render(camera, lights, entities);
-
+			master.render(camera, sun, entities);
+			
+			master.unprepare();
+			
 			TextMaster.renderAll();
 
 			Display.swapBuffers();
@@ -123,10 +129,12 @@ public class EngineTester {
 		skyboxRenderer.delete();
 		testmdl.delete();
 		master.delete();
-		
+
 		Vao.printLog();
 		ShaderProgram.printLog();
 		Texture.printLog();
+
+		l.closeApp();
 	}
 
 }

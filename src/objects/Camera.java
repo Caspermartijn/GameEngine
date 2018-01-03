@@ -3,8 +3,6 @@ package objects;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import utils.Matrix;
-
 public class Camera {
 
 	private Matrix4f projection;

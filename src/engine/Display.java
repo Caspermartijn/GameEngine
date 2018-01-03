@@ -1,5 +1,7 @@
 package engine;
 
+import javax.swing.JPanel;
+
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -28,26 +30,26 @@ public class Display {
 		if (!GLFW.glfwInit()) {
 			throw new IllegalStateException("Unable to initialize GLFW");
 		}
-		
+
 		WIDTH = builder.width;
 		HEIGHT = builder.height;
-		
-		GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_FALSE); 
+
+		GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_FALSE);
 		GLFW.glfwWindowHint(GLFW.GLFW_SAMPLES, builder.samples);
-		
+
 		long monitor = !builder.fullscreen ? 0 : GLFW.glfwGetPrimaryMonitor();
 		id = GLFW.glfwCreateWindow(WIDTH, HEIGHT, builder.title, monitor, 0);
 		if (id == MemoryUtil.NULL)
 			throw new RuntimeException("Failed to create the GLFW window");
-		
+
 		GLFW.glfwShowWindow(id);
 		GLFW.glfwMakeContextCurrent(id);
 		GLFW.glfwSwapInterval(builder.vsync ? 1 : 0);
-		
+
 		GL.createCapabilities();
-		
+
 		GL11.glEnable(GL13.GL_MULTISAMPLE);
-		
+
 		Mouse.init();
 		Keyboard.init();
 	}
@@ -60,18 +62,18 @@ public class Display {
 		GLFW.glfwSetErrorCallback(null).free();
 	}
 
-	/**updates events, frametime and fps counter*/
+	/** updates events, frametime and fps counter */
 	public static void update() {
 		Mouse.update();
 		GLFW.glfwPollEvents();
-		
+
 		if (lastTime == 0)
 			lastTime = System.nanoTime();
 		long actualTime = System.nanoTime();
 		long diffrence = actualTime - lastTime;
 		delta = diffrence * 0.000000001d;
 		lastTime = actualTime;
-		
+
 		time += delta;
 		frames++;
 		if (time > 1) {
@@ -81,23 +83,23 @@ public class Display {
 			frames = 0;
 		}
 	}
-	
+
 	public static boolean isActive() {
 		return GLFW.glfwGetWindowAttrib(id, GLFW.GLFW_FOCUSED) == 1;
 	}
-	
+
 	public static void swapBuffers() {
 		GLFW.glfwSwapBuffers(id);
 	}
-	
+
 	public static boolean isCloseRequested() {
-		return GLFW.glfwWindowShouldClose(id); 
+		return GLFW.glfwWindowShouldClose(id);
 	}
 
 	public static double getFrameTime() {
 		return delta;
 	}
-	
+
 	public static int getWidth() {
 		return WIDTH;
 	}
@@ -105,19 +107,19 @@ public class Display {
 	public static int getHeight() {
 		return HEIGHT;
 	}
-	
+
 	public static int getFPS() {
 		return fps;
 	}
-	
+
 	public static DisplayBuilder getDisplayBuilder(int width, int height) {
 		return DisplayBuilder.getNewDisplayBuilder(width, height);
 	}
-	
+
 	public static long getWindowID() {
 		return id;
 	}
-	
+
 	public static float getAspectRatio() {
 		return (float) WIDTH / (float) HEIGHT;
 	}
