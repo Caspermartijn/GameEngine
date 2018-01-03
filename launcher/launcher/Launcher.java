@@ -13,6 +13,7 @@ import javax.security.auth.login.AppConfigurationEntry;
 import javax.security.auth.login.Configuration;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -33,6 +34,8 @@ public abstract class Launcher extends JFrame implements ILauncher {
 	public int button_height = 60;
 
 	private JButton play, options, quit, credits;
+
+	private JLabel indicator;
 
 	protected ImagePanel window = new ImagePanel("/launcher/res/banner.png", width, height);
 	protected JPanel gamePanel = new JPanel();
@@ -63,10 +66,10 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		quit = new JButton("Quit");
 		credits = new JButton("Credits");
 
-		play.setBounds(width - button_width - 10, 100, button_width, button_height);
-		options.setBounds(width - button_width - 10, play.getY() + button_height + 5, button_width, button_height);
-		credits.setBounds(width - button_width - 10, options.getY() + button_height + 5, button_width, button_height);
-		quit.setBounds(width - button_width - 10, credits.getY() + button_height + 5, button_width, button_height);
+		play.setBounds(width - button_width + 5, 100, button_width, button_height);
+		options.setBounds(width - button_width + 5, play.getY() + button_height + 5, button_width, button_height);
+		credits.setBounds(width - button_width + 5, options.getY() + button_height + 5, button_width, button_height);
+		quit.setBounds(width - button_width + 5, credits.getY() + button_height + 5, button_width, button_height);
 
 		buttons.add(play);
 		buttons.add(options);
@@ -114,11 +117,12 @@ public abstract class Launcher extends JFrame implements ILauncher {
 			}
 		});
 
+		int plain = Font.PLAIN;
+		String fonttype = "Akashi";
+		int fontSize = 35;
+
 		if (true) {
 			for (JButton button : buttons) {
-				int plain = Font.PLAIN;
-				String fonttype = "Akashi";
-				int fontSize = 35;
 
 				Font font = new Font(fonttype, plain, fontSize);
 				button.setFont(font);
