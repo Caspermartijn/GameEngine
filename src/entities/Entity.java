@@ -1,5 +1,6 @@
 package entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.util.vector.Matrix4f;
@@ -16,7 +17,7 @@ public class Entity implements IEntity {
 	
 	private Entity parent;
 	
-	private List<Entity> children;
+	private List<Entity> children = new ArrayList<Entity>();
 
 	public Entity(Model_3D model, Vector3f position, Vector3f rotation, float scale) {
 		transform = new EulerTransform();

@@ -67,13 +67,12 @@ public class GameLoop {
 		Display.createDisplay(
 				new DisplayBuilder(1280, 720).setTitle("testEngine").setFullscreen(false).setVsync(false));
 
-//		FPSCamera camera = new FPSCamera();
+		// FPSCamera camera = new FPSCamera();
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
-		Skybox skybox = new Skybox(
-				new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"), new SourceFile(ame_nebula, "face_left.png"),
-						new SourceFile(ame_nebula, "face_bottom.png"), new SourceFile(ame_nebula, "face_top.png"),
-						new SourceFile(ame_nebula, "face_back.png"), new SourceFile(ame_nebula, "face_front.png") },
-				512);
+		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
+				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
+				new SourceFile(ame_nebula, "face_top.png"), new SourceFile(ame_nebula, "face_back.png"),
+				new SourceFile(ame_nebula, "face_front.png") }, 512);
 		SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 		skyboxRenderer.init();
 
@@ -95,7 +94,7 @@ public class GameLoop {
 		ship.setControllable(true);
 		Camera camera = ship.getCamera();
 		camera.z = 10f;
-		
+
 		MasterRenderer master = new MasterRenderer();
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
@@ -107,19 +106,24 @@ public class GameLoop {
 		skybox.setRotationSpeed(20);
 		List<Light> lights = new ArrayList<Light>();
 		lights.add(sun);
-		List<Entity> entities = new ArrayList<Entity>();
-		entities.add(ent);
-		entities.add(ship);
+		Game.entities.add(ent);
+		Game.entities.add(ship);
+
+		// TEMP
+		Entity timeCube_1 = new Entity(ModelLoader.getModel(new SourceFile("/res/models/timecube_1/model.obj"),
+				new SourceFile("/res/models/timecube_1/texture.png")), new Vector3f(4,0,0), new Vector3f(), 1);
+		ship.addChild(timeCube_1);
+		Game.entities.add(timeCube_1);
 		while (!Display.isCloseRequested()) {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
 			ship.update();
-			
+
 			skyboxRenderer.render(skybox, camera);
-			master.render(camera, sun, entities);
+			master.render(camera, sun, Game.entities);
 			master.unprepare();
-			
+
 			TextMaster.renderAll();
 
 			Display.swapBuffers();
