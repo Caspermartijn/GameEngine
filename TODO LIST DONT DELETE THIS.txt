@@ -11,7 +11,9 @@ ________________________________________________________________________________
 
 -----Caspermartijn------
 
-	- Hitboxes
+	- Cylinder hiboxes
+	- Ramp hitboxes
+	- Posebly -> mesh hitboxes
 	- Models/Artwork
 	- Game launcher system
 	
