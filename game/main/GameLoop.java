@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import controlls.FPSCamera;
 import engine.Display;
 import engine.DisplayBuilder;
 import engine.GLSettings;
@@ -67,10 +68,10 @@ public class GameLoop {
 
 	public static void startGame() {
 		Display.createDisplay(
-				new DisplayBuilder(1280, 720).setTitle("testEngine").setFullscreen(false).setVsync(false));
+				new DisplayBuilder(1920, 1080).setTitle("testEngine").setFullscreen(true).setVsync(false).setSamples(8));
 		Mouse.setMouseEnabled(false);
 		
-		// FPSCamera camera = new FPSCamera();
+		 FPSCamera camera = new FPSCamera();
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
 				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
@@ -84,7 +85,7 @@ public class GameLoop {
 
 		Fonts.addFont("candara", new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
 
-		Text testText = new Text("We are the best", 5, "candara", new Vector2f(0, 0), 10, false);
+		Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
 		testText.setColor(1, 1, 1);
 		TextMaster.addText(testText);
 		System.out.println("test");
@@ -94,14 +95,13 @@ public class GameLoop {
 				new SourceFile("/res/models/timemaster_hq_1/texture.png"));
 
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
-		ship.setControllable(true);
-		Camera camera = ship.getCamera();
+		ship.setControllable(false);
 		camera.z = 10f;
 
 		MasterRenderer master = new MasterRenderer();
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
-		Entity ent = new Entity(testmdl, new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), 40) {
+		Entity ent = new Entity(testmdl, new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), 10) {
 		};
 
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
@@ -110,9 +110,9 @@ public class GameLoop {
 		List<Light> lights = new ArrayList<Light>();
 		lights.add(sun);
 		Game.entities.add(ent);
-		Game.entities.add(ship);
+	//	Game.entities.add(ship);
 
-		// TEMP
+		/*
 		TimeCube timeCube_1 = new TimeCube(ModelLoader.getModel(new SourceFile("/res/models/timecube_1/model.obj"),
 				new SourceFile("/res/models/timecube_1/texture.png")), new Vector3f(0,0,-1.5f), new Vector3f(), 0.6f);
 		
@@ -121,12 +121,13 @@ public class GameLoop {
 		
 		ship.addChild(timeCube_1);ship.addChild(timeCube_2);
 		Game.entities.add(timeCube_1);
-		Game.entities.add(timeCube_2);
+		Game.entities.add(timeCube_2);*/
 		while (!Display.isCloseRequested()) {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 			Game.update();
 			
+			camera.updateInputs();
 			ship.update();
 
 			skyboxRenderer.render(skybox, camera);

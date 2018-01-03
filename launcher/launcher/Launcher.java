@@ -14,6 +14,7 @@ import javax.security.auth.login.Configuration;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 public abstract class Launcher extends JFrame implements ILauncher {
 
@@ -33,7 +34,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 	private JButton play, options, quit, credits;
 
-	protected ImagePanel window = new ImagePanel("/launcher/res/spaceBox.png", width, height);
+	protected ImagePanel window = new ImagePanel("/launcher/res/banner.png", width, height);
 	protected JPanel gamePanel = new JPanel();
 
 	public Launcher(int widht, int height, String title, int button_width, int button_height) throws HeadlessException {
@@ -62,10 +63,10 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		quit = new JButton("Quit");
 		credits = new JButton("Credits");
 
-		play.setBounds(width - button_width - 5, 50, button_width, button_height);
-		options.setBounds(width - button_width - 5, play.getY() + button_height + 5, button_width, button_height);
-		credits.setBounds(width - button_width - 5, options.getY() + button_height + 5, button_width, button_height);
-		quit.setBounds(width - button_width - 5, credits.getY() + button_height + 5, button_width, button_height);
+		play.setBounds(width - button_width - 10, 100, button_width, button_height);
+		options.setBounds(width - button_width - 10, play.getY() + button_height + 5, button_width, button_height);
+		credits.setBounds(width - button_width - 10, options.getY() + button_height + 5, button_width, button_height);
+		quit.setBounds(width - button_width - 10, credits.getY() + button_height + 5, button_width, button_height);
 
 		buttons.add(play);
 		buttons.add(options);
@@ -116,8 +117,8 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		if (true) {
 			for (JButton button : buttons) {
 				int plain = Font.PLAIN;
-				String fonttype = "Arial";
-				int fontSize = 40;
+				String fonttype = "Akashi";
+				int fontSize = 35;
 
 				Font font = new Font(fonttype, plain, fontSize);
 				button.setFont(font);
@@ -126,10 +127,11 @@ public abstract class Launcher extends JFrame implements ILauncher {
 				button.setContentAreaFilled(false);
 				button.setBorderPainted(false);
 				button.setFocusPainted(false);
+				button.setHorizontalAlignment(SwingConstants.RIGHT);
 
 				button.addMouseListener(new java.awt.event.MouseAdapter() {
 					public void mouseEntered(java.awt.event.MouseEvent evt) {
-						button.setFont(new Font(fonttype, Font.PLAIN, 42));
+						button.setFont(new Font(fonttype, Font.PLAIN, 37));
 					}
 
 					public void mouseExited(java.awt.event.MouseEvent evt) {

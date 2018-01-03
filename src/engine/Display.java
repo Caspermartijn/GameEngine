@@ -1,7 +1,8 @@
 package engine;
 
 import org.lwjgl.glfw.Callbacks;
-import org.lwjgl.glfw.GLFW;
+
+import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11;
@@ -25,24 +26,25 @@ public class Display {
 	public static void createDisplay(DisplayBuilder builder) {
 		GLFWErrorCallback.createPrint(System.err).set();
 
-		if (!GLFW.glfwInit()) {
+		if (!glfwInit()) {
 			throw new IllegalStateException("Unable to initialize GLFW");
 		}
 
 		WIDTH = builder.width;
 		HEIGHT = builder.height;
 
-		GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_FALSE);
-		GLFW.glfwWindowHint(GLFW.GLFW_SAMPLES, builder.samples);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+		glfwWindowHint(GLFW_STENCIL_BITS, 4);
+		glfwWindowHint(GLFW_SAMPLES, builder.samples);
 
-		long monitor = !builder.fullscreen ? 0 : GLFW.glfwGetPrimaryMonitor();
-		id = GLFW.glfwCreateWindow(WIDTH, HEIGHT, builder.title, monitor, 0);
+		long monitor = !builder.fullscreen ? 0 : glfwGetPrimaryMonitor();
+		id = glfwCreateWindow(WIDTH, HEIGHT, builder.title, monitor, 0);
 		if (id == MemoryUtil.NULL)
 			throw new RuntimeException("Failed to create the GLFW window");
 
-		GLFW.glfwShowWindow(id);
-		GLFW.glfwMakeContextCurrent(id);
-		GLFW.glfwSwapInterval(builder.vsync ? 1 : 0);
+		glfwShowWindow(id);
+		glfwMakeContextCurrent(id);
+		glfwSwapInterval(builder.vsync ? 1 : 0);
 
 		GL.createCapabilities();
 
@@ -54,16 +56,16 @@ public class Display {
 
 	public static void disposeDisplay() {
 		Callbacks.glfwFreeCallbacks(id);
-		GLFW.glfwDestroyWindow(id);
+		glfwDestroyWindow(id);
 
-		GLFW.glfwTerminate();
-		GLFW.glfwSetErrorCallback(null).free();
+		glfwTerminate();
+		glfwSetErrorCallback(null).free();
 	}
 
 	/** updates events, frametime and fps counter */
 	public static void update() {
 		Mouse.update();
-		GLFW.glfwPollEvents();
+		glfwPollEvents();
 		if (lastTime == 0)
 			lastTime = System.nanoTime();
 		long actualTime = System.nanoTime();
@@ -82,15 +84,15 @@ public class Display {
 	}
 
 	public static boolean isActive() {
-		return GLFW.glfwGetWindowAttrib(id, GLFW.GLFW_FOCUSED) == 1;
+		return glfwGetWindowAttrib(id, GLFW_FOCUSED) == 1;
 	}
 
 	public static void swapBuffers() {
-		GLFW.glfwSwapBuffers(id);
+		glfwSwapBuffers(id);
 	}
 
 	public static boolean isCloseRequested() {
-		return GLFW.glfwWindowShouldClose(id);
+		return glfwWindowShouldClose(id);
 	}
 
 	public static double getFrameTime() {
