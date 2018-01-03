@@ -101,7 +101,7 @@ public class GameLoop {
 		MasterRenderer master = new MasterRenderer();
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
-		Entity ent = new Entity(testmdl, new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), 20) {
+		Entity ent = new Entity(testmdl, new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), 40) {
 		};
 
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));

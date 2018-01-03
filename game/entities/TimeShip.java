@@ -43,7 +43,7 @@ public class TimeShip extends Entity {
 				if (velocity.z > -MAX_FRONT_SPEED)
 					move(velocity, yaw, pitch,  (float) (-ACCELERATION_SPEED * Display.getFrameTime()));
 			} else {
-				if (velocity.z < 0)
+				if (velocity.z <= 0)
 					move(velocity, yaw, pitch,  (float) (BRAKING_SPEED * Display.getFrameTime()));
 			}
 			
@@ -51,7 +51,7 @@ public class TimeShip extends Entity {
 				if (velocity.z < MAX_SIDE_SPEED)
 					move(velocity, yaw, pitch,  (float) (ACCELERATION_SPEED * Display.getFrameTime()));
 			} else {
-				if (velocity.z > 0)
+				if (velocity.z >= 0)
 					move(velocity, yaw, pitch,  (float) (-BRAKING_SPEED * Display.getFrameTime()));
 			}
 			
