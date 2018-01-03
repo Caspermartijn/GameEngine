@@ -29,7 +29,7 @@ import textures.Texture;
 import utils.ModelLoader;
 import utils.SourceFile;
 
-public class EngineTester {
+public class GameLoop {
 
 	public static Launcher l;
 
