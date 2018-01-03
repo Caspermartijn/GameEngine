@@ -66,7 +66,6 @@ public class Display {
 	public static void update() {
 		Mouse.update();
 		GLFW.glfwPollEvents();
-
 		if (lastTime == 0)
 			lastTime = System.nanoTime();
 		long actualTime = System.nanoTime();
