@@ -213,4 +213,12 @@ public class Vao {
 		return this;
 	}
 
+	public Vao loadToVAO(float[] positions) {
+		bind();
+		vertexCount = positions.length;
+		createStaticAttribute(0, 3, positions);
+		unbind();
+		return this;
+	}
+
 }

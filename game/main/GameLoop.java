@@ -111,7 +111,7 @@ public class GameLoop {
 
 		// TEMP
 		Entity timeCube_1 = new Entity(ModelLoader.getModel(new SourceFile("/res/models/timecube_1/model.obj"),
-				new SourceFile("/res/models/timecube_1/texture.png")), new Vector3f(4,0,0), new Vector3f(), 1);
+				new SourceFile("/res/models/timecube_1/texture.png")), new Vector3f(0,0,3), new Vector3f(), 1);
 		ship.addChild(timeCube_1);
 		Game.entities.add(timeCube_1);
 		while (!Display.isCloseRequested()) {
