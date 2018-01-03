@@ -62,9 +62,9 @@ public class Entity implements IEntity {
 //			}
 //	}
 	
-	private Matrix4f getParentSpaceMatrix() {
+	public Matrix4f getParentSpaceMatrix() {
 		if (parent != null) {
-			return Matrix4f.mul(parent.getLocalTransformationMatrix(), getLocalTransformationMatrix(), null);
+			return Matrix4f.mul(parent.getParentSpaceMatrix(), getLocalTransformationMatrix(), null);
 		} else {
 			return getLocalTransformationMatrix();
 		}
