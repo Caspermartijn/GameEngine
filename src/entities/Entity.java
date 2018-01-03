@@ -51,16 +51,6 @@ public class Entity implements IEntity {
 	public Model_3D getModel() {
 		return model;
 	}
-
-//	private Matrix4f generateMatrix() {
-//			if(parent == null) {
-//				Matrix4f matrix = new Matrix4f();
-//				matrix.setIdentity();
-//				return matrix;
-//			}else {
-//				return parent.getParentMatrix();
-//			}
-//	}
 	
 	public Matrix4f getParentSpaceMatrix() {
 		if (parent != null) {
@@ -69,16 +59,18 @@ public class Entity implements IEntity {
 			return getLocalTransformationMatrix();
 		}
 		
-//		Matrix4f matrix = generateMatrix();
-//		Matrix4f.rotate((float) Math.toRadians(rotation.x), new Vector3f(1, 0, 0), matrix, matrix);
-//		Matrix4f.rotate((float) Math.toRadians(rotation.y), new Vector3f(0, 1, 0), matrix, matrix);
-//		Matrix4f.rotate((float) Math.toRadians(rotation.z), new Vector3f(0, 0, 1), matrix, matrix);
-//		Matrix4f.translate(position, matrix, matrix);
-//		return matrix;
 	}
 
 	public Matrix4f getLocalTransformationMatrix() {
 		return transform.toMatrix();
+	}
+	
+	public Matrix4f getTransformationMatrix() {
+		if(parent == null) {
+			return getLocalTransformationMatrix();
+		}else {
+			return getParentSpaceMatrix();
+		}
 	}
 
 }
