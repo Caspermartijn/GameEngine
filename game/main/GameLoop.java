@@ -11,6 +11,7 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.Display;
 import engine.DisplayBuilder;
 import engine.GLSettings;
+import engine.Mouse;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
@@ -66,7 +67,8 @@ public class GameLoop {
 	public static void startGame() {
 		Display.createDisplay(
 				new DisplayBuilder(1280, 720).setTitle("testEngine").setFullscreen(false).setVsync(false));
-
+		Mouse.setMouseEnabled(false);
+		
 		// FPSCamera camera = new FPSCamera();
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
