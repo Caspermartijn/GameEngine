@@ -4,15 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 
 import entities.Entity;
 import objects.Model_3D;
 import objects.Vao;
-import utils.Matrix;
 
 public class EntityRenderer {
 
@@ -47,8 +43,7 @@ public class EntityRenderer {
 	}
 
 	private void prepareInstance(Entity entity) {
-		Matrix4f transformationMatrix = Matrix.createTransformationMatrix(entity.getPosition(), entity.getRotX(),
-				entity.getRotY(), entity.getRotZ(), entity.getScale());
+		Matrix4f transformationMatrix = entity.getLocalTransformationMatrix();
 		shader.location_transformationMatrix.loadMatrix(transformationMatrix);
 	}
 

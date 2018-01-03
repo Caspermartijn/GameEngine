@@ -35,4 +35,40 @@ public class EulerTransform {
 		return matrix;
 	}
 
+	public void setPosition(Vector3f pos) {
+		posX = pos.x;
+		posY = pos.y;
+		posZ = pos.z;
+	}
+
+	public void setRotation(Vector3f rot) {
+		this.rotX = rot.x;
+		this.rotY = rot.y;
+		this.rotZ = rot.z;
+	}
+
+	public void setScale(Vector3f scale) {
+		this.scaleX = scale.x;
+		this.scaleY = scale.y;
+		this.scaleZ = scale.z;
+	}
+
+	public void setScale(float scale) {
+		this.scaleX = scale;
+		this.scaleY = scale;
+		this.scaleZ = scale;
+	}
+
+	public Vector3f getPosition() {
+		return new Vector3f(posX, posY, posZ);
+	}
+
+	public Vector3f geRotation() {
+		return new Vector3f(rotX, rotY, rotZ);
+	}
+
+	public Vector3f getScale() {
+		return new Vector3f(scaleX, scaleY, scaleZ);
+	}
+
 }
