@@ -45,6 +45,7 @@ public class MasterRenderer {
 	}
 
 	public void render(Light light, Camera camera, Vector4f clipPlane) {
+		enableCulling();
 		prepare();
 		entityShader.start();
 		entityShader.location_lightColour.loadVec3(light.getColour());
@@ -53,6 +54,7 @@ public class MasterRenderer {
 		entityRenderer.render(entities);
 		entityShader.stop();
 		entities.clear();
+		disableCulling();
 	}
 
 	public void processEntity(Entity entity) {
@@ -79,6 +81,7 @@ public class MasterRenderer {
 	public void prepare() {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
+	
 	public void unprepare() {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 	}
