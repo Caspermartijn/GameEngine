@@ -11,7 +11,7 @@ public class Mouse {
 	private static double drotation = 0;
 	private static double oldRotation = 0;
 	private static boolean cursor = true;
-	private static double oldX = -1, oldY = -1;
+	private static double oldX = Display.getWidth() / 2, oldY = Display.getHeight() / 2;
 
 	protected static void init() {
 		GLFW.glfwSetCursorPosCallback(Display.getWindowID(), (window, x, y) -> {

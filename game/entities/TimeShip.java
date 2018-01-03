@@ -22,7 +22,7 @@ public class TimeShip extends Entity {
 	private static final float BRAKING_SPEED = 75;
 	private static final float MAX_FRONT_SPEED = 80;
 	private static final float MAX_SIDE_SPEED = 20;
-	private static final float MOUSE_SENSITY = 100020;
+	private static final float MOUSE_SENSITY = 100;
 	
 	public TimeShip(Vector3f position, Vector3f rotation) {
 		super(ModelLoader.getModel(new SourceFile("/res/models/timeship_1/model.obj"), new SourceFile("/res/models/timeship_1/texture.png")), position, rotation, 1f);
@@ -37,7 +37,7 @@ public class TimeShip extends Entity {
 			super.getTransform().rotX = pitch;
 			super.getTransform().rotY = yaw;
 			
-			System.out.println(yaw + pitch);
+//			System.out.println(yaw + " " + pitch);
 			
 			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
 				if (velocity.z > -MAX_FRONT_SPEED)
