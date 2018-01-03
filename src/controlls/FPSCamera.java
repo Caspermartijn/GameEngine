@@ -61,7 +61,6 @@ public class FPSCamera extends Camera {
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
 			super.y += SPEED * Display.getFrameTime();
 		}
-
 		super.updateMatrix();
 	}
 
