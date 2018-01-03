@@ -30,7 +30,7 @@ public class Mouse {
 		});
 	}
 
-	protected static void update() {
+	public static void update() {
 		drotation = 0;
 		mouseDX = 0;
 		mouseDY = 0;

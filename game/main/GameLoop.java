@@ -14,6 +14,7 @@ import engine.GLSettings;
 import engine.Mouse;
 import entities.Entity;
 import entities.Light;
+import entities.TimeCube;
 import entities.TimeShip;
 import launcher.Launcher;
 import loader.modelLoader.ModelMaster;
@@ -112,14 +113,20 @@ public class GameLoop {
 		Game.entities.add(ship);
 
 		// TEMP
-		Entity timeCube_1 = new Entity(ModelLoader.getModel(new SourceFile("/res/models/timecube_1/model.obj"),
-				new SourceFile("/res/models/timecube_1/texture.png")), new Vector3f(0,0,3), new Vector3f(), 1);
-		ship.addChild(timeCube_1);
+		TimeCube timeCube_1 = new TimeCube(ModelLoader.getModel(new SourceFile("/res/models/timecube_1/model.obj"),
+				new SourceFile("/res/models/timecube_1/texture.png")), new Vector3f(0,0,-1.5f), new Vector3f(), 0.6f);
+		
+		TimeCube timeCube_2 = new TimeCube(ModelLoader.getModel(new SourceFile("/res/models/timecube_1/model.obj"),
+				new SourceFile("/res/models/timecube_1/texture.png")), new Vector3f(0,0,-1.5f), new Vector3f(), 0.6f);
+		
+		ship.addChild(timeCube_1);ship.addChild(timeCube_2);
 		Game.entities.add(timeCube_1);
+		Game.entities.add(timeCube_2);
 		while (!Display.isCloseRequested()) {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-
+			Game.update();
+			
 			ship.update();
 
 			skyboxRenderer.render(skybox, camera);
