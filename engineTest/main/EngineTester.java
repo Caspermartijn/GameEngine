@@ -55,7 +55,7 @@ public class EngineTester {
 
 			@Override
 			public void quit() {
-
+				this.closeApp();
 			}
 
 		};
