@@ -61,7 +61,9 @@ public abstract class Launcher extends JFrame implements ILauncher {
 	public Launcher(String title) throws HeadlessException {
 		this.title = title;
 
-		launcherData.set("version", "0.0.1");
+		if(launcherData.getString("version") == "") {
+			launcherData.set("version", "0.0.1");
+		}
 		try {
 			launcherData.saveConfig();
 		} catch (IOException e) {
