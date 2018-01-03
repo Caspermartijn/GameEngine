@@ -119,7 +119,8 @@ public class EngineTester {
 		Fonts.delete();
 		Display.disposeDisplay();
 		skyboxRenderer.delete();
-
+		testmdl.delete();
+		
 		Vao.printLog();
 		ShaderProgram.printLog();
 		Texture.printLog();
