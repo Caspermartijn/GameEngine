@@ -14,6 +14,7 @@ import engine.DisplayBuilder;
 import engine.GLSettings;
 import entities.Entity;
 import entities.Light;
+import entities.TimeShip;
 import launcher.Launcher;
 import loader.modelLoader.ModelMaster;
 import objects.Model_3D;
@@ -90,6 +91,8 @@ public class GameLoop {
 		Model_3D testmdl = ModelLoader.getModel(new SourceFile("/res/models/timemaster_hq_1/model.obj"),
 				new SourceFile("/res/models/timemaster_hq_1/texture.png"));
 
+		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
+		
 		MasterRenderer master = new MasterRenderer();
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
@@ -98,12 +101,12 @@ public class GameLoop {
 
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 
-		// camera.z = -10;
 		skybox.setRotationSpeed(20);
 		List<Light> lights = new ArrayList<Light>();
 		lights.add(sun);
 		List<Entity> entities = new ArrayList<Entity>();
 		entities.add(ent);
+		entities.add(ship);
 		while (!Display.isCloseRequested()) {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -124,7 +127,8 @@ public class GameLoop {
 		Fonts.delete();
 		Display.disposeDisplay();
 		skyboxRenderer.delete();
-		testmdl.delete();
+		ent.delete();
+		ship.delete();
 		master.delete();
 
 		Vao.printLog();
