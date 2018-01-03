@@ -1,23 +1,7 @@
 package loader.dfmeshLoader;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
-
-import jdk.nashorn.internal.runtime.GlobalConstants;
-import objects.Model_3D;
-import objects.Vao;
-import utils.SourceFile;
-
 public class DFModelLoader {
-
+/*
 	public static Model_3D loadDFMeshModel(SourceFile file, boolean loadJointData) {
 		try {
 			BufferedReader br = file.openFileReader();
@@ -299,5 +283,5 @@ class Weight {
 
 	public void setValue(float value) {
 		this.value = value;
-	}
+	}*/
 }

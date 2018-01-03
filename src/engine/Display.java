@@ -1,7 +1,5 @@
 package engine;
 
-import javax.swing.JPanel;
-
 import org.lwjgl.glfw.Callbacks;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWErrorCallback;
