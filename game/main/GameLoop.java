@@ -8,7 +8,6 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import controlls.FPSCamera;
 import engine.Display;
 import engine.DisplayBuilder;
 import engine.GLSettings;
@@ -17,6 +16,7 @@ import entities.Light;
 import entities.TimeShip;
 import launcher.Launcher;
 import loader.modelLoader.ModelMaster;
+import objects.Camera;
 import objects.Model_3D;
 import objects.Skybox;
 import objects.Vao;
@@ -67,7 +67,7 @@ public class GameLoop {
 		Display.createDisplay(
 				new DisplayBuilder(1280, 720).setTitle("testEngine").setFullscreen(false).setVsync(false));
 
-		FPSCamera camera = new FPSCamera();
+//		FPSCamera camera = new FPSCamera();
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(
 				new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"), new SourceFile(ame_nebula, "face_left.png"),
@@ -92,6 +92,9 @@ public class GameLoop {
 				new SourceFile("/res/models/timemaster_hq_1/texture.png"));
 
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
+		ship.setControllable(true);
+		Camera camera = ship.getCamera();
+		camera.z = 10f;
 		
 		MasterRenderer master = new MasterRenderer();
 		master.setProjectionMatrix(camera.getProjectionMatrix());
@@ -111,7 +114,7 @@ public class GameLoop {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-			camera.updateInputs();
+			ship.update();
 			
 			skyboxRenderer.render(skybox, camera);
 			master.render(camera, sun, entities);
