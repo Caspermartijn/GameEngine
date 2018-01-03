@@ -6,6 +6,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import files.EngineFile;
+import files.EngineFileConfig;
 
 public abstract class Launcher extends JFrame implements ILauncher {
 
@@ -35,10 +39,10 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 	private JButton play, options, quit, credits;
 
-	private JLabel indicator;
-
 	protected ImagePanel window = new ImagePanel("/launcher/res/banner.png", width, height);
 	protected JPanel gamePanel = new JPanel();
+
+	private EngineFileConfig launcherData = new EngineFileConfig("", "launcherData.cnfg");
 
 	public Launcher(int widht, int height, String title, int button_width, int button_height) throws HeadlessException {
 		this.width = widht;
@@ -56,6 +60,13 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 	public Launcher(String title) throws HeadlessException {
 		this.title = title;
+
+		launcherData.set("version", "0.0.1");
+		try {
+			launcherData.saveConfig();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private List<JButton> buttons = new ArrayList<JButton>();

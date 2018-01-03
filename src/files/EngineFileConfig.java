@@ -55,7 +55,7 @@ public class EngineFileConfig {
 			writer.writeVector3fs(vec3s.values());
 			writer.writeVector4fs(vec4s.values());
 			writer.stop();
-
+			
 		} else {
 			System.out.println("Can't use file writer with source files!");
 			System.out.println("Try creating a new file outside of the project.");
@@ -66,6 +66,7 @@ public class EngineFileConfig {
 		floats = data.floats;
 		ints = data.ints;
 		booleans = data.booleans;
+		
 		strings = data.strings;
 		stringLists = data.stringLists;
 		vec2s = data.vec2s;
@@ -86,6 +87,7 @@ public class EngineFileConfig {
 	public void set(String dat, String s) {
 		ConfigString cf = new ConfigString(dat, s);
 		strings.put(dat, cf);
+		System.out.println("test");
 	}
 
 	public void set(String dat, boolean b) {
@@ -117,10 +119,9 @@ public class EngineFileConfig {
 		return booleans.get(dat).isData();
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	public float getFloat(String dat) {
 		float f = 0;
-		if (floats.get(0) != null) {
+		if (floats.get(dat) != null) {
 			f = floats.get(dat).getData();
 		}
 		return f;
@@ -135,7 +136,11 @@ public class EngineFileConfig {
 	}
 
 	public String getString(String dat) {
-		return strings.get(dat).getData();
+		String s = "";
+		if(strings.get(dat) != null) {
+			s = strings.get(dat).getData();
+		}
+		return s;
 	}
 
 	public List<String> getStringList(String dat) {
