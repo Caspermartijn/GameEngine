@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engine.GLSettings;
 import entities.Entity;
 import entities.Light;
 import objects.Camera;
@@ -45,7 +46,7 @@ public class MasterRenderer {
 	}
 
 	public void render(Light light, Camera camera, Vector4f clipPlane) {
-		enableCulling();
+		GLSettings.setBackFaceCulling(true);
 		prepare();
 		entityShader.start();
 		entityShader.location_lightColour.loadVec3(light.getColour());
@@ -54,7 +55,7 @@ public class MasterRenderer {
 		entityRenderer.render(entities);
 		entityShader.stop();
 		entities.clear();
-		disableCulling();
+		GLSettings.setBackFaceCulling(false);
 	}
 
 	public void processEntity(Entity entity) {
@@ -67,15 +68,6 @@ public class MasterRenderer {
 			newBatch.add(entity);
 			entities.put(entityModel, newBatch);
 		}
-	}
-
-	public static void enableCulling() {
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glCullFace(GL11.GL_BACK);
-	}
-
-	public static void disableCulling() {
-		GL11.glDisable(GL11.GL_CULL_FACE);
 	}
 
 	public void prepare() {
