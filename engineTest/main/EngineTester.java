@@ -67,11 +67,11 @@ public class EngineTester {
 				new DisplayBuilder(1280, 720).setTitle("testEngine").setFullscreen(false).setVsync(false));
 
 		FPSCamera camera = new FPSCamera();
-		SourceFile ame_nebula = new SourceFile("/res/skybox/ame_nebula");
+		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(
-				new SourceFile[] { new SourceFile(ame_nebula, "RIGHT.png"), new SourceFile(ame_nebula, "LEFT.png"),
-						new SourceFile(ame_nebula, "BOTTOM.png"), new SourceFile(ame_nebula, "TOP.png"),
-						new SourceFile(ame_nebula, "BACK.png"), new SourceFile(ame_nebula, "FRONT.png") },
+				new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"), new SourceFile(ame_nebula, "face_left.png"),
+						new SourceFile(ame_nebula, "face_bottom.png"), new SourceFile(ame_nebula, "face_top.png"),
+						new SourceFile(ame_nebula, "face_back.png"), new SourceFile(ame_nebula, "face_front.png") },
 				512);
 		SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 		skyboxRenderer.init();
@@ -87,8 +87,8 @@ public class EngineTester {
 		System.out.println("test");
 		ModelMaster.loadModels("");
 
-		Model_3D testmdl = ModelLoader.getModel(new SourceFile("/res/models/human_1/model.obj"),
-				new SourceFile("/res/models/timeship_1/texture.png"));
+		Model_3D testmdl = ModelLoader.getModel(new SourceFile("/res/models/timemaster_hq_1/model.obj"),
+				new SourceFile("/res/models/timemaster_hq_1/texture.png"));
 
 		MasterRenderer master = new MasterRenderer();
 		master.setProjectionMatrix(camera.getProjectionMatrix());
@@ -108,13 +108,10 @@ public class EngineTester {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-			System.out.println(camera.x + " " + camera.y + " " + camera.z);
-
 			camera.updateInputs();
 			
 			skyboxRenderer.render(skybox, camera);
 			master.render(camera, sun, entities);
-			
 			master.unprepare();
 			
 			TextMaster.renderAll();
