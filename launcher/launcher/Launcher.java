@@ -39,6 +39,8 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 	private JButton play, options, quit, credits;
 
+	private JLabel versionLabel;
+
 	protected ImagePanel window = new ImagePanel("/launcher/res/banner.png", width, height);
 	protected JPanel gamePanel = new JPanel();
 
@@ -61,7 +63,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 	public Launcher(String title) throws HeadlessException {
 		this.title = title;
 
-		if(launcherData.getString("version") == "") {
+		if (launcherData.getString("version") == "") {
 			launcherData.set("version", "0.0.1");
 		}
 		try {
@@ -78,11 +80,14 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		options = new JButton("Options");
 		quit = new JButton("Quit");
 		credits = new JButton("Credits");
+		versionLabel = new JLabel("Version: " + launcherData.getString("version"));
 
 		play.setBounds(width - button_width + 5, 100, button_width, button_height);
 		options.setBounds(width - button_width + 5, play.getY() + button_height + 5, button_width, button_height);
 		credits.setBounds(width - button_width + 5, options.getY() + button_height + 5, button_width, button_height);
 		quit.setBounds(width - button_width + 5, credits.getY() + button_height + 5, button_width, button_height);
+
+		versionLabel.setBounds(width - button_width + 120, height - button_height + 20, button_width, button_height);
 
 		buttons.add(play);
 		buttons.add(options);
@@ -134,6 +139,8 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		String fonttype = "Akashi";
 		int fontSize = 35;
 
+		window.add(versionLabel);
+		
 		if (true) {
 			for (JButton button : buttons) {
 
