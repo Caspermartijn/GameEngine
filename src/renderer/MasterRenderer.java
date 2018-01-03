@@ -81,4 +81,8 @@ public class MasterRenderer {
 		GL11.glClearColor(RED, GREEN, BLUE, 1);
 	}
 
+	public void delete() {
+		entityShader.delete();
+	}
+
 }

@@ -94,6 +94,8 @@ public class EngineTester {
 
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 
+//		camera.z = -10;
+		
 		List<Light> lights = new ArrayList<Light>();
 		lights.add(sun);
 		List<Entity> entities = new ArrayList<Entity>();
@@ -102,12 +104,12 @@ public class EngineTester {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-			camera.x += 4;
+			System.out.println(camera.x + " " + camera.y + camera.z);
 
 			camera.updateInputs();
 
 			skyboxRenderer.render(skybox, camera);
-			// master.render(camera, lights, entities);
+			master.render(camera, lights, entities);
 
 			TextMaster.renderAll();
 
@@ -120,6 +122,7 @@ public class EngineTester {
 		Display.disposeDisplay();
 		skyboxRenderer.delete();
 		testmdl.delete();
+		master.delete();
 		
 		Vao.printLog();
 		ShaderProgram.printLog();

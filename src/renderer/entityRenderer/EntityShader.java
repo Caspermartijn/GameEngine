@@ -3,7 +3,14 @@ package renderer.entityRenderer;
 import java.util.List;
 
 import entities.Light;
-import shaders.shaderObjects.*;
+import shaders.shaderObjects.ShaderProgram;
+import shaders.shaderObjects.UniformBoolean;
+import shaders.shaderObjects.UniformFloat;
+import shaders.shaderObjects.UniformMat4;
+import shaders.shaderObjects.UniformSampler;
+import shaders.shaderObjects.UniformVec2;
+import shaders.shaderObjects.UniformVec3;
+import shaders.shaderObjects.UniformVec4;
 import utils.SourceFile;
 
 public class EntityShader extends ShaderProgram {
@@ -24,6 +31,7 @@ public class EntityShader extends ShaderProgram {
 	public UniformFloat shineDamper = new UniformFloat("shineDamper");
 	public UniformFloat reflectivity = new UniformFloat("reflectivity");
 	public UniformBoolean useFakeLighting = new UniformBoolean("useFakeLighting");
+	public UniformSampler modelTexture = new UniformSampler("modelTexture");
 
 	public EntityShader() {
 		super(ShaderProgram.newShaderProgram(VERTEX_FILE, FRAGMENT_FILE).addInput(0, "position")
@@ -32,7 +40,7 @@ public class EntityShader extends ShaderProgram {
 		super.storeAllUniformLocations(offset, transformationMatrix, projectionMatrix, viewMatrix, lightPosition[0],
 				lightPosition[1], lightPosition[2], lightPosition[3], lightColour[0], lightColour[1], lightColour[2],
 				lightColour[3], attenuation[0], attenuation[1], attenuation[2], attenuation[3], numberOfRows, plane,
-				skyColour, shineDamper, reflectivity, useFakeLighting);
+				skyColour, shineDamper, reflectivity, useFakeLighting, modelTexture);
 	}
 
 	private void initLights() {
