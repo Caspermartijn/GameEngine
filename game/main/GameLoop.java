@@ -70,7 +70,9 @@ public class GameLoop {
 
 	public static Scene currentScene;
 
-	public static void exampleScene(Camera camera, MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
+	private static Camera camera;
+
+	public static void exampleScene(MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
 		Scene scene = new Scene("example", renderer, skyboxRenderer) {
 
 		};
@@ -84,8 +86,10 @@ public class GameLoop {
 				new SourceFile("/res/models/timemaster_HQ_1/texture.png"));
 		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 20);
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
+
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
-		ship.setControllable(false);
+		ship.setControllable(true);
+		GameLoop.camera = ship.getCamera();
 		camera.z = 10f;
 
 		skybox.setRotationSpeed(20);
@@ -99,20 +103,20 @@ public class GameLoop {
 		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("testEngine").setFullscreen(true).setVsync(false)
 				.setSamples(8));
 		Mouse.setMouseEnabled(false);
-		
+
 		GLSettings.setClearColor(new Vector4f(0, 0.25f, 1, 1));
 		GLSettings.setDepthTesting(true);
 
-		FPSCamera camera = new FPSCamera();
+		// FPSCamera camera = new FPSCamera();
 
 		SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 		MasterRenderer master = new MasterRenderer();
+		exampleScene(master, skyboxRenderer);
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
 		Fonts.addFont("candara", new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
 
 		ModelMaster.loadModels("");
-		exampleScene(camera, master, skyboxRenderer);
 
 		Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
 		testText.setColor(1, 1, 1);
@@ -121,7 +125,6 @@ public class GameLoop {
 		while (!Display.isCloseRequested()) {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-			camera.updateInputs();
 			currentScene.render(camera);
 
 			TextMaster.renderAll();
