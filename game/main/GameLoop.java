@@ -5,7 +5,6 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import controlls.FPSCamera;
 import engine.Display;
 import engine.DisplayBuilder;
 import engine.GLSettings;
@@ -33,7 +32,8 @@ import utils.SourceFile;
 public class GameLoop {
 
 	public static Launcher l;
-
+	private static Camera camera;
+	
 	public static void main(String[] args) {
 		l = new Launcher("testEngine") {
 
@@ -74,6 +74,11 @@ public class GameLoop {
 		Scene scene = new Scene("example", renderer, skyboxRenderer) {
 
 		};
+		
+		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
+		ship.setControllable(true);
+		GameLoop.camera = ship.getCamera();
+		
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
 				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
@@ -84,9 +89,6 @@ public class GameLoop {
 				new SourceFile("/res/models/timemaster_HQ_1/texture.png"));
 		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 20);
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
-		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
-		ship.setControllable(false);
-		camera.z = 10f;
 
 		skybox.setRotationSpeed(20);
 		scene.lights.add(sun);
@@ -103,16 +105,17 @@ public class GameLoop {
 		GLSettings.setClearColor(new Vector4f(0, 0.25f, 1, 1));
 		GLSettings.setDepthTesting(true);
 
-		FPSCamera camera = new FPSCamera();
-
+//		FPSCamera camera = new FPSCamera();
+		
 		SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 		MasterRenderer master = new MasterRenderer();
+		
+		ModelMaster.loadModels("");
+		exampleScene(camera, master, skyboxRenderer);
+		
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
 		Fonts.addFont("candara", new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
-
-		ModelMaster.loadModels("");
-		exampleScene(camera, master, skyboxRenderer);
 
 		Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
 		testText.setColor(1, 1, 1);
@@ -121,7 +124,6 @@ public class GameLoop {
 		while (!Display.isCloseRequested()) {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-			camera.updateInputs();
 			currentScene.render(camera);
 
 			TextMaster.renderAll();
