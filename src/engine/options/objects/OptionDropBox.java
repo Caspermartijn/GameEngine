@@ -16,4 +16,8 @@ public class OptionDropBox extends Option {
 		this.values = values;
 	}
 	
+	public String getValue(int i) {
+		return values[i];
+	}
+	
 }

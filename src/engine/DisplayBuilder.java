@@ -7,6 +7,7 @@ public class DisplayBuilder {
 	protected boolean fullscreen = false;
 	protected boolean vsync = true;
 	protected int samples = 0;
+	protected int fpsCap = 1000;
 	
 	public DisplayBuilder(int width, int height) {
 		this.width = width;
@@ -20,6 +21,11 @@ public class DisplayBuilder {
 	
 	public DisplayBuilder setFullscreen(boolean fullscreen) {
 		this.fullscreen = fullscreen;
+		return this;
+	}
+	
+	public DisplayBuilder setFpsCam(int fps) {
+		this.fpsCap = fps;
 		return this;
 	}
 	

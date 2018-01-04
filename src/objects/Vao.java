@@ -191,15 +191,15 @@ public class Vao {
 
 	public Vao loadToVAO(float[] verticesArray, float[] texturesArray, float[] normalsArray, int[] indicesArray,
 			float[] tangentsArray) {
-		Vao vao = Vao.create();
-		vao.bind();
-		vao.createStaticIndexBuffer(indicesArray);
-		vao.createStaticAttribute(0, 3, verticesArray);
-		vao.createStaticAttribute(1, 2, texturesArray);
-		vao.createStaticAttribute(2, 3, normalsArray);
-		vao.createStaticAttribute(3, 3, tangentsArray);
-		vao.unbind();
-		return vao;
+		bind();
+		vertexCount = verticesArray.length;
+		createStaticIndexBuffer(indicesArray);
+		createStaticAttribute(0, 3, verticesArray);
+		createStaticAttribute(1, 2, texturesArray);
+		createStaticAttribute(2, 3, normalsArray);
+		createStaticAttribute(3, 3, tangentsArray);
+		unbind();
+		return this;
 	}
 
 	public Vao loadToVAO(float[] verticesArray, float[] texturesArray, float[] normalsArray, int[] indicesArray) {
