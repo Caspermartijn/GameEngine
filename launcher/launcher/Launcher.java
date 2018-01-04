@@ -6,7 +6,6 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +15,8 @@ import javax.security.auth.login.Configuration;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import files.EngineFileConfig;
@@ -38,18 +37,23 @@ public abstract class Launcher extends JFrame implements ILauncher {
 	public int button_width = 200;
 	public int button_height = 60;
 
-	private JButton play, options, quit, credits;
-
-	private JLabel versionLabel;
-
+	// ================MAIN================
 	protected ImagePanel window = new ImagePanel("/launcher/res/banner.png", width, height);
+	private JButton play, options, quit, credits;
+	private JLabel versionLabel;
+	// ================MAIN================
 
+	// ================Loading================
 	protected LoadingScreenPanel loadingPanel = new LoadingScreenPanel("/launcher/res/bannerLoadingScreen.png", width,
 			height);
 	private JProgressBar loadingPanelProgressBar;
+	// ================Loading================
 
-	protected JPanel gamePanel = new JPanel();
-
+	// ================Error/Warning================
+	protected ImagePanel errorPanel = new ImagePanel("/launcher/res/bannerLoadingScreen.png", width, height);
+	private JLabel titleError = new JLabel("ERROR/WARNING");
+	private JTextArea errorText = new JTextArea();
+	// ================Error/Warning================
 	private EngineFileConfig launcherData = new EngineFileConfig("", "launcherData.cnfg");
 
 	public Launcher(int widht, int height, String title, int button_width, int button_height) throws HeadlessException {
@@ -80,6 +84,28 @@ public abstract class Launcher extends JFrame implements ILauncher {
 	}
 
 	private List<JButton> buttons = new ArrayList<JButton>();
+
+	private void initErrorLabel() {
+		int plain = Font.PLAIN;
+		String fonttype = "Akashi";
+		int fontSize = 35;
+		Font font = new Font(fonttype, plain, fontSize);
+
+		titleError.setBounds(0, 20, width, 30);
+		titleError.setHorizontalAlignment(SwingConstants.CENTER);
+		titleError.setForeground(Color.red);
+		titleError.setFont(font);
+
+		int errorX = (int) (width / 1.3);
+		int errorY = (int) (height / 1.3);
+
+		errorText.setSize(errorX, errorY);
+		errorText.setLocation((int) ((width - (width / 1.3)) / 2), (int) (20 + (height - (height / 1.3)) / 2));
+		errorText.setEditable(false);
+
+		errorPanel.add(titleError);
+		errorPanel.add(errorText);
+	}
 
 	private void initLoadingPanel() {
 		loadingPanelProgressBar = new JProgressBar(0, 100);
@@ -157,13 +183,13 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		int plain = Font.PLAIN;
 		String fonttype = "Akashi";
 		int fontSize = 35;
+		Font font = new Font(fonttype, plain, fontSize);
 
 		window.add(versionLabel);
 
 		if (true) {
 			for (JButton button : buttons) {
 
-				Font font = new Font(fonttype, plain, fontSize);
 				button.setFont(font);
 				button.setForeground(Color.WHITE);
 				button.setOpaque(false);
@@ -194,6 +220,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().add(window);
 		getContentPane().add(loadingPanel);
+		getContentPane().add(errorPanel);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		window.setLayout(null);
@@ -201,8 +228,13 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		window.setVisible(false);
 		loadingPanel.setLayout(null);
 		loadingPanel.setSize(width, height);
+		loadingPanel.setVisible(true);
+		errorPanel.setLayout(null);
+		errorPanel.setSize(width, height);
+		errorPanel.setVisible(false);
 		initLoadingPanel();
 		initMain();
+		initErrorLabel();
 		setVisible(true);
 		startLoading();
 	}
@@ -241,20 +273,24 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 	private String newVersion = "";
 
+	private void writerError(String error) {
+		errorText.setText(error);
+		errorText.updateUI();
+	}
+
 	private void loadDatas() {
 		Thread thread = null;
 		Runnable runnable = new Runnable() {
 			@Override
-			public void run() {
-				try {
-					Updater.downloadUpdate();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
+			public void run() {// TODO add oldversion check add updater panel
+				/*
+				 * try { Updater.downloadUpdate(); } catch (IOException e1) {
+				 * writerError(e1.getMessage()); }
+				 */
 				try {
 					newVersion = Updater.getVersion();
 				} catch (IOException e) {
-					e.printStackTrace();
+					writerError(e.getMessage());
 				}
 				System.out.println();
 				System.out.println("=====================================");
