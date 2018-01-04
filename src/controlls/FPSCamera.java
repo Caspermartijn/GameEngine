@@ -3,7 +3,7 @@ package controlls;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Matrix4f;
 
-import engine.EngineDisplay;
+import engine.Display;
 import engine.Keyboard;
 import engine.Mouse;
 import objects.Camera;
@@ -19,7 +19,7 @@ public class FPSCamera extends Camera {
 	private static final float SPEED = 20;
 
 	protected void setProjectionMatrix(Matrix4f projection) {
-		float aspectRatio = (float) EngineDisplay.getWidth() / (float) EngineDisplay.getHeight();
+		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
 		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio);
 		float x_scale = y_scale / aspectRatio;
 		float frustum_length = FAR_PLANE - NEAR_PLANE;
@@ -40,26 +40,26 @@ public class FPSCamera extends Camera {
 		pitch = Maths.clamp(-90, 90, pitch);
 
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
-			super.x += Math.sin(Math.toRadians(yaw)) * EngineDisplay.getFrameTime() * SPEED;
-			super.z -= Math.cos(Math.toRadians(yaw)) * EngineDisplay.getFrameTime() * SPEED;
+			super.x += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;
+			super.z -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;
 		}
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_S)) {
-			super.x += Math.sin(Math.toRadians(yaw)) * EngineDisplay.getFrameTime() * -SPEED;
-			super.z -= Math.cos(Math.toRadians(yaw)) * EngineDisplay.getFrameTime() * -SPEED;
+			super.x += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * -SPEED;
+			super.z -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * -SPEED;
 		}
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_A)) {
-			super.x -= Math.sin(Math.toRadians(yaw + 90)) * EngineDisplay.getFrameTime() * SPEED;
-			super.z += Math.cos(Math.toRadians(yaw + 90)) * EngineDisplay.getFrameTime() * SPEED;
+			super.x -= Math.sin(Math.toRadians(yaw + 90)) * Display.getFrameTime() * SPEED;
+			super.z += Math.cos(Math.toRadians(yaw + 90)) * Display.getFrameTime() * SPEED;
 		}
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_D)) {
-			super.x -= Math.sin(Math.toRadians(yaw + 90)) * EngineDisplay.getFrameTime() * -SPEED;
-			super.z += Math.cos(Math.toRadians(yaw + 90)) * EngineDisplay.getFrameTime() * -SPEED;
+			super.x -= Math.sin(Math.toRadians(yaw + 90)) * Display.getFrameTime() * -SPEED;
+			super.z += Math.cos(Math.toRadians(yaw + 90)) * Display.getFrameTime() * -SPEED;
 		}
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_CONTROL)) {
-			super.y -= SPEED * EngineDisplay.getFrameTime();
+			super.y -= SPEED * Display.getFrameTime();
 		}
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
-			super.y += SPEED * EngineDisplay.getFrameTime();
+			super.y += SPEED * Display.getFrameTime();
 		}
 		super.updateMatrix();
 	}

@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import engine.EngineDisplay;
+import engine.Display;
 
 public class QuadComponent extends GUIComponent {
 
@@ -69,7 +69,7 @@ public class QuadComponent extends GUIComponent {
 	}
 	
 	public Vector4f getInnerDimensions() {
-		return new Vector4f(getX() + outlineWidth, getY() + outlineWidth*EngineDisplay.getAspectRatio(), width - outlineWidth*2, height - outlineWidth*2*EngineDisplay.getAspectRatio());
+		return new Vector4f(getX() + outlineWidth, getY() + outlineWidth*Display.getAspectRatio(), width - outlineWidth*2, height - outlineWidth*2*Display.getAspectRatio());
 	}
 	
 	public Matrix4f getBackgroundTransform() {

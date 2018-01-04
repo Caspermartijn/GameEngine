@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import controlls.FPSCamera;
-import engine.EngineDisplay;
+import engine.Display;
 import engine.DisplayBuilder;
 import engine.GLSettings;
 import engine.Mouse;
@@ -95,7 +95,7 @@ public class GameLoop {
 	}
 
 	public static void startGame() {
-		EngineDisplay.createDisplay(new DisplayBuilder(1920, 1080).setTitle("testEngine").setFullscreen(true).setVsync(false)
+		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("testEngine").setFullscreen(true).setVsync(false)
 				.setSamples(8));
 		Mouse.setMouseEnabled(false);
 		
@@ -117,7 +117,7 @@ public class GameLoop {
 		testText.setColor(1, 1, 1);
 		TextMaster.addText(testText);
 
-		while (!EngineDisplay.isCloseRequested()) {
+		while (!Display.isCloseRequested()) {
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
 			camera.updateInputs();
@@ -125,14 +125,14 @@ public class GameLoop {
 
 			TextMaster.renderAll();
 
-			EngineDisplay.swapBuffers();
-			EngineDisplay.updateEvents();
+			Display.swapBuffers();
+			Display.updateEvents();
 		}
 
 		testText.delete();
 		TextMaster.cleanUp();
 		Fonts.delete();
-		EngineDisplay.disposeDisplay();
+		Display.disposeDisplay();
 		skyboxRenderer.delete();
 		master.delete();
 

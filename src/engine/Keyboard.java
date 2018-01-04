@@ -17,7 +17,7 @@ public class Keyboard {
 	protected static void init() {
 		addAllChars();
 		
-		GLFW.glfwSetKeyCallback(EngineDisplay.getWindowID(), (window, key, scancode, action, mods) -> {
+		GLFW.glfwSetKeyCallback(Display.getWindowID(), (window, key, scancode, action, mods) -> {
 			if (listener == null)
 				return;
 			
@@ -108,7 +108,7 @@ public class Keyboard {
 	}
 
 	public static boolean isKeyDown(int key) {
-		return GLFW.glfwGetKey(EngineDisplay.getWindowID(), key) == GL11.GL_TRUE;
+		return GLFW.glfwGetKey(Display.getWindowID(), key) == GL11.GL_TRUE;
 	}
 
 }

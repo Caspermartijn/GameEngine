@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import engine.EngineDisplay;
+import engine.Display;
 import utils.SourceFile;
 
 public class MetaFile {
@@ -40,7 +40,7 @@ public class MetaFile {
 		int imageSize = 0;
 		double horizontalPerPixelSize = 0.0;
 		double verticalPerPixelSize = 0.0;
-		double aspectRatio = (double) EngineDisplay.getWidth() / (double) EngineDisplay.getHeight();
+		double aspectRatio = (double) Display.getWidth() / (double) Display.getHeight();
 		try {
 			br = file.openFileReader();
 

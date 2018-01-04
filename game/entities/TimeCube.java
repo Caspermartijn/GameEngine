@@ -4,7 +4,7 @@ import java.util.Random;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.EngineDisplay;
+import engine.Display;
 import objects.Model_3D;
 
 public class TimeCube extends Entity {
@@ -26,9 +26,9 @@ public class TimeCube extends Entity {
 
 	@Override
 	public void update() {
-		this.getTransform().rotX += (x * EngineDisplay.getFrameTime());
-		this.getTransform().rotY += (y * EngineDisplay.getFrameTime());
-		this.getTransform().rotZ += (z * EngineDisplay.getFrameTime());
+		this.getTransform().rotX += (x * Display.getFrameTime());
+		this.getTransform().rotY += (y * Display.getFrameTime());
+		this.getTransform().rotZ += (z * Display.getFrameTime());
 	}
 
 }
