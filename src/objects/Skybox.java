@@ -1,6 +1,6 @@
 package objects;
 
-import engine.Display;
+import engine.EngineDisplay;
 import textures.CubeMapTexture;
 import utils.SourceFile;
 
@@ -36,7 +36,7 @@ public class Skybox {
 	}
 
 	public void updateRotation() {
-		rotation += Display.getFrameTime() * rotationSpeed;
+		rotation += EngineDisplay.getFrameTime() * rotationSpeed;
 		rotation %= rotation;
 	}
 
