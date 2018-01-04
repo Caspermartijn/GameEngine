@@ -1,4 +1,4 @@
-package hitbox;
+package hitboxes;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
+
+import hitbox.HBox;
+import hitbox.HitBox;
+import hitbox.HitBoxCircle;
 
 public class HitBoxManager {
 
@@ -63,7 +67,7 @@ public class HitBoxManager {
 		return boxes;
 	}
 
-	static float distance(Vector3f position, Vector3f position2) {
+	public static float distance(Vector3f position, Vector3f position2) {
 		float xOff = position2.x - position.x;
 		float zOff = position2.z - position.z;
 		return (float) Math.sqrt((xOff * xOff) + (zOff * zOff));

@@ -2,6 +2,8 @@ package hitbox;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import hitboxes.HitBoxManager;
+
 public class HitBoxMaths {
 
 	public static boolean isColliding(HBox box1, HBox box2) {

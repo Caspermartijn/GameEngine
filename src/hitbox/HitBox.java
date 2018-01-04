@@ -2,6 +2,7 @@ package hitbox;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import hitboxes.HitBoxManager;
 import objects.Vao;
 
 public class HitBox extends HBox {

@@ -1,8 +1,5 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -15,7 +12,6 @@ import engine.GLSettings;
 import engine.Mouse;
 import entities.Entity;
 import entities.Light;
-import entities.TimeCube;
 import entities.TimeShip;
 import launcher.Launcher;
 import loader.modelLoader.ModelMaster;
@@ -26,6 +22,7 @@ import objects.Vao;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import renderer.textRendering.TextMaster;
+import scenes.Scene;
 import shaders.shaderObjects.ShaderProgram;
 import texts.Fonts;
 import texts.Text;
@@ -38,7 +35,7 @@ public class GameLoop {
 	public static Launcher l;
 
 	public static void main(String[] args) {
-		l = new Launcher("test") {
+		l = new Launcher("testEngine") {
 
 			private static final long serialVersionUID = 001L;
 
@@ -62,77 +59,70 @@ public class GameLoop {
 				this.closeApp();
 			}
 
+			@Override
+			public void loadData() {
+
+			}
+
 		};
 		l.create();
 	}
 
-	public static void startGame() {
-		Display.createDisplay(
-				new DisplayBuilder(1920, 1080).setTitle("testEngine").setFullscreen(true).setVsync(false).setSamples(8));
-		Mouse.setMouseEnabled(false);
-		
-		 FPSCamera camera = new FPSCamera();
+	public static Scene currentScene;
+
+	public static void exampleScene(Camera camera, MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
+		Scene scene = new Scene("example", renderer, skyboxRenderer) {
+
+		};
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
 				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
 				new SourceFile(ame_nebula, "face_top.png"), new SourceFile(ame_nebula, "face_back.png"),
 				new SourceFile(ame_nebula, "face_front.png") }, 512);
-		SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
-		skyboxRenderer.init();
-
-		GLSettings.setClearColor(new Vector4f(0, 0.25f, 1, 1));
-		GLSettings.setDepthTesting(true);
-
-		Fonts.addFont("candara", new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
-
-		Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
-		testText.setColor(1, 1, 1);
-		TextMaster.addText(testText);
-		System.out.println("test");
-		ModelMaster.loadModels("");
-
-		Model_3D testmdl = ModelLoader.getModel(new SourceFile("/res/models/timemaster_hq_1/model.obj"),
-				new SourceFile("/res/models/timemaster_hq_1/texture.png"));
-
+		scene.skybox = skybox;
+		Model_3D timemastersHQ = ModelLoader.getModel(new SourceFile("/res/models/timemaster_HQ_1/model.obj"),
+				new SourceFile("/res/models/timemaster_HQ_1/texture.png"));
+		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 20);
+		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
 		ship.setControllable(false);
 		camera.z = 10f;
 
+		skybox.setRotationSpeed(20);
+		scene.lights.add(sun);
+		scene.entities.add(ent);
+		currentScene = scene;
+	}
+
+	public static void startGame() {
+		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("testEngine").setFullscreen(true).setVsync(false)
+				.setSamples(8));
+		Mouse.setMouseEnabled(false);
+		
+		GLSettings.setClearColor(new Vector4f(0, 0.25f, 1, 1));
+		GLSettings.setDepthTesting(true);
+
+		FPSCamera camera = new FPSCamera();
+
+		SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 		MasterRenderer master = new MasterRenderer();
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
-		Entity ent = new Entity(testmdl, new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), 10) {
-		};
+		Fonts.addFont("candara", new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
 
-		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
+		ModelMaster.loadModels("");
+		exampleScene(camera, master, skyboxRenderer);
 
-		skybox.setRotationSpeed(20);
-		List<Light> lights = new ArrayList<Light>();
-		lights.add(sun);
-		Game.entities.add(ent);
-	//	Game.entities.add(ship);
+		Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
+		testText.setColor(1, 1, 1);
+		TextMaster.addText(testText);
 
-		/*
-		TimeCube timeCube_1 = new TimeCube(ModelLoader.getModel(new SourceFile("/res/models/timecube_1/model.obj"),
-				new SourceFile("/res/models/timecube_1/texture.png")), new Vector3f(0,0,-1.5f), new Vector3f(), 0.6f);
-		
-		TimeCube timeCube_2 = new TimeCube(ModelLoader.getModel(new SourceFile("/res/models/timecube_1/model.obj"),
-				new SourceFile("/res/models/timecube_1/texture.png")), new Vector3f(0,0,-1.5f), new Vector3f(), 0.6f);
-		
-		ship.addChild(timeCube_1);ship.addChild(timeCube_2);
-		Game.entities.add(timeCube_1);
-		Game.entities.add(timeCube_2);*/
 		while (!Display.isCloseRequested()) {
 			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
-			Game.update();
-			
-			camera.updateInputs();
-			ship.update();
 
-			skyboxRenderer.render(skybox, camera);
-			master.render(camera, sun, Game.entities);
-			master.unprepare();
+			camera.updateInputs();
+			currentScene.render(camera);
 
 			TextMaster.renderAll();
 
@@ -144,8 +134,6 @@ public class GameLoop {
 		Fonts.delete();
 		Display.disposeDisplay();
 		skyboxRenderer.delete();
-		ent.delete();
-		ship.delete();
 		master.delete();
 
 		Vao.printLog();

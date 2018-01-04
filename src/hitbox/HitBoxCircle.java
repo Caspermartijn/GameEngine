@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import hitboxes.HitBoxManager;
 import objects.Vao;
 
 public class HitBoxCircle extends HBox {

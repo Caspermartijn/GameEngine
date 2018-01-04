@@ -1,7 +1,4 @@
-package terrains;
-
-import terrains.terrainTexture.TerrainTexture;
-import terrains.terrainTexture.TerrainTexturePack;
+package terrains.terrainTexture;
 
 public class TerrainPack {
 	

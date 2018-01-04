@@ -21,6 +21,10 @@ public class SkyboxRenderer {
 
 	private Vao cube;
 	private SkyboxShader shader;
+	
+	public SkyboxRenderer() {
+		init();
+	}
 
 	public void init() {
 		cube = Vao.create();

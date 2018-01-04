@@ -10,7 +10,6 @@ import org.lwjgl.util.vector.Vector4f;
 
 import objects.Vao;
 import terrains.Terrain;
-import terrains.TerrainManager;
 import terrains.terrainTexture.TerrainTexturePack;
 import textures.Texture;
 
@@ -77,7 +76,7 @@ public class TerrainRenderer {
 		rawModel.bind(0, 1, 2, 3);
 		shader.location_shineDamper.loadFloat(1);
 		shader.location_reflectivity.loadFloat(0);
-		shader.location_numberOfRows.loadFloat(TerrainManager.terrainRows);
+		shader.location_numberOfRows.loadFloat(0);
 		shader.location_offset.loadVec2(terrain.getTextureXOffset(), terrain.getTextureYOffset());
 	}
 

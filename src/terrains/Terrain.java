@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import objects.Vao;
+import terrains.terrainTexture.TerrainPack;
 import textures.Texture;
 import utils.Maths;
 
