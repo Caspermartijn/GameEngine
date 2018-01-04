@@ -1,4 +1,4 @@
-package launcher;
+package panels;
 
 public class LoadingScreenPanel extends ImagePanel{
 

@@ -20,6 +20,8 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 import files.EngineFileConfig;
+import panels.ImagePanel;
+import panels.LoadingScreenPanel;
 
 public abstract class Launcher extends JFrame implements ILauncher {
 

@@ -1,4 +1,4 @@
-package launcher;
+package panels;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
