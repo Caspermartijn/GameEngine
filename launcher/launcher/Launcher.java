@@ -247,6 +247,11 @@ public abstract class Launcher extends JFrame implements ILauncher {
 			@Override
 			public void run() {
 				try {
+					Updater.downloadUpdate();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				try {
 					newVersion = Updater.getVersion();
 				} catch (IOException e) {
 					e.printStackTrace();
