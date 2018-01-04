@@ -98,7 +98,7 @@ public class GameLoop {
 	}
 
 	public static void startGame() {
-		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("testEngine").setFullscreen(true).setVsync(false)
+		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("IceRise is best dev").setFullscreen(true).setVsync(false)
 				.setSamples(8));
 		Mouse.setMouseEnabled(false);
 		
