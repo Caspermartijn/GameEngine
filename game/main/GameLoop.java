@@ -91,6 +91,7 @@ public class GameLoop {
 		skybox.setRotationSpeed(20);
 		scene.lights.add(sun);
 		scene.entities.add(ent);
+		scene.entities.add(ship);
 		currentScene = scene;
 	}
 
