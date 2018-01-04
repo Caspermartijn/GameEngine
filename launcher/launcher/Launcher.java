@@ -6,6 +6,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 
-import files.EngineFile;
 import files.EngineFileConfig;
 
 public abstract class Launcher extends JFrame implements ILauncher {
@@ -42,6 +43,11 @@ public abstract class Launcher extends JFrame implements ILauncher {
 	private JLabel versionLabel;
 
 	protected ImagePanel window = new ImagePanel("/launcher/res/banner.png", width, height);
+
+	protected LoadingScreenPanel loadingPanel = new LoadingScreenPanel("/launcher/res/bannerLoadingScreen.png", width,
+			height);
+	private JProgressBar loadingPanelProgressBar;
+
 	protected JPanel gamePanel = new JPanel();
 
 	private EngineFileConfig launcherData = new EngineFileConfig("", "launcherData.cnfg");
@@ -75,7 +81,20 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 	private List<JButton> buttons = new ArrayList<JButton>();
 
-	private void initButtons() {
+	private void initLoadingPanel() {
+		loadingPanelProgressBar = new JProgressBar(0, 100);
+		int middle = height / 2;
+		loadingPanelProgressBar.setBounds(50, middle + height / 4, width - 100, height / 6);
+		loadingPanelProgressBar.setValue(20);
+		loadingPanelProgressBar.setVisible(true);
+		loadingPanelProgressBar.setStringPainted(false);
+		loadingPanelProgressBar.setForeground(Color.gray);
+		loadingPanelProgressBar.setOpaque(false);
+		loadingPanelProgressBar.setBorderPainted(false);
+		loadingPanel.add(loadingPanelProgressBar);
+	}
+
+	private void initMain() {
 		play = new JButton("Play");
 		options = new JButton("Options");
 		quit = new JButton("Quit");
@@ -140,7 +159,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		int fontSize = 35;
 
 		window.add(versionLabel);
-		
+
 		if (true) {
 			for (JButton button : buttons) {
 
@@ -174,12 +193,89 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		setSize(width, height);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().add(window);
+		getContentPane().add(loadingPanel);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		window.setLayout(null);
 		window.setSize(width, height);
-		initButtons();
+		window.setVisible(false);
+		loadingPanel.setLayout(null);
+		loadingPanel.setSize(width, height);
+		initLoadingPanel();
+		initMain();
 		setVisible(true);
+		startLoading();
+	}
+
+	private int progressBarAmount = 0;
+	private Thread thread;
+	private boolean b = true;
+
+	private void startLoading() {
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				while (b) {
+					try {
+						progressBarAmount++;
+						loadingPanelProgressBar.setValue(progressBarAmount);
+						Thread.sleep(50);
+						if (progressBarAmount >= 100) {
+							openMain();
+							try {
+								thread.join();
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		thread = new Thread(runnable);
+		thread.start();
+		loadDatas();
+	}
+
+	private String newVersion = "";
+
+	private void loadDatas() {
+		Thread thread = null;
+		Runnable runnable = new Runnable() {
+			@Override
+			public void run() {
+				try {
+					newVersion = Updater.getVersion();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				System.out.println();
+				System.out.println("=====================================");
+				System.out.println("Version: " + launcherData.getString("version") + " -> " + newVersion);
+				System.out.println("=====================================");
+				System.out.println();
+			}
+		};
+		thread = new Thread(runnable);
+		thread.start();
+
+		Thread thread2 = null;
+		Runnable runnable2 = new Runnable() {
+			@Override
+			public void run() {
+				loadData();
+			}
+		};
+		thread2 = new Thread(runnable2);
+		thread2.start();
+	}
+
+	private void openMain() {
+		b = false;
+		loadingPanel.setVisible(false);
+		window.setVisible(true);
 	}
 
 	public void hideApp() {

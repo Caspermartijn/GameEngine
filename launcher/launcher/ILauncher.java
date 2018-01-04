@@ -6,5 +6,5 @@ public interface ILauncher {
 	void credits();
 	void options();
 	void quit();
-	
+	void loadData();
 }
