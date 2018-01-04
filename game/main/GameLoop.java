@@ -118,7 +118,6 @@ public class GameLoop {
 		TextMaster.addText(testText);
 
 		while (!Display.isCloseRequested()) {
-			Display.update();
 			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
 			camera.updateInputs();
@@ -127,6 +126,7 @@ public class GameLoop {
 			TextMaster.renderAll();
 
 			Display.swapBuffers();
+			Display.updateEvents();
 		}
 
 		testText.delete();
