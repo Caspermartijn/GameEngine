@@ -34,12 +34,6 @@ public class Mouse {
 		drotation = 0;
 		mouseDX = 0;
 		mouseDY = 0;
-		
-		if (!cursor) {
-			GLFW.glfwSetCursorPos(Display.getWindowID(), Display.getWidth() / 2, Display.getHeight() / 2);
-			oldX = Display.getWidth() / 2;
-			oldY = Display.getHeight() / 2;
-		}
 	}
 	
 	public static boolean buttonPressed(int button) {
