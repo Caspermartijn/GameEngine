@@ -3,11 +3,13 @@ package entities;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import engine.Display;
 import engine.Keyboard;
 import engine.Mouse;
 import objects.Camera;
+import utils.EulerTransform.RotationType;
 import utils.ModelLoader;
 import utils.SourceFile;
 
@@ -18,6 +20,10 @@ public class TimeShip extends Entity {
 	private Vector3f velocity = new Vector3f();
 	private float pitch, yaw;
 	
+	private static final float CAMERA_HEIGHT = 8;
+	private static final float CAMERA_DISTANCE = 30;
+	private static final float CAMERA_ANGLE = 5;
+	
 	private static final float ACCELERATION_SPEED = 50;
 	private static final float BRAKING_SPEED = 75;
 	private static final float MAX_FRONT_SPEED = 80;
@@ -26,6 +32,7 @@ public class TimeShip extends Entity {
 	
 	public TimeShip(Vector3f position, Vector3f rotation) {
 		super(ModelLoader.getModel(new SourceFile("/res/models/timeship_1/model.obj"), new SourceFile("/res/models/timeship_1/texture.png")), position, rotation, 1f);
+		super.getTransform().setType(RotationType.YXZ);
 	}
 
 	@Override public void update() {
@@ -37,33 +44,43 @@ public class TimeShip extends Entity {
 			super.getTransform().rotX = pitch;
 			super.getTransform().rotY = yaw;
 			
-//			System.out.println(yaw + " " + pitch);
+			boolean forwards = false, backwards = false, left = false, right = false, up = false, down = false;
 			
-			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
-				if (velocity.z > -MAX_FRONT_SPEED)
-					move(velocity, yaw, pitch,  (float) (-ACCELERATION_SPEED * Display.getFrameTime()));
-			} else {
-				if (velocity.z <= 0)
-					move(velocity, yaw, pitch,  (float) (BRAKING_SPEED * Display.getFrameTime()));
-			}
+			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_W))
+				forwards = true;
+			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_S))
+				backwards = true;
+			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_A))
+				left = true;
+			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_D))
+				right = true;
+			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_CONTROL))
+				down = true;
+			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE))
+				up = true;
 			
-			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_S)) {
-				if (velocity.z < MAX_SIDE_SPEED)
-					move(velocity, yaw, pitch,  (float) (ACCELERATION_SPEED * Display.getFrameTime()));
-			} else {
-				if (velocity.z >= 0)
-					move(velocity, yaw, pitch,  (float) (-BRAKING_SPEED * Display.getFrameTime()));
-			}
+			if (forwards && backwards) 
+				forwards = backwards = false;
+			if (left && right) 
+				left = right = false;
+			if (up && down)
+				up = down = false;
 			
-//			System.out.println(velocity.z);
+			
 			
 			super.getTransform().posX += velocity.x * Display.getFrameTime();
 			super.getTransform().posY += velocity.y * Display.getFrameTime();
 			super.getTransform().posZ += velocity.z * Display.getFrameTime();
 			
-			camera.x = super.getTransform().posX;
-			camera.y = super.getTransform().posY + 5;
-			camera.z = super.getTransform().posZ + 30;
+			Vector4f v = new Vector4f(0, CAMERA_HEIGHT, CAMERA_DISTANCE, 1);
+			Matrix4f.transform(getTransformationMatrix(), v, v);
+			float distance = (float) Math.sqrt(CAMERA_DISTANCE*CAMERA_DISTANCE + CAMERA_HEIGHT*CAMERA_HEIGHT);
+			camera.x = v.x;
+			camera.y = v.y;
+			camera.z = v.z;
+			camera.pitch = CAMERA_ANGLE-pitch;
+			camera.yaw = -yaw;
+			
 			camera.updateMatrix();
 		}
 	}
