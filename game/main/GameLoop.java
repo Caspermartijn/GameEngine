@@ -21,6 +21,7 @@ import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import renderer.textRendering.TextMaster;
 import scenes.Scene;
+import scenes.SceneLoader;
 import shaders.shaderObjects.ShaderProgram;
 import texts.Fonts;
 import texts.Text;
@@ -70,6 +71,8 @@ public class GameLoop {
 	public static Scene currentScene;
 
 	public static void exampleScene(MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
+		SceneLoader.getScene(null, null, "Scene1");
+		
 		Scene scene = new Scene("example", renderer, skyboxRenderer) {
 
 		};

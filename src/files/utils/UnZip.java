@@ -11,7 +11,7 @@ import java.util.zip.ZipInputStream;
 public class UnZip {
 	List<String> fileList;
 
-	public void unZipIt(String zipFile, String outputFolder) {
+	public void unZipIt(boolean temp, String zipFile, String outputFolder) {
 
 		byte[] buffer = new byte[1024];
 
@@ -28,13 +28,28 @@ public class UnZip {
 
 			while (ze != null) {
 
+				File fldr = new File(outputFolder) ;
+				if(!fldr.exists()) {
+					fldr.mkdirs();
+				}
+				
 				String fileName = ze.getName();
 				File newFile = new File(outputFolder + File.separator + fileName);
-
+				if(!newFile.exists()) {
+					newFile.mkdir();
+					newFile.createNewFile();
+				}
+				if (temp) {
+					newFile.deleteOnExit();
+				}
 				System.out.println("File unzip : " + newFile.getAbsoluteFile());
 
-				new File(newFile.getParent()).mkdirs();
-
+				File f = new File(newFile.getParent());
+				f.mkdirs();
+				if (temp) {
+					f.deleteOnExit();
+				}
+				
 				FileOutputStream fos = new FileOutputStream(newFile);
 
 				int len;

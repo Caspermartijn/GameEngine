@@ -14,7 +14,6 @@ import terrains.Terrain;
 
 public abstract class Scene implements IScene {
 
-	
 	public List<Entity> entities = new ArrayList<Entity>();
 	public List<Light> lights = new ArrayList<Light>();
 	public List<HBox> hitboxes = new ArrayList<HBox>();
