@@ -57,9 +57,9 @@ public class Entity implements IEntity {
 		return model;
 	}
 	
-	public Matrix4f getParentSpaceMatrix() {
+	public Matrix4f getTransformationMatrix() {
 		if (parent != null) {
-			return Matrix4f.mul(parent.getParentSpaceMatrix(), getLocalTransformationMatrix(), null);
+			return Matrix4f.mul(parent.getTransformationMatrix(), getLocalTransformationMatrix(), null);
 		} else {
 			return getLocalTransformationMatrix();
 		}
@@ -68,14 +68,6 @@ public class Entity implements IEntity {
 
 	public Matrix4f getLocalTransformationMatrix() {
 		return transform.toMatrix();
-	}
-	
-	public Matrix4f getTransformationMatrix() {
-		if(parent == null) {
-			return getLocalTransformationMatrix();
-		}else {
-			return getParentSpaceMatrix();
-		}
 	}
 
 }
