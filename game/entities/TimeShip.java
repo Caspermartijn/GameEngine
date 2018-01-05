@@ -10,6 +10,7 @@ import engine.Keyboard;
 import engine.Mouse;
 import objects.Camera;
 import utils.EulerTransform.RotationType;
+import utils.Maths;
 import utils.ModelLoader;
 import utils.SourceFile;
 
@@ -24,11 +25,16 @@ public class TimeShip extends Entity {
 	private static final float CAMERA_DISTANCE = 30;
 	private static final float CAMERA_ANGLE = 5;
 	
-	private static final float ACCELERATION_SPEED = 50;
-	private static final float BRAKING_SPEED = 75;
-	private static final float MAX_FRONT_SPEED = 80;
-	private static final float MAX_SIDE_SPEED = 20;
-	private static final float MOUSE_SENSITY = 100;
+	private static final float ACCELERATION_SPEED = 80;
+	private static final float FRONT_BRAKING_SPEED = 100;
+	private static final float BRAKING_SPEED = 50;
+	private static final float MAX_FRONT_SPEED = 200;
+	private static final float MAX_SPEED = 20;
+	
+	private static final float MOUSE_SENSITY = 200;
+	private static final float MAX_ROTATION = 600;
+	
+	private static final float STABILIZATION_SPEED = 50;
 	
 	public TimeShip(Vector3f position, Vector3f rotation) {
 		super(ModelLoader.getModel(new SourceFile("/res/models/timeship_1/model.obj"), new SourceFile("/res/models/timeship_1/texture.png")), position, rotation, 1f);
@@ -38,8 +44,15 @@ public class TimeShip extends Entity {
 	@Override public void update() {
 		if (controllable) {
 			
-			yaw += Mouse.getMouseDX() * MOUSE_SENSITY;
-			pitch += Mouse.getMouseDY() * MOUSE_SENSITY;
+			float yawOffset = -(float) (Mouse.getMouseDX() * MOUSE_SENSITY);
+			float pitchOffset = (float) (Mouse.getMouseDY() * MOUSE_SENSITY);
+			
+			float maxRot = (float) (MAX_ROTATION * Display.getFrameTime());
+			yaw += Maths.clamp(-maxRot, maxRot, yawOffset);
+			pitch +=  Maths.clamp(-maxRot, maxRot, pitchOffset);
+			
+			yaw = (yaw + 360) % 360;
+			pitch = (pitch + 360) % 360;
 			
 			super.getTransform().rotX = pitch;
 			super.getTransform().rotY = yaw;
@@ -66,20 +79,123 @@ public class TimeShip extends Entity {
 			if (up && down)
 				up = down = false;
 			
+			if (forwards) {
+				if (velocity.z > -MAX_FRONT_SPEED) {
+					velocity.z -= ACCELERATION_SPEED * Display.getFrameTime();
+				} else {
+					velocity.z = -MAX_FRONT_SPEED;
+				}
+			} else if (backwards) {
+				if (velocity.z < MAX_SPEED) {
+					velocity.z += ACCELERATION_SPEED * Display.getFrameTime();
+				} else {
+					velocity.z = MAX_SPEED;
+				}
+			} else {
+				if (velocity.z > 0) {
+					float newVelocity = (float) (velocity.z - BRAKING_SPEED * Display.getFrameTime());
+					if (newVelocity < 0)
+						velocity.z = 0;
+					else 
+						velocity.z = newVelocity;
+				} else if (velocity.z < 0) {
+					float newVelocity = (float) (velocity.z + FRONT_BRAKING_SPEED * Display.getFrameTime());
+					if (newVelocity > 0)
+						velocity.z = 0;
+					else 
+						velocity.z = newVelocity;
+				}
+			}
+			
+			if (left) {
+				if (velocity.x > -MAX_SPEED) {
+					velocity.x -= ACCELERATION_SPEED * Display.getFrameTime();
+				} else {
+					velocity.x = -MAX_SPEED;
+				}
+			} else if (right) {
+				if (velocity.x < MAX_SPEED) {
+					velocity.x += ACCELERATION_SPEED * Display.getFrameTime();
+				} else {
+					velocity.x = MAX_SPEED;
+				}
+			} else {
+				if (velocity.x > 0) {
+					float newVelocity = (float) (velocity.x - BRAKING_SPEED * Display.getFrameTime());
+					if (newVelocity < 0)
+						velocity.x = 0;
+					else 
+						velocity.x = newVelocity;
+				} else if (velocity.x < 0) {
+					float newVelocity = (float) (velocity.x + BRAKING_SPEED * Display.getFrameTime());
+					if (newVelocity > 0)
+						velocity.x = 0;
+					else 
+						velocity.x = newVelocity;
+				}
+			}
+			
+			if (down) {
+				if (velocity.y > -MAX_SPEED) {
+					velocity.y -= ACCELERATION_SPEED * Display.getFrameTime();
+				} else {
+					velocity.y = -MAX_SPEED;
+				}
+			} else if (up) {
+				if (velocity.y < MAX_SPEED) {
+					velocity.y += ACCELERATION_SPEED * Display.getFrameTime();
+				} else {
+					velocity.y = MAX_SPEED;
+				}
+			} else {
+				if (velocity.y > 0) {
+					float newVelocity = (float) (velocity.y - BRAKING_SPEED * Display.getFrameTime());
+					if (newVelocity < 0)
+						velocity.y = 0;
+					else 
+						velocity.y = newVelocity;
+				} else if (velocity.y < 0) {
+					float newVelocity = (float) (velocity.y + BRAKING_SPEED * Display.getFrameTime());
+					if (newVelocity > 0)
+						velocity.y= 0;
+					else 
+						velocity.y = newVelocity;
+				}
+			}
+			
+			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_C)) {
+				if (pitch != 0) {
+					if (pitch > 180) {
+						float newPitch = pitch += STABILIZATION_SPEED * Display.getFrameTime();
+						if (newPitch > 360)
+							pitch = 0;
+						else 
+							pitch = newPitch;
+					} else {
+						float newPitch = pitch -= STABILIZATION_SPEED * Display.getFrameTime();
+						if (newPitch < 0)
+							pitch = 0;
+						else 
+							pitch = newPitch;
+					}
+				}
+			}
 			
 			
-			super.getTransform().posX += velocity.x * Display.getFrameTime();
-			super.getTransform().posY += velocity.y * Display.getFrameTime();
-			super.getTransform().posZ += velocity.z * Display.getFrameTime();
+			Vector4f m = new Vector4f();
+			Matrix4f.transform(getTransformationMatrix(), new Vector4f(velocity.x, velocity.y, velocity.z, 0.0f), m);
+			super.getTransform().posX += m.x * Display.getFrameTime();
+			super.getTransform().posY += m.y * Display.getFrameTime();
+			super.getTransform().posZ += m.z * Display.getFrameTime();
 			
 			Vector4f v = new Vector4f(0, CAMERA_HEIGHT, CAMERA_DISTANCE, 1);
 			Matrix4f.transform(getTransformationMatrix(), v, v);
-			float distance = (float) Math.sqrt(CAMERA_DISTANCE*CAMERA_DISTANCE + CAMERA_HEIGHT*CAMERA_HEIGHT);
 			camera.x = v.x;
 			camera.y = v.y;
 			camera.z = v.z;
 			camera.pitch = CAMERA_ANGLE-pitch;
 			camera.yaw = -yaw;
+			camera.roll = 0;
 			
 			camera.updateMatrix();
 		}
@@ -92,12 +208,6 @@ public class TimeShip extends Entity {
 		start.z -= Math.sin(Math.toRadians(pitch)) * speed;
 
 	}
-	
-//	public static void main(String[] args) {
-//		Vector3f vec = new Vector3f();
-//		move(vec, 0f, -90f, 1f);
-//		System.out.println(vec);
-//	}
 	
 	public Camera getCamera() {
 		return camera;

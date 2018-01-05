@@ -26,7 +26,7 @@ public class EulerTransform {
 			case 2:
 				return transform.rotY;
 			case 3:
-				return transform.posZ;
+				return transform.rotZ;
 			}
 			return 0;
 		}
