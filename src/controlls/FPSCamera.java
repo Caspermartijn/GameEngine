@@ -7,7 +7,7 @@ import engine.Display;
 import engine.Keyboard;
 import engine.Mouse;
 import objects.Camera;
-import utils.Maths;
+import utils.maths.Maths;
 
 public class FPSCamera extends Camera {
 

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import utils.Vector;
+import utils.maths.Vector;
 
 
 public class Vertex1c {

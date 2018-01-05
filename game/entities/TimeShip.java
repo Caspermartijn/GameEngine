@@ -9,8 +9,8 @@ import engine.Display;
 import engine.Keyboard;
 import engine.Mouse;
 import objects.Camera;
-import utils.EulerTransform.RotationType;
-import utils.Maths;
+import utils.maths.Maths;
+import utils.transformations.EulerTransform.RotationType;
 import utils.ModelLoader;
 import utils.SourceFile;
 

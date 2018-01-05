@@ -13,7 +13,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import objects.Vao;
 import utils.SourceFile;
-import utils.Vector;
+import utils.maths.Vector;
 
 public class NormalMappedObjLoader {
 

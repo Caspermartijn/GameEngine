@@ -1,4 +1,4 @@
-package utils;
+package utils.guis;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;

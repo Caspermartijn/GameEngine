@@ -9,9 +9,9 @@ import engine.KeyboardListener;
 import engine.Mouse;
 import texts.Text;
 import texts.TextMaster;
-import utils.Collision;
 import utils.Switch;
-import utils.Vector;
+import utils.guis.Collision;
+import utils.maths.Vector;
 
 public class TextFieldComponent extends QuadComponent {
 

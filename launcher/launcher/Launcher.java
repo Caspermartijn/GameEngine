@@ -63,10 +63,6 @@ public abstract class Launcher extends JFrame implements ILauncher {
 	private EngineFileConfig launcherData = new EngineFileConfig("", "launcherData.cnfg");
 	// ================LauncherData================
 
-	// ================Listeners================
-	
-	// ================Listeners================
-
 	public Launcher(int widht, int height, String title, int button_width, int button_height) throws HeadlessException {
 		this.width = widht;
 		this.height = height;
@@ -136,7 +132,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		credits = new JButton("Credits");
 		versionLabel = new JLabel("Version: " + launcherData.getString("version"));
 
-		play.setBounds(width - button_width + 5, 100, button_width, button_height);
+		play.setBounds(width - button_width + 5, 120, button_width, button_height);
 		options.setBounds(width - button_width + 5, play.getY() + button_height + 5, button_width, button_height);
 		credits.setBounds(width - button_width + 5, options.getY() + button_height + 5, button_width, button_height);
 		quit.setBounds(width - button_width + 5, credits.getY() + button_height + 5, button_width, button_height);

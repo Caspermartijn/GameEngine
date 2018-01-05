@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 import texts.Text;
 import texts.TextMaster;
-import utils.Vector;
+import utils.maths.Vector;
 
 public class TextComponent extends GUIComponent {
 	

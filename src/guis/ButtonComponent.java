@@ -7,9 +7,9 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.Mouse;
 import texts.Text;
 import texts.TextMaster;
-import utils.Collision;
 import utils.Delay;
-import utils.Vector;
+import utils.guis.Collision;
+import utils.maths.Vector;
 
 public class ButtonComponent extends QuadComponent {
 

@@ -9,7 +9,7 @@ import static org.lwjgl.opengl.GL11.*;
 import hitbox.HBox;
 import objects.Camera;
 import objects.Vao;
-import utils.Matrix;
+import utils.maths.Matrix;
 
 public class LineRenderer {
 

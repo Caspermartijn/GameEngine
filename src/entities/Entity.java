@@ -7,7 +7,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import objects.Model_3D;
-import utils.EulerTransform;
+import utils.transformations.EulerTransform;
 
 public class Entity implements IEntity {
 

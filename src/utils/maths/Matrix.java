@@ -1,4 +1,4 @@
-package utils;
+package utils.maths;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
