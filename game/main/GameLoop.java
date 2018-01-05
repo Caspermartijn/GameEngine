@@ -26,7 +26,7 @@ import texts.Fonts;
 import texts.Text;
 import textures.Texture;
 import utils.SourceFile;
-import utils.models.ModelLoader;
+import utils.models.ModelMaster;
 
 public class GameLoop {
 
@@ -84,8 +84,7 @@ public class GameLoop {
 				new SourceFile(ame_nebula, "face_top.png"), new SourceFile(ame_nebula, "face_back.png"),
 				new SourceFile(ame_nebula, "face_front.png") }, 512);
 		scene.skybox = skybox;
-		Model_3D timemastersHQ = ModelLoader.getModel(new SourceFile("/res/models/timemaster_HQ_1/model.obj"),
-				new SourceFile("/res/models/timemaster_HQ_1/texture.png"));
+		Model_3D timemastersHQ = ModelMaster.getModel("timemaster_HQ_1");
 		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 30);
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 
@@ -99,7 +98,7 @@ public class GameLoop {
 	}
 
 	public static void startGame() {
-		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("IceRise is best dev").setFullscreen(true)
+		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("IceRise is little").setFullscreen(true)
 				.setVsync(false).setSamples(8));
 		Mouse.setMouseEnabled(false);
 
