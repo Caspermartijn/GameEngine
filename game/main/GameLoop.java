@@ -33,7 +33,7 @@ public class GameLoop {
 
 	public static Launcher l;
 	private static Camera camera;
-	
+
 	public static void main(String[] args) {
 		l = new Launcher("testEngine") {
 
@@ -70,15 +70,15 @@ public class GameLoop {
 
 	public static Scene currentScene;
 
-	public static void exampleScene(Camera camera, MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
+	public static void exampleScene(MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
 		Scene scene = new Scene("example", renderer, skyboxRenderer) {
 
 		};
-		
+
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
 		ship.setControllable(true);
 		GameLoop.camera = ship.getCamera();
-		
+
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
 				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
@@ -90,6 +90,8 @@ public class GameLoop {
 		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 20);
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 
+		camera.z = 10f;
+
 		skybox.setRotationSpeed(20);
 		scene.lights.add(sun);
 		scene.entities.add(ent);
@@ -98,24 +100,29 @@ public class GameLoop {
 	}
 
 	public static void startGame() {
-		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("IceRise is best dev").setFullscreen(true).setVsync(false)
-				.setSamples(8));
+		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("IceRise is best dev").setFullscreen(true)
+				.setVsync(false).setSamples(8));
 		Mouse.setMouseEnabled(false);
-		
+
 		GLSettings.setClearColor(new Vector4f(0, 0.25f, 1, 1));
 		GLSettings.setDepthTesting(true);
 
-//		FPSCamera camera = new FPSCamera();
-		
+		// FPSCamera camera = new FPSCamera();
+
+		// FPSCamera camera = new FPSCamera();
+
 		SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 		MasterRenderer master = new MasterRenderer();
-		
+		exampleScene(master, skyboxRenderer);
+
 		ModelMaster.loadModels("");
-		exampleScene(camera, master, skyboxRenderer);
-		
+		exampleScene(master, skyboxRenderer);
+
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
 		Fonts.addFont("candara", new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
+
+		ModelMaster.loadModels("");
 
 		Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
 		testText.setColor(1, 1, 1);
