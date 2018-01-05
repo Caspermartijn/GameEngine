@@ -13,7 +13,6 @@ import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
 import launcher.Launcher;
-import loader.modelLoader.ModelMaster;
 import objects.Camera;
 import objects.Model_3D;
 import objects.Skybox;
@@ -26,8 +25,8 @@ import shaders.shaderObjects.ShaderProgram;
 import texts.Fonts;
 import texts.Text;
 import textures.Texture;
-import utils.ModelLoader;
 import utils.SourceFile;
+import utils.models.ModelLoader;
 
 public class GameLoop {
 
@@ -113,7 +112,6 @@ public class GameLoop {
 		MasterRenderer master = new MasterRenderer();
 		exampleScene(master, skyboxRenderer);
 
-		ModelMaster.loadModels("");
 		exampleScene(master, skyboxRenderer);
 
 		master.setProjectionMatrix(camera.getProjectionMatrix());
