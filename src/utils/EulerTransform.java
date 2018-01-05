@@ -5,7 +5,49 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class EulerTransform {
 
+	private static final Vector3f X_AXIS = new Vector3f(1, 0, 0);
+	private static final Vector3f Y_AXIS = new Vector3f(0, 1, 0);
+	private static final Vector3f Z_AXIS = new Vector3f(0, 0, 1);
+
+	public enum RotationType {
+		XYZ(1, 2, 3), XZY(1, 3, 2), YXZ(2, 1, 3), YZX(2, 3, 1), ZXY(3, 1, 2), ZYX(3, 2, 1);
+
+		private int[] order;
+
+		RotationType(int first, int second, int third) {
+			order = new int[] { first, second, third };
+		}
+
+		protected static float getAngle(int index, EulerTransform transform) {
+			int o = transform.type.order[index-1];
+			switch (o) {
+			case 1:
+				return transform.rotX;
+			case 2:
+				return transform.rotY;
+			case 3:
+				return transform.posZ;
+			}
+			return 0;
+		}
+
+		protected static Vector3f getAxis(int index, EulerTransform transform) {
+			int o = transform.type.order[index-1];
+			switch (o) {
+			case 1:
+				return X_AXIS;
+			case 2:
+				return Y_AXIS;
+			case 3:
+				return Z_AXIS;
+			}
+			return new Vector3f();
+		}
+	}
+
 	public float posX, posY, posZ, rotX, rotY, rotZ, scaleX = 1, scaleY = 1, scaleZ = 1;
+
+	private RotationType type = RotationType.XYZ;
 
 	public EulerTransform() {
 	}
@@ -28,9 +70,9 @@ public class EulerTransform {
 		Matrix4f matrix = new Matrix4f();
 		matrix.setIdentity();
 		Matrix4f.translate(new Vector3f(posX, posY, posZ), matrix, matrix);
-		Matrix4f.rotate((float) Math.toRadians(rotX), new Vector3f(1, 0, 0), matrix, matrix);
-		Matrix4f.rotate((float) Math.toRadians(rotY), new Vector3f(0, 1, 0), matrix, matrix);
-		Matrix4f.rotate((float) Math.toRadians(rotZ), new Vector3f(0, 0, 1), matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(RotationType.getAngle(1, this)), RotationType.getAxis(1, this), matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(RotationType.getAngle(2, this)), RotationType.getAxis(2, this), matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(RotationType.getAngle(3, this)), RotationType.getAxis(3, this), matrix, matrix);
 		Matrix4f.scale(new Vector3f(scaleX, scaleY, scaleZ), matrix, matrix);
 		return matrix;
 	}
@@ -69,6 +111,14 @@ public class EulerTransform {
 
 	public Vector3f getScale() {
 		return new Vector3f(scaleX, scaleY, scaleZ);
+	}
+
+	public RotationType getType() {
+		return type;
+	}
+
+	public void setType(RotationType type) {
+		this.type = type;
 	}
 
 }
