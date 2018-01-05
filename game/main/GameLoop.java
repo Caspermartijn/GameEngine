@@ -87,7 +87,7 @@ public class GameLoop {
 		scene.skybox = skybox;
 		Model_3D timemastersHQ = ModelLoader.getModel(new SourceFile("/res/models/timemaster_HQ_1/model.obj"),
 				new SourceFile("/res/models/timemaster_HQ_1/texture.png"));
-		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 20);
+		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 30);
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 
 		camera.z = 10f;
@@ -109,8 +109,6 @@ public class GameLoop {
 
 		// FPSCamera camera = new FPSCamera();
 
-		// FPSCamera camera = new FPSCamera();
-
 		SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 		MasterRenderer master = new MasterRenderer();
 		exampleScene(master, skyboxRenderer);
@@ -119,10 +117,6 @@ public class GameLoop {
 		exampleScene(master, skyboxRenderer);
 
 		master.setProjectionMatrix(camera.getProjectionMatrix());
-
-		Fonts.addFont("candara", new SourceFile("/res/candara.png"), new SourceFile("/res/candara.fnt"));
-
-		ModelMaster.loadModels("");
 
 		Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
 		testText.setColor(1, 1, 1);

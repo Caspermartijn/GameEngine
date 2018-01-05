@@ -102,6 +102,7 @@ public class MasterRenderer {
 
 	public void delete() {
 		entityShader.delete();
+		terrainShader.delete();
 	}
 
 }

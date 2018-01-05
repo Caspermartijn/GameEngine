@@ -31,7 +31,7 @@ public class TimeShip extends Entity {
 	private static final float MAX_FRONT_SPEED = 200;
 	private static final float MAX_SPEED = 20;
 	
-	private static final float MOUSE_SENSITY = 200;
+	private static final float MOUSE_SENSITY = 20;
 	private static final float MAX_ROTATION = 600;
 	
 	private static final float STABILIZATION_SPEED = 50;

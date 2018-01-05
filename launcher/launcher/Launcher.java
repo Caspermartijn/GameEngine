@@ -27,6 +27,8 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 	private static final long serialVersionUID = 1593584962448100240L;
 
+	private List<JButton> buttons = new ArrayList<JButton>();
+
 	Configuration config = new Configuration() {
 		@Override
 		public AppConfigurationEntry[] getAppConfigurationEntry(String name) {
@@ -56,7 +58,14 @@ public abstract class Launcher extends JFrame implements ILauncher {
 	private JLabel titleError = new JLabel("ERROR/WARNING");
 	private JTextArea errorText = new JTextArea();
 	// ================Error/Warning================
+
+	// ================LauncherData================
 	private EngineFileConfig launcherData = new EngineFileConfig("", "launcherData.cnfg");
+	// ================LauncherData================
+
+	// ================Listeners================
+	
+	// ================Listeners================
 
 	public Launcher(int widht, int height, String title, int button_width, int button_height) throws HeadlessException {
 		this.width = widht;
@@ -84,8 +93,6 @@ public abstract class Launcher extends JFrame implements ILauncher {
 			e.printStackTrace();
 		}
 	}
-
-	private List<JButton> buttons = new ArrayList<JButton>();
 
 	private void initErrorLabel() {
 		int plain = Font.PLAIN;
@@ -116,7 +123,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		loadingPanelProgressBar.setValue(20);
 		loadingPanelProgressBar.setVisible(true);
 		loadingPanelProgressBar.setStringPainted(false);
-		loadingPanelProgressBar.setForeground(Color.gray);
+		loadingPanelProgressBar.setForeground( new Color(40, 40, 40, 64) );
 		loadingPanelProgressBar.setOpaque(false);
 		loadingPanelProgressBar.setBorderPainted(false);
 		loadingPanel.add(loadingPanelProgressBar);
