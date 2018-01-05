@@ -33,8 +33,8 @@ public class FPSCamera extends Camera {
 	}
 
 	public void updateInputs() {
-		float dx = (float) (Mouse.getMouseDX() * MOUSE_SENSITY) / 1000;
-		float dy = (float) (Mouse.getMouseDY() * MOUSE_SENSITY) / 1000;
+		float dx = (float) (Mouse.getMouseDX() * MOUSE_SENSITY);
+		float dy = (float) (Mouse.getMouseDY() * MOUSE_SENSITY);
 		super.yaw += dx;
 		super.pitch += dy;
 		pitch = Maths.clamp(-90, 90, pitch);
@@ -61,6 +61,7 @@ public class FPSCamera extends Camera {
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
 			super.y += SPEED * Display.getFrameTime();
 		}
+		
 		super.updateMatrix();
 	}
 

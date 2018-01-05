@@ -36,9 +36,6 @@ public class Camera {
 	}
 
 	public void updateMatrix() {
-		yaw = (yaw + 360) % 360;
-		pitch = (pitch + 180 + 360) % 360 - 180;
-		roll = (roll + 360) % 360;
 		view.setIdentity();
 		Matrix4f.rotate((float) Math.toRadians(pitch), new Vector3f(1, 0, 0), view, view);
 		Matrix4f.rotate((float) Math.toRadians(yaw), new Vector3f(0, 1, 0), view, view);

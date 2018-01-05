@@ -43,7 +43,7 @@ public class Mouse {
 	public static void setMouseEnabled(boolean value) {
 		cursor = value;
 		GLFW.glfwSetInputMode(Display.getWindowID(), GLFW.GLFW_CURSOR,
-				(value) ? GLFW.GLFW_CURSOR_NORMAL : GLFW.GLFW_CURSOR_HIDDEN);
+				(value) ? GLFW.GLFW_CURSOR_NORMAL : GLFW.GLFW_CURSOR_DISABLED);
 	}
 
 	public static void setCursorPosition(float x, float y) {
