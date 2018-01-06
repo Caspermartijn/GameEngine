@@ -1,0 +1,20 @@
+JAN
+1: Started project
+	- Setup git project
+	- Added GuiRenderer
+2: Added entity renderer
+	- Added entity renderer
+	- started working on ideas
+3: Fixed entity renderer
+	- Fixed entity renderer
+	- Started working on launcher
+4: Made alot of changes to launcher
+	- Added som many cool featurs to launcher
+	- added version download
+	- added terrain renderer
+5: Added ship movement
+	- Added timeship movement
+	- Some other features
+6: Log file
+	- Added this file
+	- //Nothing yet
