@@ -12,15 +12,6 @@ public class Controller {
 
 	private int controller;
 
-	public static final int CONTROLLER_BUTTON_A = GLFW.GLFW_JOYSTICK_1, CONTROLLER_BUTTON_B = GLFW.GLFW_JOYSTICK_2, CONTROLLER_BUTTON_X = GLFW.GLFW_JOYSTICK_3,
-			CONTROLLER_BUTTON_Y = GLFW.GLFW_JOYSTICK_4;
-	
-	public static final int CONTROLLER_BUTTON_LB = 10004, CONTROLLER_BUTTON_RB = 10005;
-	public static final int CONTROLLER_BUTTON_BACK = 10006, CONTROLLER_BUTTON_START = 10007;
-	public static final int CONTROLLER_LEFT_STICK = 10008, CONTROLLER_RIGHT_STICK = 10009;
-	public static final int CONTROLLER_DPAD_UP = 10010, CONTROLLER_DPAD_RIGHT = 10011, CONTROLLER_DPAD_DOWN = 10012,
-			CONTROLLER_DPAD_LEFT = 10013;
-
 	public Controller(int controller) {
 		this.controller = controller;
 	}

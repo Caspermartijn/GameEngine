@@ -37,60 +37,59 @@ public class FPSCamera extends Camera {
 	}
 
 	public void updateInputs() {
-		if (!controller.isActive()) {
-			
-			float dx = (float) (Mouse.getMouseDX() * MOUSE_SENSITY);
-			float dy = (float) (Mouse.getMouseDY() * MOUSE_SENSITY);
-			super.yaw += dx;
-			super.pitch += dy;
-			pitch = Maths.clamp(-90, 90, pitch);
-			
-			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
-				super.x += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;
-				super.z -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;
-			}
-			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_S)) {
-				super.x += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * -SPEED;
-				super.z -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * -SPEED;
-			}
-			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_A)) {
-				super.x -= Math.sin(Math.toRadians(yaw + 90)) * Display.getFrameTime() * SPEED;
-				super.z += Math.cos(Math.toRadians(yaw + 90)) * Display.getFrameTime() * SPEED;
-			}
-			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_D)) {
-				super.x -= Math.sin(Math.toRadians(yaw + 90)) * Display.getFrameTime() * -SPEED;
-				super.z += Math.cos(Math.toRadians(yaw + 90)) * Display.getFrameTime() * -SPEED;
-			}
-			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_CONTROL)) {
-				super.y -= SPEED * Display.getFrameTime();
-			}
-			if (Keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
-				super.y += SPEED * Display.getFrameTime();
-			}
 
-		} else {
+		float dx = (float) (Mouse.getMouseDX() * MOUSE_SENSITY);
+		float dy = (float) (Mouse.getMouseDY() * MOUSE_SENSITY);
+		super.yaw += dx;
+		super.pitch += dy;
+		pitch = Maths.clamp(-90, 90, pitch);
+
+		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
+			super.x += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;
+			super.z -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;
+		}
+		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_S)) {
+			super.x += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * -SPEED;
+			super.z -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * -SPEED;
+		}
+		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_A)) {
+			super.x -= Math.sin(Math.toRadians(yaw + 90)) * Display.getFrameTime() * SPEED;
+			super.z += Math.cos(Math.toRadians(yaw + 90)) * Display.getFrameTime() * SPEED;
+		}
+		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_D)) {
+			super.x -= Math.sin(Math.toRadians(yaw + 90)) * Display.getFrameTime() * -SPEED;
+			super.z += Math.cos(Math.toRadians(yaw + 90)) * Display.getFrameTime() * -SPEED;
+		}
+		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_LEFT_CONTROL)) {
+			super.y -= SPEED * Display.getFrameTime();
+		}
+		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
+			super.y += SPEED * Display.getFrameTime();
+		}
+
+		if (controller.isActive()) {
 			Vector2f moveVec = controller.getLeftStick();
 			super.x += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * (SPEED * -moveVec.y);
 			super.z -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * (SPEED * -moveVec.y);
 
 			super.x -= Math.sin(Math.toRadians(yaw + 90)) * Display.getFrameTime() * (SPEED * -moveVec.x);
 			super.z += Math.cos(Math.toRadians(yaw + 90)) * Display.getFrameTime() * (SPEED * -moveVec.x);
-			
+
 			Vector2f camVec = controller.getRightStick();
-			
-			float dx = (float) ((camVec.x/1000) * MOUSE_SENSITY);
-			float dy = (float) ((camVec.y/1000) * MOUSE_SENSITY);
-			super.yaw += dx;
-			super.pitch += dy;
+
+			float dx2 = (float) ((camVec.x / 1000) * MOUSE_SENSITY);
+			float dy2 = (float) ((camVec.y / 1000) * MOUSE_SENSITY);
+			super.yaw += dx2;
+			super.pitch += dy2;
 			pitch = Maths.clamp(-90, 90, pitch);
-			
+
 			if (controller.getButtonA_X()) {
 				super.y += SPEED * Display.getFrameTime();
 			}
 			if (controller.getButtonThumbR()) {
 				super.y -= SPEED * Display.getFrameTime();
 			}
-			
+
 		}
 		super.updateMatrix();
 	}

@@ -10,10 +10,13 @@ import java.io.InputStreamReader;
 public class SourceFile {
 	
 	private String path;
+	private String name;
 	private static final String FILE_SEPERATOR = "/";
 	
 	public SourceFile(String file) {
-		path = file;
+		this.path = (file);
+	    String[] dirs = path.split("/");
+	    this.name = dirs[(dirs.length - 1)];
 	}
 	
 	public SourceFile(SourceFile file, String subfile) {
@@ -50,5 +53,9 @@ public class SourceFile {
 		} catch (Exception e) {
 			return this;
 		}
+	}
+
+	public String getName() {
+		return name;
 	}
 }

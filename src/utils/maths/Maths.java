@@ -1,9 +1,13 @@
 package utils.maths;
 
+import java.util.Random;
+
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Maths {
+
+	public static Random RANDOM = new Random();
 
 	public static float clamp(float min, float max, float value) {
 		return Float.min(max, Float.max(min, value));
