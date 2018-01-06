@@ -5,6 +5,8 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import controlls.Controller;
+import controlls.FreeCam;
 import engine.Display;
 import engine.DisplayBuilder;
 import engine.GLSettings;
@@ -14,6 +16,7 @@ import entities.Light;
 import entities.TimeShip;
 import launcher.Launcher;
 import objects.Camera;
+import objects.FPSCamera;
 import objects.Model_3D;
 import objects.Skybox;
 import objects.Vao;
@@ -26,6 +29,7 @@ import shaders.shaderObjects.ShaderProgram;
 import texts.Fonts;
 import texts.Text;
 import textures.Texture;
+import utils.RenderItem;
 import utils.SourceFile;
 import utils.models.ModelMaster;
 
@@ -72,14 +76,23 @@ public class GameLoop {
 
 	public static void exampleScene(MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
 		SceneLoader.getScene(null, null, "Scene1");
-		
+
 		Scene scene = new Scene("example", renderer, skyboxRenderer) {
 
 		};
 
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
-		ship.setControllable(true);
-		GameLoop.camera = ship.getCamera();
+		ship.setControllable(false);
+		FPSCamera free = new FPSCamera();
+		GameLoop.camera = free;
+
+		new RenderItem() {
+
+			@Override
+			public void render() {
+				free.updateInputs();
+			}
+		};
 
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
@@ -87,8 +100,8 @@ public class GameLoop {
 				new SourceFile(ame_nebula, "face_top.png"), new SourceFile(ame_nebula, "face_back.png"),
 				new SourceFile(ame_nebula, "face_front.png") }, 512);
 		scene.skybox = skybox;
-		Model_3D timemastersHQ = ModelMaster.getModel("timemaster_HQ_1");
-		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 30);
+		Model_3D timemastersHQ = ModelMaster.getModel("timemasters_hq_1");
+		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 5);
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 
 		camera.z = 10f;
@@ -101,50 +114,55 @@ public class GameLoop {
 	}
 
 	public static void startGame() {
-		Display.createDisplay(new DisplayBuilder(1920, 1080).setTitle("IceRise is little").setFullscreen(true)
-				.setVsync(false).setSamples(8));
-		Mouse.setMouseEnabled(false);
+		try {
+			Display.createDisplay(new DisplayBuilder(1280, 720).setTitle("IceRise is little").setFullscreen(false)
+					.setVsync(false).setSamples(8));
+			Mouse.setMouseEnabled(false);
 
-		GLSettings.setClearColor(new Vector4f(0, 0.25f, 1, 1));
-		GLSettings.setDepthTesting(true);
+			GLSettings.setClearColor(new Vector4f(0, 0.25f, 1, 1));
+			GLSettings.setDepthTesting(true);
 
-		// FPSCamera camera = new FPSCamera();
+			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
+			MasterRenderer master = new MasterRenderer();
+			exampleScene(master, skyboxRenderer);
 
-		SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
-		MasterRenderer master = new MasterRenderer();
-		exampleScene(master, skyboxRenderer);
+			exampleScene(master, skyboxRenderer);
 
-		exampleScene(master, skyboxRenderer);
+			master.setProjectionMatrix(camera.getProjectionMatrix());
 
-		master.setProjectionMatrix(camera.getProjectionMatrix());
+			Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
+			testText.setColor(1, 1, 1);
+			TextMaster.addText(testText);
 
-		Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
-		testText.setColor(1, 1, 1);
-		TextMaster.addText(testText);
+			while (!Display.isCloseRequested()) {
+				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-		while (!Display.isCloseRequested()) {
-			GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+				RenderItem.renderItems();
+				currentScene.render(camera);
 
-			currentScene.render(camera);
+				TextMaster.renderAll();
 
-			TextMaster.renderAll();
+				Display.swapBuffers();
+				Display.updateEvents();
+			}
 
-			Display.swapBuffers();
-			Display.updateEvents();
+			testText.delete();
+			TextMaster.cleanUp();
+			Fonts.delete();
+			Display.disposeDisplay();
+			skyboxRenderer.delete();
+			master.delete();
+
+			Vao.printLog();
+			ShaderProgram.printLog();
+			Texture.printLog();
+
+			l.closeApp();
+		} catch (Exception e) {
+			e.printStackTrace();
+			l.closeApp();
 		}
 
-		testText.delete();
-		TextMaster.cleanUp();
-		Fonts.delete();
-		Display.disposeDisplay();
-		skyboxRenderer.delete();
-		master.delete();
-
-		Vao.printLog();
-		ShaderProgram.printLog();
-		Texture.printLog();
-
-		l.closeApp();
 	}
 
 }

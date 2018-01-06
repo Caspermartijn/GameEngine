@@ -43,7 +43,7 @@ public class DisplayBuilder {
 		return new DisplayBuilder(width, height);
 	}
 
-	public void create() {
+	public void create() throws Exception {
 		Display.createDisplay(this);
 	}
 }

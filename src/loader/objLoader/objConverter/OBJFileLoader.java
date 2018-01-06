@@ -2,6 +2,7 @@ package loader.objLoader.objConverter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,8 @@ import utils.SourceFile;
 public class OBJFileLoader {
 
 	public static ModelData loadOBJ(SourceFile file) throws IOException {
-		InputStreamReader objFile = new InputStreamReader(Class.class.getResourceAsStream(file.getPath()));
+		InputStream inputstream = Class.class.getResourceAsStream(file.getPath());
+		InputStreamReader objFile = new InputStreamReader(inputstream);
 		BufferedReader reader = new BufferedReader(objFile);
 		String line;
 		List<Vertex> vertices = new ArrayList<Vertex>();

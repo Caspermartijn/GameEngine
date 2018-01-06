@@ -41,7 +41,7 @@ public class Display {
 
 	private static long id;
 
-	public static void createDisplay(DisplayBuilder builder) {
+	public static void createDisplay(DisplayBuilder builder) throws Exception {
 		GLFWErrorCallback.createPrint(System.err).set();
 
 		if (!glfwInit()) {
