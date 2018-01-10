@@ -4,13 +4,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
 import utils.SourceFile;
+import utils.tasks.Cleanup;
 
-
-
-public class Texture {
+public class Texture extends Cleanup {
 
 	public int id;
-	
+
 	private static int created, deleted;
 
 	protected Texture(int id) {
@@ -32,20 +31,20 @@ public class Texture {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
 	}
 
+	@Override
 	public void delete() {
 		deleted++;
-		
+		super.cleaned = true;
 		GL11.glDeleteTextures(id);
 	}
 
 	public static void deleteTexture(int id) {
 		deleted++;
-		
+
 		GL11.glDeleteTextures(id);
 	}
 
-	
 	public static void printLog() {
-		System.out.println("Texture_Log[created: " + created + " , deleted:" + deleted + "]" );
+		System.out.println("Texture_Log[created: " + created + " , deleted:" + deleted + "]");
 	}
 }

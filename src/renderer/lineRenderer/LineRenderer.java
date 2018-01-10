@@ -3,18 +3,15 @@ package renderer.lineRenderer;
 import java.util.Collection;
 
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-
-import entities.Entity;
-
 import static org.lwjgl.opengl.GL11.*;
 import hitbox.HBox;
 import objects.Camera;
 import objects.Vao;
 import shaders.ShaderProgram;
 import utils.maths.Matrix;
+import utils.tasks.Cleanup;
 
-public class LineRenderer {
+public class LineRenderer extends Cleanup {
 
 	private LineShader shader = new LineShader();
 
@@ -32,7 +29,7 @@ public class LineRenderer {
 				shader.location_transformationMatrix.loadMatrix(Matrix.createTransformationMatrix(box.getPosition(),
 						box.getRotation().x, box.getRotation().y, box.getRotation().z, box.getScale()));
 				shader.location__viewMatrix.loadMatrix(camera.getViewMatrix());
-				shader.color.loadVec4(0, 1, 0, 1);//100% green
+				shader.color.loadVec4(0, 1, 0, 1);// 100% green
 				glDrawArrays(GL_LINE_STRIP, 0, box.getRawModel().getVertexCount());
 				unbind(box);
 			}
@@ -40,11 +37,10 @@ public class LineRenderer {
 		shader.stop();
 	}
 
-	private float distance(Camera c, Vector3f p) {
-		float xOff = p.x - c.x;
-		float zOff = p.z - c.z;
-		return (float) Math.sqrt((xOff * xOff) + (zOff * zOff));
-	}
+	/*
+	 * private float distance(Camera c, Vector3f p) { float xOff = p.x - c.x; float
+	 * zOff = p.z - c.z; return (float) Math.sqrt((xOff * xOff) + (zOff * zOff)); }
+	 */
 
 	private void prepareHitBox(HBox box) {
 		Vao model = box.getRawModel();
@@ -57,6 +53,11 @@ public class LineRenderer {
 
 	public ShaderProgram getShader() {
 		return shader;
+	}
+
+	@Override
+	public void delete() {
+		shader.delete();
 	}
 
 }

@@ -4,8 +4,9 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
 
 import objects.Vao;
+import utils.tasks.Cleanup;
 
-public class Text {
+public class Text extends Cleanup{
 
 	private String textString;
 	private float fontSize;
@@ -31,6 +32,7 @@ public class Text {
 		this.lineMaxSize = maxLineLength;
 		this.centerText = centered;
 		buildMesh();
+		
 	}
 
 	private void buildMesh() {

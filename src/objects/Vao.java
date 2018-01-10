@@ -8,7 +8,9 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-public class Vao {
+import utils.tasks.Cleanup;
+
+public class Vao extends Cleanup {
 
 	public int id;
 	private List<Vbo> dataVbos = new ArrayList<Vbo>();
@@ -163,6 +165,8 @@ public class Vao {
 		}
 		if (indexVbo != null)
 			indexVbo.delete();
+		
+		super.cleaned = true;
 	}
 
 	private void bind() {

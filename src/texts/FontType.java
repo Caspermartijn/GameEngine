@@ -24,10 +24,6 @@ public class FontType {
 		this.smoothness = smoothness;
 	}
 
-	public void delete() {
-		textureAtlas.delete();
-	}
-	
 	public Texture getTexture() {
 		return textureAtlas;
 	}

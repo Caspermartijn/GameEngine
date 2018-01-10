@@ -2,10 +2,8 @@ package objects;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import controlls.Controller;
 import engine.Display;
 import engine.Keyboard;
 import engine.Mouse;
@@ -23,8 +21,6 @@ public class FPS_Player extends Entity {
 
 	private static final float MOUSE_SENSITY = 100;
 	private static final float SPEED = 20;
-
-	private static Controller controller = new Controller(0);
 
 	public FPS_Player(Model_3D model, Vector3f position, Vector3f rotation, HitBox playerHitBox, float scale) {
 		super(model, position, rotation, scale);

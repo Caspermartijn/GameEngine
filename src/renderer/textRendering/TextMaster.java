@@ -3,25 +3,38 @@ package renderer.textRendering;
 import java.util.ArrayList;
 
 import texts.Text;
+import utils.tasks.Cleanup;
 
 public class TextMaster {
 
 	private static ArrayList<Text> texts = new ArrayList<>();
 	private static FontRenderer renderer = new FontRenderer();
-	
+
+	private static Cleanup cleanup;
+
 	public static void removeText(Text text) {
 		texts.remove(text);
-	} 
-	
+	}
+
 	public static void addText(Text text) {
 		texts.add(text);
+		if (TextMaster.cleanup == null) {
+			TextMaster.cleanup = new Cleanup() {
+
+				@Override
+				public void delete() {
+					TextMaster.delete();
+				}
+
+			};
+		}
 	}
-	
-	public static void cleanUp() {
+
+	public static void delete() {
 		renderer.cleanUp();
 	}
-	
-	public static void renderAll() { 
+
+	public static void renderAll() {
 		for (Text t : texts) {
 			renderer.renderText(t);
 		}

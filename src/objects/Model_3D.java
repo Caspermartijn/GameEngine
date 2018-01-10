@@ -22,11 +22,6 @@ public class Model_3D {
 		return texture;
 	}
 
-	public void delete() {
-		mesh.delete();
-		texture.delete();
-	}
-
 	public boolean isBackfaceCullingEnabled() {
 		return backfaceCullingEnabled;
 	}

@@ -6,7 +6,6 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import audio.Sound2DMaster;
-import controlls.FreeCam;
 import engine.Display;
 import engine.DisplayBuilder;
 import engine.GLSettings;
@@ -20,18 +19,15 @@ import objects.Camera;
 import objects.FPS_Player;
 import objects.Model_3D;
 import objects.Skybox;
-import objects.Vao;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import renderer.textRendering.TextMaster;
 import scenes.Scene;
-import shaders.ShaderProgram;
-import texts.Fonts;
 import texts.Text;
-import textures.Texture;
 import utils.RenderItem;
 import utils.SourceFile;
 import utils.models.ModelMaster;
+import utils.tasks.Cleanup;
 
 public class GameLoop {
 
@@ -186,15 +182,11 @@ public class GameLoop {
 				Display.swapBuffers();
 				Display.updateEvents();
 			}
-			testText.delete();
-			TextMaster.cleanUp();
-			Fonts.delete();
+			
+			Cleanup.cleanAll();
+			
 			Display.disposeDisplay();
-			skyboxRenderer.delete();
-			master.delete();
-			Vao.printLog();
-			ShaderProgram.printLog();
-			Texture.printLog();
+			
 			l.closeApp();
 		} catch (Exception e) {
 			e.printStackTrace();

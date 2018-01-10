@@ -14,7 +14,6 @@ public class GUIMaster {
 	}
 	
 	public static void cleanUp() {
-		quadRenderer.cleanUp();
 		guis.clear();
 	}
 	

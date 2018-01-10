@@ -48,6 +48,7 @@ public class ShaderProgram {
 		GL20.glDetachShader(programID, fragmentShaderID);
 		GL20.glDeleteShader(vertexShaderID);
 		GL20.glDeleteShader(fragmentShaderID);
+
 	}
 
 	protected void storeAllUniformLocations(Uniform... uniforms) {
@@ -67,7 +68,6 @@ public class ShaderProgram {
 
 	public void delete() {
 		deleted++;
-
 		stop();
 		GL20.glDeleteProgram(programID);
 	}

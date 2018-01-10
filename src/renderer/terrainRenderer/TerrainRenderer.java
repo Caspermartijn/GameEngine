@@ -12,8 +12,9 @@ import shaders.ShaderProgram;
 import terrains.Terrain;
 import terrains.terrainTexture.TerrainTexturePack;
 import textures.Texture;
+import utils.tasks.Cleanup;
 
-public class TerrainRenderer {
+public class TerrainRenderer extends Cleanup {
 
 	private TerrainShader shader;
 
@@ -86,6 +87,11 @@ public class TerrainRenderer {
 
 	public ShaderProgram getShader() {
 		return shader;
+	}
+
+	@Override
+	public void delete() {
+		shader.delete();
 	}
 	
 }

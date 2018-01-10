@@ -5,8 +5,9 @@ import org.lwjgl.opengl.GL11;
 import engine.GLSettings;
 import guis.QuadComponent;
 import objects.Vao;
+import utils.tasks.Cleanup;
 
-public class QuadRenderer {
+public class QuadRenderer extends Cleanup{
 
 	private QuadShader shader = new QuadShader();
 	private Vao quad;
@@ -38,7 +39,7 @@ public class QuadRenderer {
 		shader.stop();
 	}
 	
-	public void cleanUp() {
+	public void delete() {
 		shader.delete();
 		quad.delete();
 	}

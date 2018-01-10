@@ -8,8 +8,9 @@ import objects.Camera;
 import objects.Skybox;
 import objects.Vao;
 import shaders.ShaderProgram;
+import utils.tasks.Cleanup;
 
-public class SkyboxRenderer {
+public class SkyboxRenderer extends Cleanup{
 
 	private final int SIZE = 1;
 	private final float[] VERTICES = { -SIZE, SIZE, -SIZE, -SIZE, -SIZE, -SIZE, SIZE, -SIZE, -SIZE, SIZE, -SIZE, -SIZE,

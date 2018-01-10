@@ -22,8 +22,9 @@ import renderer.terrainRenderer.TerrainRenderer;
 import renderer.terrainRenderer.TerrainShader;
 import terrains.Terrain;
 import terrains.terrainTexture.TerrainTexturePack;
+import utils.tasks.Cleanup;
 
-public class MasterRenderer {
+public class MasterRenderer extends Cleanup {
 
 	public static final float RED = 0.1f;
 	public static final float GREEN = 0.4f;
@@ -111,9 +112,6 @@ public class MasterRenderer {
 	}
 
 	public void delete() {
-		entityShader.delete();
-		terrainShader.delete();
-		linerenderer.getShader().delete();
 	}
 
 }

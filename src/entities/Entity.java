@@ -58,10 +58,6 @@ public class Entity implements IEntity {
 		}
 	}
 
-	public void delete() {
-		model.delete();
-	}
-
 	public EulerTransform getTransform() {
 		return transform;
 	}

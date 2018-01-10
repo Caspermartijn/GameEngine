@@ -3,13 +3,27 @@ package texts;
 import java.util.HashMap;
 
 import utils.SourceFile;
+import utils.tasks.Cleanup;
 
 public class Fonts {
 
 	private static HashMap<String, FontType> fonts = new HashMap<>();
 
+	private static Cleanup cleanup;
+	
+	
 	public static void addFont(String name, SourceFile texture, SourceFile fontFile) {
 		fonts.put(name, new FontType(texture, fontFile));
+		if(Fonts.cleanup == null) {
+			Fonts.cleanup = new Cleanup() {
+				
+				@Override
+				public void delete() {
+					Fonts.delete();
+				}
+	
+			};
+		}
 	}
 
 	public static void addFont(String name, SourceFile texture, SourceFile fontFile, float width, float smoothness) {
@@ -26,9 +40,6 @@ public class Fonts {
 	}
 
 	public static void delete() {
-		for (FontType f : fonts.values()) {
-			f.delete();
-		}
 	}
 
 }

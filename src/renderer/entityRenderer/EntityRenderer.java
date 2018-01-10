@@ -10,8 +10,9 @@ import engine.GLSettings;
 import entities.Entity;
 import objects.Model_3D;
 import objects.Vao;
+import utils.tasks.Cleanup;
 
-public class EntityRenderer {
+public class EntityRenderer extends Cleanup{
 
 	private EntityShader shader;
 
@@ -57,6 +58,11 @@ public class EntityRenderer {
 		shader.start();
 		shader.location_projectionMatrix.loadMatrix(matrix);
 		shader.stop();
+	}
+
+	@Override
+	public void delete() {
+		shader.delete();
 	}
 
 }
