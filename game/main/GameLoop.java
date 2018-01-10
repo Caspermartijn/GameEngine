@@ -1,14 +1,26 @@
 package main;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.glClear;
+import static utils.tasks.Cleanup.cleanAll;
+import static scenes.Scene.renderScene;
+import static scenes.Scene.setCurrentScene;
+import static renderer.textRendering.TextMaster.renderAllTexts;
+import static renderer.textRendering.TextMaster.addText;
+import static utils.RenderItem.renderItems;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static engine.GLSettings.*;
+import static engine.Display.*;
+import static audio.Sound2DMaster.*;
+import static engine.Mouse.*;
+
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
-import audio.Sound2DMaster;
 import engine.Display;
 import engine.DisplayBuilder;
-import engine.GLSettings;
+
 import engine.Mouse;
 import entities.Entity;
 import entities.Light;
@@ -21,13 +33,11 @@ import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
-import renderer.textRendering.TextMaster;
 import scenes.Scene;
 import texts.Text;
 import utils.RenderItem;
 import utils.SourceFile;
 import utils.models.ModelMaster;
-import utils.tasks.Cleanup;
 
 public class GameLoop {
 
@@ -67,18 +77,18 @@ public class GameLoop {
 			@Override
 			public void launcherLoad() {
 				try {
-					Sound2DMaster.loadSound("track1", "/res/sounds/songs/film_guitar_theme_music.wav");
-					Sound2DMaster.loadSound("track2", "/res/sounds/songs/that_feeling.wav");
-					Sound2DMaster.loadSound("hoverpop", "/res/sounds/launcher/hoverpop.wav");
-					Sound2DMaster.loadSound("play_click", "/res/sounds/launcher/play_click.wav");
-					Sound2DMaster.loadSound("back1", "/res/sounds/background/back1.wav");
+					loadSound("track1", "/res/sounds/songs/film_guitar_theme_music.wav");
+					loadSound("track2", "/res/sounds/songs/that_feeling.wav");
+					loadSound("hoverpop", "/res/sounds/launcher/hoverpop.wav");
+					loadSound("play_click", "/res/sounds/launcher/play_click.wav");
+					loadSound("back1", "/res/sounds/background/back1.wav");
 				} catch (Exception e) {
 				}
-				Sound2DMaster.play("track2");
-				Sound2DMaster.getSong("track2").loop();
-				Sound2DMaster.setGeneralVolume(10);
-				Sound2DMaster.setVolume("hoverpop", 20);
-				Sound2DMaster.setVolume("play_click", 30);
+				playSound("track2");
+				getSong("track2").loop();
+				setGeneralVolume(10);
+				setVolume("hoverpop", 20);
+				setVolume("play_click", 30);
 			}
 
 		};
@@ -86,7 +96,7 @@ public class GameLoop {
 	}
 
 	public static void spaceScene(MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
-		Scene scene = new Scene("example", renderer, skyboxRenderer) {
+		Scene scene = new Scene("TimeMasters", renderer, skyboxRenderer) {
 
 		};
 		Mouse.setMouseEnabled(false);
@@ -147,17 +157,17 @@ public class GameLoop {
 		scene.entities.add(ent);
 		scene.entities.add(ship);
 		scene.entities.add(inner);
-		Scene.setCurrentScene(scene);
+		setCurrentScene(scene);
 	}
 
 	public static void startGame() {
 		try {
-			Display.createDisplay(new DisplayBuilder(1280, 720).setTitle("GameEngine").setFullscreen(false)
-					.setVsync(false).setSamples(8).setFpsCap(60));
-			Mouse.setMouseEnabled(true);
+			createDisplay(new DisplayBuilder(1280, 720).setTitle("GameEngine").setFullscreen(false).setVsync(false)
+					.setSamples(8).setFpsCap(60));
+			setMouseEnabled(true);
 
-			GLSettings.setClearColor(new Vector4f(0, 0.25f, 1, 1));
-			GLSettings.setDepthTesting(true);
+			setClearColor(new Vector4f(0, 0.25f, 1, 1));
+			setDepthTesting(true);
 
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
@@ -168,25 +178,25 @@ public class GameLoop {
 
 			Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
 			testText.setColor(1, 1, 1);
-			TextMaster.addText(testText);
+			
+			addText(testText);
 
 			while (!Display.isCloseRequested()) {
-				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-				RenderItem.renderItems();
+				renderItems();
 
-				Scene.renderScene(camera);
+				renderScene(camera);
 
-				TextMaster.renderAll();
+				renderAllTexts();
 
-				Display.swapBuffers();
-				Display.updateEvents();
+				swapBuffers();
+				updateEvents();
 			}
-			
-			Cleanup.cleanAll();
-			
-			Display.disposeDisplay();
-			
+
+			cleanAll();
+			disposeDisplay();
+
 			l.closeApp();
 		} catch (Exception e) {
 			e.printStackTrace();

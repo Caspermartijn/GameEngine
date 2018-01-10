@@ -44,4 +44,8 @@ public class TextMaster {
 		return renderer;
 	}
 
+	public static void renderAllTexts() {
+		renderAll();
+	}
+
 }

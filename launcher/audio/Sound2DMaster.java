@@ -16,7 +16,7 @@ public class Sound2DMaster {
 		return songs.get(name);
 	}
 
-	public static void play(String string) {
+	public static void playSound(String string) {
 		songs.get(string).play();
 	}
 

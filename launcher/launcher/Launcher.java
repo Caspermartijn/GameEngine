@@ -168,7 +168,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 							@Override
 							public void run() {
-								Sound2DMaster.play("track1");
+								Sound2DMaster.playSound("track1");
 								Sound2DMaster.setVolume("track1", 5);
 							}
 
@@ -182,7 +182,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 							}
 
 						};
-						Sound2DMaster.play("play_click");
+						Sound2DMaster.playSound("play_click");
 					}
 				};
 				hideApp();
@@ -233,7 +233,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 				button.addMouseListener(new java.awt.event.MouseAdapter() {
 					public void mouseEntered(java.awt.event.MouseEvent evt) {
 						button.setFont(new Font(fonttype, Font.PLAIN, 37));
-						Sound2DMaster.play("hoverpop");
+						Sound2DMaster.playSound("hoverpop");
 					}
 
 					public void mouseExited(java.awt.event.MouseEvent evt) {
