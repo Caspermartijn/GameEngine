@@ -2,7 +2,6 @@ package hitbox;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import hitboxes.HitBoxManager;
 import objects.Vao;
 
 public class HitBox extends HBox {
@@ -31,7 +30,7 @@ public class HitBox extends HBox {
 		this.zMin = zMin;
 		this.zMax = zMax;
 		generateCorners(xMin, xMax, yMin, yMax, zMin, zMax);
-		HitBoxManager.addHitBox(this);
+		HitBoxMaster.hitBoxes.add(this);
 		super.setRawModel(HitBox.getCube(this));
 	}
 
@@ -85,12 +84,32 @@ public class HitBox extends HBox {
 
 	public static Vao getCube(HitBox box) {
 		Vao vao = Vao.create();
-		float[] positions = { box.xMin, box.yMax, box.zMin, box.xMax, box.yMax, box.zMin, box.xMax, box.yMax, box.zMax,
-				box.xMin, box.yMax, box.zMax, box.xMin, box.yMax, box.zMin, box.xMin, box.yMin, box.zMin, box.xMax,
-				box.yMin, box.zMin, box.xMax, box.yMax, box.zMin, box.xMax, box.yMin, box.zMin, box.xMax, box.yMin,
-				box.zMax, box.xMax, box.yMax, box.zMax, box.xMax, box.yMin, box.zMax, box.xMin, box.yMin, box.zMax,
-				box.xMax, box.yMin, box.zMin, box.xMin, box.yMin, box.zMax, box.xMin, box.yMax, box.zMax, box.xMin,
-				box.yMin, box.zMax, box.xMin, box.yMin, box.zMin, box.xMax, box.yMin, box.zMax };
+		float[] positions = { 
+				box.xMin, box.yMax, box.zMin,
+				box.xMax, box.yMax, box.zMin, 
+				box.xMax, box.yMax, box.zMax,
+				
+				box.xMin, box.yMax, box.zMax, 
+				box.xMin, box.yMax, box.zMin, 
+				box.xMin, box.yMin, box.zMin, 
+				
+				box.xMax, box.yMin, box.zMin,
+				box.xMax, box.yMax, box.zMin, 
+				box.xMax, box.yMin, box.zMin, 
+				
+				box.xMax, box.yMin, box.zMax,
+				box.xMax, box.yMax, box.zMax,
+				box.xMax, box.yMin, box.zMax,
+				
+				box.xMin, box.yMin, box.zMax,
+				box.xMax, box.yMin, box.zMin, 
+				box.xMin, box.yMin, box.zMax, 
+				
+				box.xMin, box.yMax, box.zMax, 
+				box.xMin, box.yMin, box.zMax,
+				box.xMin, box.yMin, box.zMin, 
+				
+				box.xMax, box.yMin, box.zMax };
 		return vao.loadToVAO(positions);
 	}
 

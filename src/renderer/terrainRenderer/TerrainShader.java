@@ -5,6 +5,12 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Light;
+import shaders.ShaderProgram;
+import shaders.UniformFloat;
+import shaders.UniformMat4;
+import shaders.UniformSampler;
+import shaders.UniformVec2;
+import shaders.UniformVec3;
 import shaders.shaderObjects.*;
 import utils.SourceFile;
 

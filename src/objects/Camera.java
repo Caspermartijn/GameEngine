@@ -3,8 +3,14 @@ package objects;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engine.Display;
+
 public class Camera {
 
+	private final static float FOV = 90;
+	private final static float NEAR_PLANE = 0.1f;
+	private final static float FAR_PLANE = 2000;
+	
 	private Matrix4f projection;
 	private Matrix4f view;
 	private Matrix4f camera;
@@ -16,11 +22,26 @@ public class Camera {
 		projection = new Matrix4f();
 		projection.setIdentity();
 		view = new Matrix4f();
-		view.setIdentity();
+		view.setIdentity(); 
 		setProjectionMatrix(projection);
 	}
 
 	protected void setProjectionMatrix(Matrix4f projection) {
+	}
+	
+	public void setNewProj() {
+		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
+		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio);
+		float x_scale = y_scale / aspectRatio;
+		float frustum_length = FAR_PLANE - NEAR_PLANE;
+
+		projection.m00 = x_scale;
+		projection.m11 = y_scale;
+		projection.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
+		projection.m23 = -1;
+		projection.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
+		projection.m33 = 0;
+		
 	}
 
 	public Matrix4f getCameraMatrix() {

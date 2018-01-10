@@ -14,21 +14,40 @@ import terrains.Terrain;
 
 public abstract class Scene implements IScene {
 
+	private static Scene current_scene;
+
+	public static void setCurrentScene(Scene scene) {
+		Scene.current_scene = scene;
+	}
+
+	public static Scene getCurrentscene() {
+		return current_scene;
+	}
+
+	public static void renderScene(Camera camera) {
+		current_scene.render(camera);
+	}
+
 	public List<Entity> entities = new ArrayList<Entity>();
+
 	public List<Light> lights = new ArrayList<Light>();
 	public List<HBox> hitboxes = new ArrayList<HBox>();
 	public List<Terrain> terrains = new ArrayList<Terrain>();
 	public Skybox skybox;
-	
+
 	private String base_name;
-	
+
 	private MasterRenderer masterRenderer;
 	private SkyboxRenderer skyboxRenderer;
-	
+
 	public Scene(String base_name, MasterRenderer masterRenderer, SkyboxRenderer skyboxRenderer) {
 		this.base_name = base_name;
 		this.masterRenderer = masterRenderer;
 		this.skyboxRenderer = skyboxRenderer;
+	}
+
+	public void addHitBox(HBox box) {
+		hitboxes.add(box);
 	}
 
 	public Skybox getSkyBox() {
@@ -66,15 +85,12 @@ public abstract class Scene implements IScene {
 	public SkyboxRenderer getSkyboxRenderer() {
 		return skyboxRenderer;
 	}
-	
+
 	@Override
 	public void render(Camera camera) {
-		for(Entity ent : entities) {
-			ent.update();
-		}
 		skyboxRenderer.render(skybox, camera);
 		masterRenderer.render(camera, lights, entities);
-		masterRenderer.unprepare();		
+		masterRenderer.unprepare();
 	}
-	
+
 }

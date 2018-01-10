@@ -24,7 +24,7 @@ public class FreeCam extends Camera {
 		float x_scale = y_scale / aspectRatio;
 		float frustum_length = FAR_PLANE - NEAR_PLANE;
 
-		projection.m00 = x_scale;
+		projection.m00 = x_scale; 
 		projection.m11 = y_scale;
 		projection.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
 		projection.m23 = -1;

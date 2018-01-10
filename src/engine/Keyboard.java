@@ -18,7 +18,7 @@ public class Keyboard {
 		addAllChars();
 		
 		GLFW.glfwSetKeyCallback(Display.getWindowID(), (window, key, scancode, action, mods) -> {
-			if (listener == null)
+			if (listener == null) 
 				return;
 			
 			if (action != 2 && action != 0)

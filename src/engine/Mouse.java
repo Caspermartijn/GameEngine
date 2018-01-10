@@ -37,7 +37,7 @@ public class Mouse {
 	}
 	
 	public static boolean buttonPressed(int button) {
-		return GLFW.glfwGetMouseButton(Display.getWindowID(), button) == GL11.GL_TRUE;
+		return GLFW.glfwGetMouseButton(Display.getWindowID(), button) == GL11.GL_TRUE; 
 	}
 
 	public static void setMouseEnabled(boolean value) {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import hitboxes.HitBoxManager;
 import objects.Vao;
 
 public class HitBoxCircle extends HBox {
@@ -18,7 +17,7 @@ public class HitBoxCircle extends HBox {
 		this.distance = distance;
 		this.yMax = yMax;
 		this.yMin = yMin;
-		HitBoxManager.addHitBox(this);
+		HitBoxMaster.hitBoxes.add(this);
 		super.setRawModel(HitBoxCircle.getCylinderModel(this));
 	}
 

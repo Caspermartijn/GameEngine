@@ -15,10 +15,6 @@ public class LineRenderer {
 
 	private LineShader shader = new LineShader();
 
-	public LineRenderer() {
-
-	}
-
 	public void setProjectionMatrix(Matrix4f matrix) {
 		shader.start();
 		shader.location_projectionViewMatrix.loadMatrix(matrix);
@@ -29,14 +25,12 @@ public class LineRenderer {
 		shader.start();
 		for (HBox box : collection) {
 			if (box.getPosition() != null) {
-				if (distance(camera, box.getPosition()) < 200)
-					prepareHitBox(box);
+				prepareHitBox(box);
 				shader.location_transformationMatrix.loadMatrix(Matrix.createTransformationMatrix(box.getPosition(),
 						box.getRotation().x, box.getRotation().y, box.getRotation().z, box.getScale()));
 				shader.location__viewMatrix.loadMatrix(camera.getViewMatrix());
 				glDrawArrays(GL_LINE_STRIP, 0, box.getRawModel().getVertexCount());
 				unbind(box);
-
 			}
 		}
 		shader.stop();

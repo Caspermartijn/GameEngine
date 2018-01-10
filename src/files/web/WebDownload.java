@@ -17,7 +17,8 @@ public class WebDownload {
 		}
 	}
 
-    private static void downloadUsingStream(String urlStr, String file) throws IOException{
+    @SuppressWarnings("unused")
+	private static void downloadUsingStream(String urlStr, String file) throws IOException{
         URL url = new URL(urlStr);
         BufferedInputStream bis = new BufferedInputStream(url.openStream());
         FileOutputStream fis = new FileOutputStream(file);

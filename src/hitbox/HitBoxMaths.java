@@ -44,7 +44,8 @@ public class HitBoxMaths {
 
 	private static boolean isCollidingCircle(HitBoxCircle box1, HitBoxCircle box2) {
 		HitBoxCircle[] boxes = { (HitBoxCircle) box1, (HitBoxCircle) box2 };
-		return isColliding(boxes);
+		HitBoxCircle[] boxes2 = { (HitBoxCircle) box2, (HitBoxCircle) box1 };
+		return isColliding(boxes) || isColliding(boxes2);
 	}
 
 	private static boolean isColliding(HBox[] boxes) {
@@ -62,15 +63,22 @@ public class HitBoxMaths {
 
 	private static boolean tier2Check(HitBoxCircle circular, HitBox squaire) {
 		boolean isBox = false;
-		float[] dat = rotate(squaire.getPosition().x, squaire.getPosition().z, circular.getPosition().x,
-				circular.getPosition().z, squaire.getRotation().y, circular.getRotation().y);
+		float[] dat = rotate(squaire.getPosition().x, squaire.getPosition().y, squaire.getPosition().z,
+				circular.getPosition().x, circular.getPosition().y, circular.getPosition().z, squaire.getRotation().y,
+				circular.getRotation().y);
 		Vector3f checkedPos = new Vector3f(dat[0], circular.getPosition().y, dat[1]);
 		float bX = checkedPos.x;
+		float bY = checkedPos.y;
 		float bZ = checkedPos.z;
 		float aX = squaire.getPosition().x;
+		float aY = squaire.getPosition().y;
 		float aZ = squaire.getPosition().z;
 		float aXmin = aX + squaire.getxMin();
 		float aXmax = aX + squaire.getxMax();
+
+		float aYmin = aY + squaire.getyMin();
+		float aYmax = aY + squaire.getyMax();
+
 		float aZmin = aZ + squaire.getzMin();
 		float aZmax = aZ + squaire.getzMax();
 		if (bX >= aXmin && bX <= aXmax) {
@@ -86,6 +94,27 @@ public class HitBoxMaths {
 				if (bZ < aZ) {
 					float tot_off = circular.getDistance() + -aZmin;
 					float abrange = aZ - bZ;
+					double norm = Math.sqrt(abrange * abrange);
+					if (norm <= tot_off) {
+						isBox = true;
+					}
+				}
+			}
+		}
+
+		if (bY >= aYmin && bY <= aYmax) {
+			if (bZ >= aZ) {
+				float tot_off = circular.getDistance() + aYmax;
+				float abrange = aY - bY;
+				double norm = Math.sqrt(abrange * abrange);
+				if (norm <= tot_off) {
+					isBox = true;
+				}
+			}
+			if (!isBox) {
+				if (bY < aY) {
+					float tot_off = circular.getDistance() + -aYmin;
+					float abrange = aY - bY;
 					double norm = Math.sqrt(abrange * abrange);
 					if (norm <= tot_off) {
 						isBox = true;
@@ -121,8 +150,9 @@ public class HitBoxMaths {
 
 	private static boolean tier1Check(HitBoxCircle circular, HitBox squaire) {
 		boolean isBox = false;
-		float[] dat = rotate(squaire.getPosition().x, squaire.getPosition().z, circular.getPosition().x,
-				circular.getPosition().z, squaire.getRotation().y, circular.getRotation().y);
+		float[] dat = rotate(squaire.getPosition().x, squaire.getPosition().y, squaire.getPosition().z,
+				circular.getPosition().x, circular.getPosition().y, circular.getPosition().z, squaire.getRotation().y,
+				circular.getRotation().y);
 		Vector3f checkedPos = new Vector3f(dat[0], circular.getPosition().y, dat[1]);
 		Vector3f[] corners = generateCorners(squaire, 0);
 		if (true) {
@@ -146,8 +176,17 @@ public class HitBoxMaths {
 		float collideRange = checker.getDistance() + checked.getDistance();
 		float distance = HitBoxManager.distance(checker.getPosition(), checked.getPosition());
 		boolean isBox = false;
+		float by1 = checked.getyMax();
+		float by2 = checked.getyMin();
+
 		if (collideRange >= distance) {
-			isBox = true;
+			if (by1 >= checker.getyMin() && by1 <= checker.getyMax()) {
+				isBox = true;
+			}
+
+			if (by2 >= checker.getyMin() && by2 <= checker.getyMax()) {
+				isBox = true;
+			}
 		}
 		return isBox;
 	}
@@ -182,21 +221,29 @@ public class HitBoxMaths {
 
 		boolean inBox = false;
 		if (true) {
-			float[] dat = rotate(checker.getPosition().x, checker.getPosition().z, checked.getPosition().x,
-					checked.getPosition().z, checker.getRotation().y, checked.getRotation().y);
+			float[] dat = rotate(checker.getPosition().x, checker.getPosition().y, checker.getPosition().z,
+					checked.getPosition().x, checked.getPosition().y, checked.getPosition().z, checker.getRotation().y,
+					checked.getRotation().y);
 			float yRot = dat[2];
 			Vector3f checkedPos = new Vector3f(dat[0], checked.getPosition().y, dat[1]);
 			Vector3f[] corners = generateCorners(checked, yRot);
 			for (Vector3f vec : corners) {
+
 				float x = checkedPos.x + vec.x;
 				float z = checkedPos.z + vec.z;
+				float y = checkedPos.y + vec.y;
 				float checkerxMax = checker.getPosition().x + checker.getxMax();
 				float checkerxMin = checker.getPosition().x + checker.getxMin();
 				float checkerzMax = checker.getPosition().z + checker.getzMax();
 				float checkerzMin = checker.getPosition().z + checker.getzMin();
+				float checkeryMax = checker.getPosition().y + checker.getyMax();
+				float checkeryMin = checker.getPosition().y + checker.getyMin();
+
 				if (x > checkerxMin && x < checkerxMax) {
 					if (z < checkerzMax && z > checkerzMin) {
-						inBox = true;
+						if (y < checkeryMax && y > checkeryMin) {
+							inBox = true;
+						}
 					}
 				}
 			}
@@ -210,7 +257,7 @@ public class HitBoxMaths {
 		if (true) {
 			for (int i = 0; i < corners.length; i++) {
 				Vector3f corner = checked.corners[i];
-				float[] dat = rotate(0, 0, corner.x, corner.z, yRot, 0);
+				float[] dat = rotate(0, 0, 0, corner.x, corner.y, corner.z, yRot, 0);
 				Vector3f cornerPos = new Vector3f(dat[0] * checked.getScale(), corner.getY(),
 						dat[1] * checked.getScale());
 				corners[i] = cornerPos;
@@ -219,18 +266,26 @@ public class HitBoxMaths {
 		return corners;
 	}
 
-	private static float[] rotate(float inx, float inz, float outx, float outz, float inRot, float outRot) {
+	private static float[] rotate(float inx, float iny, float inz, float outx, float outy, float outz, float inRot,
+			float outRot) {
 		float yrot = -inRot;
+
 		float xoff = outx - inx;
 		float zoff = outz - inz;
+
 		float xcalc1 = (float) (xoff * Math.sin(Math.toRadians(yrot + 90)));
 		float zcalc1 = (float) (xoff * Math.cos(Math.toRadians(yrot + 90)));
+		float ycalc1 = (float) (xoff * Math.cos(Math.toRadians(yrot)));
+
 		float xcalc2 = (float) (zoff * Math.sin(Math.toRadians(yrot)));
 		float zcalc2 = (float) (zoff * Math.cos(Math.toRadians(yrot)));
-		float[] returnFlt = new float[3];
+		float ycalc2 = (float) (zoff * Math.cos(Math.toRadians(yrot)));
+
+		float[] returnFlt = new float[4];
 		returnFlt[0] = inx - xcalc1 + xcalc2;
-		returnFlt[1] = inz - zcalc1 + zcalc2;
-		returnFlt[2] = inRot + outRot;
+		returnFlt[1] = iny - ycalc1 + ycalc2;
+		returnFlt[2] = inz - zcalc1 + zcalc2;
+		returnFlt[3] = inRot + outRot;
 		return returnFlt;
 	}
 

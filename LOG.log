@@ -20,3 +20,6 @@ JAN
 	- Controller support added
 	- Updated timemasters hq
 	- Added freecam
+7: Controller support
+	- Added ship controller support
+	- Changed some packages

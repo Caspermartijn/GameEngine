@@ -18,7 +18,7 @@ public class Matrix {
 	}
 
 	// public static void store(Matrix3f matrix, FloatBuffer buffer) {
-	// buffer.put(0, matrix.m00());
+	// buffer.put(0, matrix.m00()); 
 	// buffer.put(1, matrix.m01());
 	// buffer.put(2, matrix.m02());
 	//

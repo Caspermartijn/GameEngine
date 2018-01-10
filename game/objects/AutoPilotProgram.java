@@ -17,7 +17,7 @@ public class AutoPilotProgram {
 		stage++;
 	}
 
-	public AutoPilotCheckPoint getCurrentCheckPoint() {
+	public AutoPilotCheckPoint getCurrentCheckPoint() { 
 		if (stage >= check.size()-1) {
 			return check.get(check.size() - 1);
 		} else {

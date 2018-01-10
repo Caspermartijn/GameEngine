@@ -24,18 +24,22 @@ public class Controller {
 		return GLFW.glfwJoystickPresent(controller);
 	}
 
-	public boolean isButtonsDown(int button) {
-		ByteBuffer bb = GLFW.glfwGetJoystickButtons(controller);
-		byte[] data = new byte[bb.capacity()];
-		bb.get(data);
-		return data[button - 10000] == 1;
+	public boolean isUsed() {
+		if (getButtonA_X() || getButtonB_CIRCLE() || getButtonDown() || getButtonLeft() || getButtonLS_L1()
+				|| getButtonRight() || getButtonRS_R1() || getButtonThumbL() || getButtonThumbR() || getButtonUp()
+				|| getButtonX_SQUAIRE() || getButtonY_TRIANGLE() || getButtonLT_L2() >= 0.2f
+				|| getButtonRT_R2() >= 0.2f) {
+			return true;
+		} else {
+			return false; 
+		}
 	}
 
 	public Vector2f getLeftStick() {
 		FloatBuffer fb = GLFW.glfwGetJoystickAxes(controller);
 		float[] data = new float[fb.capacity()];
 		fb.get(data);
-		data = Maths.controllerInterval(true,0.2f, data);
+		data = Maths.controllerInterval(true, 0.2f, data);
 		return new Vector2f(data[0], data[1]);
 	}
 
@@ -43,18 +47,18 @@ public class Controller {
 		FloatBuffer fb = GLFW.glfwGetJoystickAxes(controller);
 		float[] data = new float[fb.capacity()];
 		fb.get(data);
-		data = Maths.controllerInterval(false,0.2f, data);
+		data = Maths.controllerInterval(false, 0.2f, data);
 		return new Vector2f(data[2], data[3]);
 	}
 
 	private boolean getBoolean(byte data) {
-		if(data == 1) {
+		if (data == 1) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
+
 	public boolean getButtonThumbL() {
 		ByteBuffer buffer = GLFW.glfwGetJoystickButtons(controller);
 		byte[] data = new byte[buffer.capacity()];

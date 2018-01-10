@@ -21,7 +21,7 @@ public class TextMaster {
 		renderer.cleanUp();
 	}
 	
-	public static void renderAll() {
+	public static void renderAll() { 
 		for (Text t : texts) {
 			renderer.renderText(t);
 		}

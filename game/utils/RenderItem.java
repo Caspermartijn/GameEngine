@@ -15,6 +15,6 @@ public abstract class RenderItem implements IRenderItem{
 		for(RenderItem item : renderItems) {
 			item.render();
 		}
-	}
+	} 
 	
 }

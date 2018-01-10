@@ -7,6 +7,8 @@ public class Model_3D {
 	private Vao mesh;
 	private Texture texture;
 
+	private boolean backfaceCullingEnabled = true;
+
 	public Model_3D(Vao mesh, Texture texture) {
 		this.mesh = mesh;
 		this.texture = texture;
@@ -23,6 +25,15 @@ public class Model_3D {
 	public void delete() {
 		mesh.delete();
 		texture.delete();
+	}
+
+	public boolean isBackfaceCullingEnabled() {
+		return backfaceCullingEnabled;
+	}
+
+	public Model_3D setBackfaceCullingEnabled(boolean backfaceCullingEnabled) {
+		this.backfaceCullingEnabled = backfaceCullingEnabled;
+		return this;
 	}
 
 }

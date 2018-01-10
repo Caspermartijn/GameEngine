@@ -12,10 +12,12 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.GLSettings;
 import entities.Entity;
 import entities.Light;
+import hitbox.HitBoxMaster;
 import objects.Camera;
 import objects.Model_3D;
 import renderer.entityRenderer.EntityRenderer;
 import renderer.entityRenderer.EntityShader;
+import renderer.lineRenderer.LineRenderer;
 import renderer.terrainRenderer.TerrainRenderer;
 import renderer.terrainRenderer.TerrainShader;
 import terrains.Terrain;
@@ -29,12 +31,14 @@ public class MasterRenderer {
 
 	public static float density = 0.0035f;
 	public static float gradient = 5f;
-	
+
 	private EntityShader entityShader = new EntityShader();
 	private EntityRenderer entityRenderer;
 
 	private TerrainShader terrainShader = new TerrainShader();
 	private TerrainRenderer terrainRenderer;
+
+	public LineRenderer linerenderer;
 
 	private Map<Model_3D, List<Entity>> entities = new HashMap<Model_3D, List<Entity>>();
 	private Map<TerrainTexturePack, List<Terrain>> terrains = new HashMap<TerrainTexturePack, List<Terrain>>();
@@ -42,19 +46,25 @@ public class MasterRenderer {
 	public MasterRenderer() {
 		entityRenderer = new EntityRenderer(entityShader);
 		terrainRenderer = new TerrainRenderer(terrainShader);
+		linerenderer = new LineRenderer();
 	}
 
 	public void setProjectionMatrix(Matrix4f matrix) {
 		entityRenderer.setProjectionMatrix(matrix);
 		terrainRenderer.setProjMat(matrix);
+		linerenderer.setProjectionMatrix(matrix);
+	}
+
+	private void updateEntities(List<Entity> entities) {
+		for (Entity ent : entities) {
+			ent.update();
+			processEntity(ent);
+			updateEntities(ent.getChildrenEntities());
+		}
 	}
 
 	public void render(Camera camera, List<Light> light, List<Entity> entities) {
-		if (true) {
-			for (Entity ent : entities) {
-				processEntity(ent);
-			}
-		}
+		updateEntities(entities);
 		render(light, camera, new Vector4f(0, 0, 1, 0));
 	}
 
@@ -67,7 +77,7 @@ public class MasterRenderer {
 		entityShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());
 		entityRenderer.render(entities);
 		entityShader.stop();
-
+		linerenderer.renderHitBoxes(camera, HitBoxMaster.hitBoxes);
 		terrainShader.start();
 		terrainShader.loadLights(lights);
 		terrainShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());

@@ -26,6 +26,5 @@ public class SceneLoader {
 		unzip.unZipIt(true,zip.getPath(), path.toString() + "/scenes/temp/" + scene_name);
 
 		return scene;
-	}
-
+	} 
 }

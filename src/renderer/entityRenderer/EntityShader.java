@@ -1,5 +1,10 @@
 package renderer.entityRenderer;
 
+import shaders.ShaderProgram;
+import shaders.UniformFloat;
+import shaders.UniformMat4;
+import shaders.UniformSampler;
+import shaders.UniformVec3;
 import shaders.shaderObjects.*;
 import utils.SourceFile;
 
@@ -25,6 +30,6 @@ public class EntityShader extends ShaderProgram {
 		start();
 		texture.loadTexUnit(0);
 		stop();
-	}
+	} 
 
 }

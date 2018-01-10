@@ -24,7 +24,7 @@ public class DisplayBuilder {
 		return this;
 	}
 	
-	public DisplayBuilder setFpsCam(int fps) {
+	public DisplayBuilder setFpsCap(int fps) {
 		this.fpsCap = fps;
 		return this;
 	}

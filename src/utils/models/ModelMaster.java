@@ -20,7 +20,7 @@ public class ModelMaster {
 		}
 	}
 
-	public static void loadModels(String path) {
+	public static void loadModels(String path) { 
 		
 	}
 

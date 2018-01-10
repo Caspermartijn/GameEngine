@@ -19,9 +19,11 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import audio.Sound2DMaster;
 import files.EngineFileConfig;
 import panels.ImagePanel;
 import panels.LoadingScreenPanel;
+import utils.tasks.Task;
 
 public abstract class Launcher extends JFrame implements ILauncher {
 
@@ -119,7 +121,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		loadingPanelProgressBar.setValue(20);
 		loadingPanelProgressBar.setVisible(true);
 		loadingPanelProgressBar.setStringPainted(false);
-		loadingPanelProgressBar.setForeground( new Color(40, 40, 40, 64) );
+		loadingPanelProgressBar.setForeground(new Color(40, 40, 40, 64));
 		loadingPanelProgressBar.setOpaque(false);
 		loadingPanelProgressBar.setBorderPainted(false);
 		loadingPanel.add(loadingPanelProgressBar);
@@ -148,15 +150,41 @@ public abstract class Launcher extends JFrame implements ILauncher {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Runnable r = new Runnable() {
+				new Task() {
 
 					@Override
 					public void run() {
-						play();
+						new Task(100, (int) Sound2DMaster.getSong("track2").getVolume()) {
+
+							@Override
+							public void run() {
+								Sound2DMaster.getSong("track2")
+										.setVolume(Sound2DMaster.getSong("track2").getVolume() - 1);
+							}
+
+						};
+
+						new Task(200) {
+
+							@Override
+							public void run() {
+								Sound2DMaster.play("track1");
+								Sound2DMaster.setVolume("track1", 5);
+							}
+
+						};
+
+						new Task(1000) {
+
+							@Override
+							public void run() {
+								play();
+							}
+
+						};
+						Sound2DMaster.play("play_click");
 					}
 				};
-				Thread t = new Thread(r);
-				t.start();
 				hideApp();
 			}
 		});
@@ -202,14 +230,15 @@ public abstract class Launcher extends JFrame implements ILauncher {
 				button.setBorderPainted(false);
 				button.setFocusPainted(false);
 				button.setHorizontalAlignment(SwingConstants.RIGHT);
-
 				button.addMouseListener(new java.awt.event.MouseAdapter() {
 					public void mouseEntered(java.awt.event.MouseEvent evt) {
 						button.setFont(new Font(fonttype, Font.PLAIN, 37));
+						Sound2DMaster.play("hoverpop");
 					}
 
 					public void mouseExited(java.awt.event.MouseEvent evt) {
 						button.setFont(font);
+						Sound2DMaster.getSong("hoverpop").stop();
 					}
 				});
 
@@ -287,7 +316,9 @@ public abstract class Launcher extends JFrame implements ILauncher {
 		Thread thread = null;
 		Runnable runnable = new Runnable() {
 			@Override
-			public void run() {// TODO add oldversion check add updater panel
+			public void run() {
+				launcherLoad();
+				// TODO add oldversion check add updater panel
 				/*
 				 * try { Updater.downloadUpdate(); } catch (IOException e1) {
 				 * writerError(e1.getMessage()); }

@@ -7,4 +7,6 @@ public interface ILauncher {
 	void options();
 	void quit();
 	void loadData();
+	
+	void launcherLoad();
 }

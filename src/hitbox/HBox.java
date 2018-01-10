@@ -14,6 +14,10 @@ public abstract class HBox {
 
 	protected Vao rawModel;
 	
+	public HBox() {
+		HitBoxMaster.hitBoxes.add(this);
+	}
+	
 	public void setID(int id) {
 		this.hitBoxID = id;
 	}

@@ -33,7 +33,7 @@ public class FPSCamera extends Camera {
 		projection.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
 		projection.m23 = -1;
 		projection.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
-		projection.m33 = 0;
+		projection.m33 = 0; 
 	}
 
 	public void updateInputs() {
