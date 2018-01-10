@@ -1,8 +1,9 @@
 package renderer.quadRenderer;
 
+import shaders.Shader;
 import shaders.ShaderProgram;
-import shaders.UniformMat4;
-import shaders.UniformVec4;
+import shaders.uniforms.UniformMat4;
+import shaders.uniforms.UniformVec4;
 import utils.SourceFile;
 
 public class QuadShader extends ShaderProgram {
@@ -15,20 +16,9 @@ public class QuadShader extends ShaderProgram {
 	public UniformVec4 outlineColor = new UniformVec4("outlineColor");
 
 	protected QuadShader() {
-		super(ShaderProgram.newShaderProgram(vertexShader(), FRAGMENT_FILE).addInput(0, "inPosition").addOutput(0,
-				"outColor"));
+		super(ShaderProgram.newShaderProgram(Shader.vertexShaderQuad(), FRAGMENT_FILE).addInput(0, "inPosition")
+				.addOutput(0, "outColor"));
 		super.storeAllUniformLocations(transform, color, outlineColor, dimensions);
-	}
-
-	private static String[] vertexShader() {
-		String[] returnSS = new String[] { "#version 400 core",
-				"in vec2 inPosition;",
-				"out vec2 position;",
-				"uniform mat4 transform;",
-				"void main(void) {", "gl_Position = transform * vec4(inPosition, 0.0, 1.0);",
-				"position = gl_Position.xy;", "}"
-		};
-		return returnSS;
 	}
 
 }

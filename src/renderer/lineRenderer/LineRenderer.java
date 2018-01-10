@@ -5,10 +5,13 @@ import java.util.Collection;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import entities.Entity;
+
 import static org.lwjgl.opengl.GL11.*;
 import hitbox.HBox;
 import objects.Camera;
 import objects.Vao;
+import shaders.ShaderProgram;
 import utils.maths.Matrix;
 
 public class LineRenderer {
@@ -29,6 +32,7 @@ public class LineRenderer {
 				shader.location_transformationMatrix.loadMatrix(Matrix.createTransformationMatrix(box.getPosition(),
 						box.getRotation().x, box.getRotation().y, box.getRotation().z, box.getScale()));
 				shader.location__viewMatrix.loadMatrix(camera.getViewMatrix());
+				shader.color.loadVec4(0, 1, 0, 1);//100% green
 				glDrawArrays(GL_LINE_STRIP, 0, box.getRawModel().getVertexCount());
 				unbind(box);
 			}
@@ -49,6 +53,10 @@ public class LineRenderer {
 
 	private void unbind(HBox box) {
 		box.getRawModel().unbind(0);
+	}
+
+	public ShaderProgram getShader() {
+		return shader;
 	}
 
 }

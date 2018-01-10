@@ -1,4 +1,4 @@
-package shaders;
+package shaders.uniforms;
 
 import org.lwjgl.opengl.GL20;
 

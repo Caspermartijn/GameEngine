@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
 import objects.Vao;
+import shaders.ShaderProgram;
 import terrains.Terrain;
 import terrains.terrainTexture.TerrainTexturePack;
 import textures.Texture;
@@ -83,4 +84,8 @@ public class TerrainRenderer {
 		vao.unbind(0, 1, 2, 3);
 	}
 
+	public ShaderProgram getShader() {
+		return shader;
+	}
+	
 }

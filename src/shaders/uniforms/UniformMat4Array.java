@@ -1,4 +1,4 @@
-package shaders;
+package shaders.uniforms;
 
 import org.lwjgl.util.vector.Matrix4f;
 
@@ -15,7 +15,7 @@ public class UniformMat4Array extends Uniform {
 	}
 
 	@Override
-	protected boolean storeUniformLocation(int programID) {
+	public boolean storeUniformLocation(int programID) {
 		boolean success = true;
 		for (UniformMat4 matrixUniform : matrixUniforms) {
 			if (!matrixUniform.storeUniformLocation(programID))

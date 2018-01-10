@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 import objects.Camera;
 import objects.Skybox;
 import objects.Vao;
+import shaders.ShaderProgram;
 
 public class SkyboxRenderer {
 
@@ -59,6 +60,10 @@ public class SkyboxRenderer {
 	public void delete() {
 		cube.delete();
 		shader.delete();
+	}
+	
+	public ShaderProgram getShader() {
+		return shader;
 	}
 
 }

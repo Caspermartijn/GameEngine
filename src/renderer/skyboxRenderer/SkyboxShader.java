@@ -1,9 +1,10 @@
 package renderer.skyboxRenderer;
 
+import shaders.Shader;
 import shaders.ShaderProgram;
-import shaders.UniformCubeMap;
-import shaders.UniformFloat;
-import shaders.UniformMat4;
+import shaders.uniforms.UniformCubeMap;
+import shaders.uniforms.UniformFloat;
+import shaders.uniforms.UniformMat4;
 import utils.SourceFile;
 
 public class SkyboxShader extends ShaderProgram {
@@ -16,28 +17,12 @@ public class SkyboxShader extends ShaderProgram {
 	public UniformFloat size = new UniformFloat("scale");
 
 	protected SkyboxShader() {
-		super(ShaderProgram.newShaderProgram(VERTEX_FILE, getFragmentFile()).addInput(0, "position").addOutput(0,
-				"out_Color"));
+		super(ShaderProgram.newShaderProgram(VERTEX_FILE, Shader.getFragmentFileSkybox()).addInput(0, "position")
+				.addOutput(0, "out_Color"));
 		super.storeAllUniformLocations(cubeMap, projectionMatrix, viewMatrix, size);
 		start();
 		cubeMap.loadTexUnit(0);
 		stop();
-	}
-
-	private static String[] getFragmentFile() {
-		String[] returnSS = new String[] { 
-				"#version 400 core",
-
-				"in vec3 textureCoords;", 
-				"out vec4 out_Color;", 
-				"uniform samplerCube cubeMap;",
-
-				"void main(void) {",
-				"out_Color = texture(cubeMap, textureCoords);", 
-				"}" 
-				};
-
-		return returnSS;
 	}
 
 }

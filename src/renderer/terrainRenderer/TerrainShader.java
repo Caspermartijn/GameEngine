@@ -6,12 +6,11 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Light;
 import shaders.ShaderProgram;
-import shaders.UniformFloat;
-import shaders.UniformMat4;
-import shaders.UniformSampler;
-import shaders.UniformVec2;
-import shaders.UniformVec3;
-import shaders.shaderObjects.*;
+import shaders.uniforms.UniformFloat;
+import shaders.uniforms.UniformMat4;
+import shaders.uniforms.UniformSampler;
+import shaders.uniforms.UniformVec2;
+import shaders.uniforms.UniformVec3;
 import utils.SourceFile;
 
 public class TerrainShader extends ShaderProgram {

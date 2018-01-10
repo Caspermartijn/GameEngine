@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import engine.GLSettings;
 import objects.Vao;
+import shaders.ShaderProgram;
 import texts.Fonts;
 import texts.Text;
 
@@ -33,6 +34,10 @@ public class FontRenderer {
 		vao.unbind(0, 1);
 		
 		shader.stop();
+	}
+	
+	public ShaderProgram getShader() {
+		return shader;
 	}
 	
 }
