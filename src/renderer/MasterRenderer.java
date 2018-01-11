@@ -12,15 +12,18 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.GLSettings;
 import entities.Entity;
 import entities.Light;
+import guis.QuadRenderer;
 import hitbox.HitBoxMaster;
 import objects.Camera;
 import objects.Model_3D;
+import objects.Vao;
 import renderer.entityRenderer.EntityRenderer;
 import renderer.entityRenderer.EntityShader;
-import renderer.hudRenderer.HudRenderer;
+import renderer.imageRenderer.ImageRenderer;
 import renderer.lineRenderer.LineRenderer;
 import renderer.terrainRenderer.TerrainRenderer;
 import renderer.terrainRenderer.TerrainShader;
+import renderer.textRendering.FontRenderer;
 import terrains.Terrain;
 import terrains.terrainTexture.TerrainTexturePack;
 import utils.tasks.Cleanup;
@@ -49,7 +52,6 @@ public class MasterRenderer extends Cleanup {
 		entityRenderer = new EntityRenderer(entityShader);
 		terrainRenderer = new TerrainRenderer(terrainShader);
 		linerenderer = new LineRenderer();
-		new HudRenderer();
 	}
 
 	public void setProjectionMatrix(Matrix4f matrix) {
@@ -114,6 +116,28 @@ public class MasterRenderer extends Cleanup {
 	}
 
 	public void delete() {
+		FontRenderer.delete();
+		QuadRenderer.delete();
+		ImageRenderer.delete();
+		quad.delete();
 	}
 
+	private static Vao quad;
+	
+	public static void init() {
+		FontRenderer.init();
+		QuadRenderer.init();
+		ImageRenderer.init();
+		quad = Vao.create();
+		quad.bind();
+		quad.createStaticAttribute(0, new float[] {-1, -1, 1, -1, -1, 1, 1, -1, 1, 1, -1, 1}, 2);
+		quad.unbind();
+	}
+	
+	public static void renderQuad() {
+		quad.bind(0);
+		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 8);
+		quad.unbind(0);
+	}
+	
 }

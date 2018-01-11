@@ -10,13 +10,13 @@ import texts.Text;
 
 public class FontRenderer {
 
-	private FontShader shader = new FontShader();
+	private static FontShader shader = new FontShader();
 	
-	public void cleanUp() {
+	public static void cleanUp() {
 		shader.delete();
 	}
 
-	public void renderText(Text text) {
+	public static void renderText(Text text) {
 		shader.start();
 		GLSettings.enableAlphaBlending();
 		GLSettings.setDepthTesting(false);
@@ -36,8 +36,16 @@ public class FontRenderer {
 		shader.stop(); 
 	}
 	
-	public ShaderProgram getShader() {
+	public static ShaderProgram getShader() {
 		return shader;
+	}
+
+	public static void init() {
+		
+	}
+
+	public static void delete() {
+		cleanUp();
 	}
 	
 }

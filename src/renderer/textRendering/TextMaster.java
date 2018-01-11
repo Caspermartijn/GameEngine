@@ -33,17 +33,17 @@ public class TextMaster {
 
 	public static void renderTexts(Collection<Text> textss) {
 		for (Text t : textss) {
-			renderer.renderText(t); 
+			FontRenderer.renderText(t); 
 		}
 	}
 	
 	public static void delete() {
-		renderer.cleanUp();
+		FontRenderer.cleanUp();
 	}
 
 	public static void renderAll() {
 		for (Text t : texts) {
-			renderer.renderText(t); 
+			FontRenderer.renderText(t); 
 		}
 	}
 

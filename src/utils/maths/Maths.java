@@ -128,7 +128,7 @@ public class Maths {
 		return dis;
 	}
 
-	public static Vector2f openGLtoText(Vector2f vec) {
+	public static Vector2f openGLtoIce(Vector2f vec) {
 		Vector2f returnVec = new Vector2f();
 		returnVec.x = ((vec.x + 1) / 2);
 		returnVec.y = ((vec.y + 1) / 2);

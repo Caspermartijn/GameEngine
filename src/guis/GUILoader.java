@@ -49,8 +49,10 @@ public class GUILoader {
 						addText(line);
 					} else if (line.startsWith("TextFieldComponent<")) {
 						addTextField(line);
-					} else if (line.startsWith("ButtonComponent")) {
+					} else if (line.startsWith("ButtonComponent<")) {
 						addButton(line);
+					} else if (line.startsWith("ImageComponent<")) {
+						addImage(line);
 					}
 				} else {
 					if (line.contains("}")) {
@@ -117,6 +119,15 @@ public class GUILoader {
 							c.setClickEvent(runnableArg(att, 0));
 						}
 					}
+					if (obj instanceof ImageComponent) {
+						ImageComponent c = ((ImageComponent) obj);
+						String[] att = getAttributes(line);
+						if (line.startsWith("position=")) {
+							c.setPosition(floatArg(att, 0), floatArg(att, 1));
+						} else if (line.startsWith("scale=")) {
+							c.setScale(floatArg(att, 0));
+						}
+					}
 				}
 			}
 
@@ -133,6 +144,15 @@ public class GUILoader {
 		}
 
 		return GUILoader.gui;
+	}
+
+	private static void addImage(String line) {
+		String[] args = getArguments(line);
+		SourceFile file = new SourceFile(stringArg(args, 0));
+		ImageComponent i = new ImageComponent(gui, file);
+		if (line.contains("{")) {
+			obj = i;
+		}
 	}
 
 	private static void addButton(String line) {

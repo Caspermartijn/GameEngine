@@ -2,9 +2,9 @@ package guis;
 
 import org.lwjgl.util.vector.Vector2f;
 
+import renderer.textRendering.FontRenderer;
 import texts.Text;
-import texts.TextMaster;
-import utils.maths.Vector;
+
 
 public class TextComponent extends GUIComponent {
 	
@@ -13,21 +13,21 @@ public class TextComponent extends GUIComponent {
 	private Vector2f textPosition;
 	
 	public TextComponent(GUI container, String text, String font, float fontSize, float lineLength, boolean centered) {
+		super(container);
 		this.text = new Text(text, fontSize, font, new Vector2f(0, 0), lineLength, centered);
 		textPosition = new Vector2f();
 		this.container = container;
-		container.addComponent(this);
 	}
 	
 	@Override
 	public void render() {
 		text.setPosition(getPosition());
 		
-		TextMaster.getRenderer().renderText(text);
+		FontRenderer.renderText(text);
 	}
 	
 	public Vector2f getPosition() {
-		return Vector.add(container.getPosition(), textPosition, null);
+		return Vector2f.add(container.getPosition(), textPosition, null);
 	}
 	
 	public void setColor(float r, float g, float b, float a) {
@@ -39,8 +39,10 @@ public class TextComponent extends GUIComponent {
 	}
 
 	public void setText(String text) {
-		this.text.setText(text);
-		this.text.applyChanges();
+		if (!this.text.getText().equals(text)) {
+			this.text.setText(text);
+			this.text.applyChanges();
+		}
 	}
 	
 	public String getText() {

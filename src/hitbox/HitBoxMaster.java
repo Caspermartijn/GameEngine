@@ -29,7 +29,7 @@ public class HitBoxMaster {
 		List<HBox> boxes = new ArrayList<HBox>();
 		for (HBox box : hitBoxes) {
 			if (Maths.distance(box.getPosition(), hitbox.getPosition()) < 20) {
-				boxes.add(box);
+				boxes.add(box); 
 			}
 		}
 		return boxes;

@@ -6,8 +6,6 @@ import static utils.tasks.Cleanup.cleanAll;
 import static scenes.Scene.renderScene;
 import static scenes.Scene.setCurrentScene;
 import static renderer.textRendering.TextMaster.renderAllTexts;
-import static renderer.hudRenderer.HudRenderer.renderAllHuds;
-import static renderer.hudRenderer.HudRenderer.renderAllHudTextures;
 import static utils.RenderItem.renderItems;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -27,9 +25,6 @@ import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
 import hitbox.HitBox;
-import hud.Hud;
-import hud.HudManager;
-import hud.HudTexture;
 import launcher.Launcher;
 import log.Log;
 import objects.Camera;
@@ -189,8 +184,6 @@ public class GameLoop {
 			master.setProjectionMatrix(camera.getProjectionMatrix());
 			Texture sideTex = Texture.getTextureBuilder(new SourceFile("/res/guis/hud/hud_side.png")).create();
 			Vector2f scale = Maths.getNormalizedSize(1280, 200);
-			HudTexture hud = new HudTexture(sideTex, new Vector2f(0, (1 - scale.y) + 0.075f), scale);
-			hud.setRotation(180);
 
 			Text fps = new Text(Display.getFPS() + "", 0.78f, "candara", new Vector2f(0, 0), 10, false);
 			Text delta = new Text("delta: ", 0.78f, "candara", new Vector2f(0, 0.02f), 10, false);
@@ -200,37 +193,14 @@ public class GameLoop {
 			delta.setColor(0, 0.25f, 1);
 			ping.setColor(0, 0.25f, 1);
 
-			Hud test_hud = new Hud(1f, new Vector2f()) {
-				public void init() {
-					addHud(hud);
-					addText(fps);
-					addText(delta);
-					addText(ping);
-					for (Text text : Log.logTexts) {
-						addText(text);
-						text.applyChanges();
-					}
-				}
-			};
-
 			while (!Display.isCloseRequested()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 				updateData(fps, delta, ping);
-
 				renderItems();
-
 				renderScene(camera);
-
-				renderAllHuds(test_hud);
-
-				renderAllHudTextures(HudManager.getAllHudTextures());
-
 				renderAllTexts();
-
 				swapBuffers();
 				updateEvents();
-
 			}
 
 			cleanAll();

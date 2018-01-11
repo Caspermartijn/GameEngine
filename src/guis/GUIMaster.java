@@ -2,20 +2,9 @@ package guis;
 
 import java.util.ArrayList;
 
-import renderer.quadRenderer.QuadRenderer;
-
 public class GUIMaster {
 
 	private static  ArrayList<GUI> guis = new ArrayList<>();
-	private static QuadRenderer quadRenderer = new QuadRenderer();
-	
-	public static void init() {
-		quadRenderer.init();
-	}
-	
-	public static void cleanUp() {
-		guis.clear();
-	}
 	
 	public static void removeGUI(GUI gui) {
 		guis.remove(gui);
@@ -29,10 +18,6 @@ public class GUIMaster {
 		for (GUI gui : guis) {
 			gui.renderComponents();
 		}
-	}
-	
-	public static QuadRenderer getQuadRenderer() {
-		return quadRenderer;
 	}
 }
 

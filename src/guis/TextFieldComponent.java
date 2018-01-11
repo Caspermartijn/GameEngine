@@ -7,11 +7,10 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.Keyboard;
 import engine.KeyboardListener;
 import engine.Mouse;
+import renderer.textRendering.FontRenderer;
 import texts.Text;
-import texts.TextMaster;
 import utils.Switch;
 import utils.guis.Collision;
-import utils.maths.Vector;
 
 public class TextFieldComponent extends QuadComponent {
 
@@ -53,16 +52,18 @@ public class TextFieldComponent extends QuadComponent {
 	}
 
 	public void setText(String text) {
-		this.textString = text;
-		this.text.setText(text);
-		this.text.applyChanges();
+		if (!this.textString.equals(text)) {
+			this.textString = text;
+			this.text.setText(text);
+			this.text.applyChanges();
+		}
 	}
 
 	@Override
 	public void render() {
 
 		if (!isActive() && Mouse.buttonPressed(button)) {
-			Vector2f mouse = new Vector2f((float) Mouse.getMouseX(), (float) Mouse.getMouseY());
+			Vector2f mouse = new Vector2f(Mouse.getMouseX(), Mouse.getMouseY());
 			if (Collision.rectanglePointCollision(mouse, new Vector4f(getX(), getY(), getWidth(), getHeight()))) {
 				activate();
 			}
@@ -70,15 +71,15 @@ public class TextFieldComponent extends QuadComponent {
 
 		super.render();
 
-		Vector2f position = Vector.add(new Vector2f(getX(), getY()), textPosition, null);
+		Vector2f position = Vector2f.add(new Vector2f(getX(), getY()), textPosition, null);
 		text.setPosition(position);
-		TextMaster.getRenderer().renderText(text);
+		FontRenderer.renderText(text);
 
 		if (isActive()) {
 			showCurser.switchBoolean();
 			if (showCurser.getBooleanValue()) {
-				curser.setPosition(Vector.add(position, text.getCharacterPosition(textString.length()), null));
-				TextMaster.getRenderer().renderText(curser);
+				curser.setPosition(Vector2f.add(position, text.getCharacterPosition(textString.length()), null));
+				FontRenderer.renderText(curser);
 			}
 		}
 	}

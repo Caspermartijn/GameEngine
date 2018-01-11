@@ -1,4 +1,4 @@
-package engine; 
+package engine;
 
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
@@ -6,38 +6,44 @@ import org.lwjgl.opengl.GL11;
 public class Mouse {
 
 	private static double mousePosX, mousePosY;
-	private static double mouseDX, mouseDY;
+	private static float mouseDX, mouseDY;
 	private static double rotation = 0;
-	private static double drotation = 0;
-	private static double oldRotation = 0;
+	private static float drotation = 0;
+	private static float oldRotation = 0;
 	private static boolean cursor = true;
-	private static double oldX = Display.getWidth() / 2, oldY = Display.getHeight() / 2;
+	private static float oldX = -1, oldY = -1;
 
 	protected static void init() {
 		GLFW.glfwSetCursorPosCallback(Display.getWindowID(), (window, x, y) -> {
-			mousePosX = (x / ((double) Display.getWidth()) * 2.0 - 1.0);
-			mousePosY = (y / ((double) Display.getHeight()) * 2.0 - 1.0);
-			mouseDX = ((x-oldX) / ((double) Display.getWidth()) * 2.0);
-			mouseDY = ((y-oldY) / ((double) Display.getHeight()) * 2.0);
-			oldX = x;
-			oldY = y;
+
+			if (oldX == -1 && oldY == -1) {
+				oldX = (float) x;
+				oldY = (float) y;
+			}
+
+			mousePosX = x;
+			mousePosY = y;
 		});
 
 		GLFW.glfwSetScrollCallback(Display.getWindowID(), (window, x, y) -> {
+
 			rotation = y;
-			drotation = (y-oldRotation);
-			oldRotation = y;
+
 		});
 	}
 
-	public static void update() {
-		drotation = 0;
-		mouseDX = 0;
-		mouseDY = 0;
+	protected static void update() {
+		drotation = (float) (rotation - oldRotation);
+		mouseDX = (float) ((mousePosX - oldX) / Display.getWidth());
+		mouseDY = (float) ((mousePosY - oldY) / Display.getHeight());
+
+		oldX = (float) mousePosX;
+		oldY = (float) mousePosY;
+
 	}
-	
+
 	public static boolean buttonPressed(int button) {
-		return GLFW.glfwGetMouseButton(Display.getWindowID(), button) == GL11.GL_TRUE; 
+		return GLFW.glfwGetMouseButton(Display.getWindowID(), button) == GL11.GL_TRUE;
 	}
 
 	public static void setMouseEnabled(boolean value) {
@@ -46,32 +52,27 @@ public class Mouse {
 				(value) ? GLFW.GLFW_CURSOR_NORMAL : GLFW.GLFW_CURSOR_DISABLED);
 	}
 
-	public static void setCursorPosition(float x, float y) {
-		GLFW.glfwSetCursorPos(Display.getWindowID(), (x / 2 + 0.5f) * Display.getWidth(),
-				(y / 2 + 0.5f) * Display.getHeight());
+	public static float getMouseX() {
+		return (float) (mousePosX / Display.getWidth());
 	}
 
-	public static double getMouseX() {
-		return mousePosX;
+	public static float getMouseY() {
+		return (float) (mousePosY / Display.getHeight());
 	}
 
-	public static double getMouseY() {
-		return mousePosY;
+	public static float getMouseRotation() {
+		return (float) rotation;
 	}
 
-	public static double getMouseRotation() {
-		return rotation;
-	}
-
-	public static double getMouseDX() {
+	public static float getMouseDX() {
 		return mouseDX;
 	}
 
-	public static double getMouseDY() {
+	public static float getMouseDY() {
 		return mouseDY;
 	}
 
-	public static double getRotationD() {
+	public static float getRotationD() {
 		return drotation;
 	}
 

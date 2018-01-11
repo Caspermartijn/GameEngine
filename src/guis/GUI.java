@@ -36,7 +36,7 @@ public class GUI {
 		position.set(x, y);
 	}
 	
-	public void setPositon(Vector2f v) {
+	public void setPosition(Vector2f v) {
 		position = v;
 	}
 	
@@ -57,5 +57,7 @@ public class GUI {
 			c.show();
 		}
 	}
+
+
 }
  

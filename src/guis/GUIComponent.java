@@ -4,6 +4,12 @@ public abstract class GUIComponent {
 	
 	private boolean hidden;
 	private String id;
+	private GUI container;
+	
+	public GUIComponent(GUI container) {
+		this.container = container;
+		container.addComponent(this);
+	}
 	
 	public void show() {
 		hidden = false;
@@ -25,6 +31,10 @@ public abstract class GUIComponent {
 		return id;
 	}
 	
+	protected GUI getContainer() {
+		return container;
+	}
+
 	public abstract void render();
 	public abstract void delete();
 

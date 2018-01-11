@@ -15,21 +15,20 @@ public class QuadComponent extends GUIComponent {
 	private GUI container;
 	
 	public QuadComponent(GUI container, float x, float y, float width, float height) {
-		super();
+		super(container);
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.container = container;
-		container.addComponent(this);
 	}
 	
 	public float getX() {
-		return x + container.getPosition().x;
+		return x + container.getPosition().getX();
 	}
 	
 	public float getY() {
-		return y + container.getPosition().y;
+		return y + container.getPosition().getY();
 	}
 	
 	public float getWidth() {
@@ -78,14 +77,14 @@ public class QuadComponent extends GUIComponent {
 		
 		float posX = (getX()-0.5f)*2.0f + getWidth();
 		float posY = (getY()-0.5f)*-2.0f - getHeight();
-		Matrix4f.translate(new Vector3f(posX, posY, 0),matrix,matrix);
-		Matrix4f.scale(new Vector3f(width, height, 1),matrix,matrix);	
+		Matrix4f.translate(new Vector3f(posX, posY, 0), matrix, matrix);
+		Matrix4f.scale(new Vector3f(width, height, 1), matrix, matrix);	
 		return matrix;
 	}
 	
 	@Override
 	public void render() {
-		GUIMaster.getQuadRenderer().renderQuad(this);
+		QuadRenderer.renderQuad(this);
 	}
 
 	public void setX(float x) {

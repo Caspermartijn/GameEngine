@@ -1,6 +1,7 @@
 package renderer.entityRenderer;
 
 import shaders.ShaderProgram;
+import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformFloat;
 import shaders.uniforms.UniformMat4;
 import shaders.uniforms.UniformSampler;
@@ -22,13 +23,27 @@ public class EntityShader extends ShaderProgram {
 	public UniformSampler texture = new UniformSampler("modelTexture");
 
 	public EntityShader() {
-		super(ShaderProgram.newShaderProgram(VERTEX_FILE, FRAGMENT_FILE).addInput(0, "position")
+		super(ShaderProgram.newShaderProgram().addInput(0, "position")
 				.addInput(1, "textureCoords").addOutput(0, "out_Color"));
-		super.storeAllUniformLocations(texture, location_lightColour, location_lightPosition, location_projectionMatrix,
-				location_reflectivity, location_shineDamper, location_transformationMatrix, location_viewMatrix);
 		start();
 		texture.loadTexUnit(0);
 		stop();
+	}
+
+	@Override
+	protected SourceFile getVertexFile() {
+		return VERTEX_FILE;
+	}
+
+	@Override
+	protected SourceFile getFragmentFile() {
+		return FRAGMENT_FILE;
+	}
+
+	@Override
+	protected Uniform[] getAllUniforms() {
+		return new Uniform[] { texture, location_lightColour, location_lightPosition, location_projectionMatrix,
+				location_reflectivity, location_shineDamper, location_transformationMatrix, location_viewMatrix };
 	}
 
 }

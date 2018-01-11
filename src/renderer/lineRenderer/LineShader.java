@@ -1,12 +1,16 @@
 package renderer.lineRenderer;
 
-import shaders.Shader;
 import shaders.ShaderProgram;
+import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformMat4;
 import shaders.uniforms.UniformVec4;
+import utils.SourceFile;
 
 public class LineShader extends ShaderProgram {
 
+	private static final SourceFile VERTEX_FILE = new SourceFile("/shaders/line/shader.vsh");
+	private static final SourceFile FRAGMENT_FILE = new SourceFile("/shaders/line/shader.fsh");
+	
 	public UniformMat4 location_transformationMatrix = new UniformMat4("transformationMatrix");
 	public UniformMat4 location_projectionViewMatrix = new UniformMat4("projectionViewMatrix");
 	public UniformMat4 location__viewMatrix = new UniformMat4("viewMatrix");
@@ -14,10 +18,24 @@ public class LineShader extends ShaderProgram {
 	public UniformVec4 color = new UniformVec4("color");
 
 	public LineShader() {
-		super(ShaderProgram.newShaderProgram(Shader.getVertexFileLine(), Shader.getFragmentFileLine())
+		super(ShaderProgram.newShaderProgram()
 				.addInput(0, "in_position").addOutput(0, "out_Color"));
-		super.storeAllUniformLocations(location__viewMatrix, location_projectionViewMatrix,
-				location_transformationMatrix);
+	}
+
+	@Override
+	protected SourceFile getVertexFile() {
+		return VERTEX_FILE;
+	}
+
+	@Override
+	protected SourceFile getFragmentFile() {
+		return FRAGMENT_FILE;
+	}
+
+	@Override
+	protected Uniform[] getAllUniforms() {
+		return new Uniform[] {location__viewMatrix, location_projectionViewMatrix,
+				location_transformationMatrix};
 	}
 
 }
