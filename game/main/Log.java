@@ -82,7 +82,7 @@ public class Log {
 	}
 
 	public static void append() {
-		String s = "                                                                           ";
+		String s = " ";
 		System.out.println(s);
 		if (log.size() == 0) {
 			initLines();
