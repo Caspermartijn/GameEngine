@@ -17,6 +17,7 @@ import objects.Camera;
 import objects.Model_3D;
 import renderer.entityRenderer.EntityRenderer;
 import renderer.entityRenderer.EntityShader;
+import renderer.hudRenderer.HudRenderer;
 import renderer.lineRenderer.LineRenderer;
 import renderer.terrainRenderer.TerrainRenderer;
 import renderer.terrainRenderer.TerrainShader;
@@ -36,7 +37,7 @@ public class MasterRenderer extends Cleanup {
 	private EntityShader entityShader = new EntityShader();
 	private EntityRenderer entityRenderer;
 
-	private TerrainShader terrainShader = new TerrainShader();
+	private TerrainShader terrainShader = new TerrainShader(); 
 	private TerrainRenderer terrainRenderer;
 
 	public LineRenderer linerenderer;
@@ -48,6 +49,7 @@ public class MasterRenderer extends Cleanup {
 		entityRenderer = new EntityRenderer(entityShader);
 		terrainRenderer = new TerrainRenderer(terrainShader);
 		linerenderer = new LineRenderer();
+		new HudRenderer();
 	}
 
 	public void setProjectionMatrix(Matrix4f matrix) {

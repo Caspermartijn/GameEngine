@@ -1,19 +1,20 @@
-package main;
-
-import static renderer.textRendering.TextMaster.addText;
+package log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
 import texts.Text;
 
 public class Log {
 
+	public static final Vector3f DEFAULT_COLOR = new Vector3f(0, 0.25f, 1);
+
 	public static Text[] logTexts = new Text[11];
 
-	public static List<String> log = new ArrayList<String>();
+	public static List<LogItem> log = new ArrayList<LogItem>();
 
 	private static boolean inited = false;
 
@@ -49,7 +50,6 @@ public class Log {
 
 		for (Text text : logTexts) {
 			text.setColor(0, 0.25f, 1);
-			addText(text);
 		}
 
 	}
@@ -58,8 +58,32 @@ public class Log {
 		String s = "";
 		for (int i = 0; i < 11; i++) {
 			s = s + " ";
-			log.add(s);
+			log.add(new LogItem(s));
 		}
+	}
+
+	public static void error(String s) {
+		System.err.println(s);
+		if (log.size() == 0) {
+			initLines();
+		}
+
+		log.remove(0);
+		log.add(new LogItem(s, new Vector3f(1, 0.01f, 0.01f)));
+		update();
+	}
+
+	public static void append(String s, Vector3f color) {
+
+		System.out.println(s);
+		if (log.size() == 0) {
+			initLines();
+		}
+
+		log.remove(0);
+		log.add(new LogItem(s, color));
+
+		update();
 	}
 
 	public static void append(String s) {
@@ -70,15 +94,9 @@ public class Log {
 		}
 
 		log.remove(0);
-		log.add(s);
+		log.add(new LogItem(s));
 
-		if (inited) {
-
-			for (int i = 0; i < 11; i++) {
-				logTexts[i].setText(log.get(10 - i));
-				logTexts[i].applyChanges();
-			}
-		}
+		update();
 	}
 
 	public static void append() {
@@ -89,13 +107,18 @@ public class Log {
 		}
 
 		log.remove(0);
-		log.add(s);
+		log.add(new LogItem(s));
+		update();
+	}
+
+	private static void update() {
 		if (inited) {
 			for (int i = 0; i < 11; i++) {
-				logTexts[i].setText(log.get(10 - i));
+				logTexts[i].setText(log.get(i).getString());
+				Vector3f c = log.get(i).getColor();
+				logTexts[i].setColor(c.x, c.y, c.z);
 				logTexts[i].applyChanges();
 			}
 		}
 	}
-
 }

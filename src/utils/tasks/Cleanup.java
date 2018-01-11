@@ -13,7 +13,7 @@ public abstract class Cleanup {
 
 	public static void cleanAll() {
 		for (Cleanup cleanup : list) {
-			if (!cleanup.cleaned) {
+			if (!cleanup.cleaned) { 
 				cleanup.delete();
 			}
 		}

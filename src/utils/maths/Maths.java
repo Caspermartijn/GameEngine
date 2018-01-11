@@ -22,7 +22,7 @@ public class Maths {
 	}
 
 	public static float linearInterpolationBlendToSinWave(float blend) {
-		return (float) Math.sin(Math.toRadians(blend * 90)); 
+		return (float) Math.sin(Math.toRadians(blend * 90));
 	}
 
 	public static float linearInterpolation(float a, float b, float blend) {
@@ -55,7 +55,7 @@ public class Maths {
 		float y = (sizeY / 720) * yFac;
 		return new Vector2f(x, y);
 	}
-	
+
 	public static float[] controllerInterval(boolean b, float intervall, float[] value) {
 		if (b) {
 			float backupx = value[0];
@@ -87,7 +87,7 @@ public class Maths {
 			if (value[1] > 0.2f || value[1] < -0.2f) {
 				value[0] = backupx;
 			}
-		}else {
+		} else {
 			float backupx = value[2];
 			float backupz = value[3];
 			if (value[2] >= 0) {
@@ -126,6 +126,13 @@ public class Maths {
 		float z = position.z - position2.z;
 		float dis = (float) Math.sqrt(x * x + z * z);
 		return dis;
+	}
+
+	public static Vector2f openGLtoText(Vector2f vec) {
+		Vector2f returnVec = new Vector2f();
+		returnVec.x = ((vec.x + 1) / 2);
+		returnVec.y = ((vec.y + 1) / 2);
+		return returnVec;
 	}
 
 }

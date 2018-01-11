@@ -21,7 +21,7 @@ public class SkyboxShader extends ShaderProgram {
 				.addOutput(0, "out_Color"));
 		super.storeAllUniformLocations(cubeMap, projectionMatrix, viewMatrix, size);
 		start();
-		cubeMap.loadTexUnit(0);
+		cubeMap.loadTexUnit(0); 
 		stop();
 	}
 

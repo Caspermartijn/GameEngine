@@ -1,6 +1,6 @@
 package renderer.hudRenderer;
 
-import java.util.List;
+import java.util.Collection;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.*;
@@ -9,22 +9,40 @@ import static org.lwjgl.opengl.GL30.*;
 import org.lwjgl.util.vector.Matrix4f;
 
 import engine.GLSettings;
+import hud.Hud;
 import hud.HudTexture;
 import objects.Vao;
+import renderer.textRendering.TextMaster;
 import utils.maths.Matrix;
+import utils.tasks.Cleanup;
 
-public class HudRenderer {
+public class HudRenderer extends Cleanup {
 
-	private final Vao quad;
-	private HudShader shader;
+	private static Vao quad;
+	private static HudShader shader;
 
 	public HudRenderer() {
+		super();
 		float[] positions = { -1, 1, -1, -1, 1, 1, 1, -1 };
 		quad = Vao.create().loadToVAO(positions, 2);
 		shader = new HudShader();
 	}
 
-	public void render(List<HudTexture> guis) {
+	public static void renderAllHuds(Hud... allHUDS) {
+		for (Hud hud : allHUDS) {
+			renderAllHudTextures(hud.getAllHuds());
+			TextMaster.renderTexts(hud.getAllTexts());
+		}
+	}
+	
+	public static void renderAllHuds(Collection<Hud> allHUDS) {
+		for (Hud hud : allHUDS) {
+			renderAllHudTextures(hud.getAllHuds());
+			TextMaster.renderTexts(hud.getAllTexts());
+		}
+	}
+
+	public static void renderAllHudTextures(Collection<HudTexture> allHUDS) {
 		GLSettings.disableBlending();
 		shader.start();
 		glBindVertexArray(quad.id);
@@ -32,7 +50,7 @@ public class HudRenderer {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_DEPTH_TEST);
-		for (HudTexture gui : guis) {
+		for (HudTexture gui : allHUDS) {
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, gui.getTexture().id);
 			Matrix4f matrix = Matrix.createTransformationMatrix(gui.getPosition(), gui.getScale(), gui.getRotation());
@@ -44,6 +62,11 @@ public class HudRenderer {
 		glDisableVertexAttribArray(0);
 		glBindVertexArray(0);
 		shader.stop();
+	}
+
+	@Override
+	public void delete() {
+		shader.delete();
 	}
 
 }

@@ -3,7 +3,7 @@ package textures;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
-import main.Log;
+import log.Log;
 import utils.SourceFile;
 import utils.tasks.Cleanup;
 

@@ -19,9 +19,11 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import audio.Sound2DMaster;
 import files.EngineFileConfig;
-import main.Log;
+import log.Log;
 import panels.ImagePanel;
 import panels.LoadingScreenPanel;
 import utils.tasks.Task;
@@ -230,7 +232,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 				button.setContentAreaFilled(false);
 				button.setBorderPainted(false);
 				button.setFocusPainted(false);
-				button.setHorizontalAlignment(SwingConstants.RIGHT); 
+				button.setHorizontalAlignment(SwingConstants.RIGHT);
 				button.addMouseListener(new java.awt.event.MouseAdapter() {
 					public void mouseEntered(java.awt.event.MouseEvent evt) {
 						button.setFont(new Font(fonttype, Font.PLAIN, 37));
@@ -287,6 +289,8 @@ public abstract class Launcher extends JFrame implements ILauncher {
 						progressBarAmount++;
 						loadingPanelProgressBar.setValue(progressBarAmount);
 						Thread.sleep(50);
+						if (progressBarAmount == 20) {
+						}
 						if (progressBarAmount >= 100) {
 							openMain();
 							try {
@@ -300,6 +304,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 					}
 				}
 			}
+
 		};
 		thread = new Thread(runnable);
 		thread.start();
@@ -329,10 +334,11 @@ public abstract class Launcher extends JFrame implements ILauncher {
 				} catch (IOException e) {
 					writerError(e.getMessage());
 				}
+				Vector3f green = new Vector3f(0.1f, 0.9f, 0.1f);
 				Log.append();
-				Log.append("=====================================");
-				Log.append("Version: " + launcherData.getString("version") + " -> " + newVersion);
-				Log.append("=====================================");
+				Log.append("=====================================", green);
+				Log.append("Version: " + launcherData.getString("version") + " -> " + newVersion, green);
+				Log.append("=====================================", green);
 				Log.append();
 			}
 		};

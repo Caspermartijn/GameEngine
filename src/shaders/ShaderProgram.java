@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import main.Log;
+import log.Log;
 import shaders.uniforms.Uniform;
 import utils.SourceFile;
 
@@ -36,7 +36,7 @@ public class ShaderProgram {
 		created++;
 
 		programID = GL20.glCreateProgram();
-		GL20.glAttachShader(programID, vertexShaderID);
+		GL20.glAttachShader(programID, vertexShaderID); 
 		GL20.glAttachShader(programID, fragmentShaderID);
 		for (Entry<Integer, String> e : builder.inputs.entrySet()) {
 			bindAttribute(e.getKey(), e.getValue());

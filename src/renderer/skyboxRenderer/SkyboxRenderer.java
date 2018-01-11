@@ -31,7 +31,7 @@ public class SkyboxRenderer extends Cleanup{
 	public void init() {
 		cube = Vao.create();
 		cube.bind();
-		cube.createStaticAttribute(0, VERTICES, 3);
+		cube.createStaticAttribute(0, VERTICES, 3); 
 		cube.unbind();
 
 		shader = new SkyboxShader();

@@ -10,6 +10,7 @@ public class Text extends Cleanup {
 
 	private String textString;
 	private float fontSize;
+	private float start_fontSize;
 
 	private Vao textMeshVao;
 	private int vertexCount;
@@ -26,6 +27,7 @@ public class Text extends Cleanup {
 	public Text(String text, float fontSize, String font, Vector2f position, float maxLineLength, boolean centered) {
 		this.textString = text;
 		this.fontSize = fontSize;
+		start_fontSize = fontSize;
 		this.font = font;
 		this.position = position;
 		this.lineMaxSize = maxLineLength;
@@ -43,6 +45,10 @@ public class Text extends Cleanup {
 		vertexCount = data.getVertexCount();
 		Vao.vaosDeleted--;
 		Vao.vaosCreated--;
+	}
+	
+	public float getStartFontSize() {
+		return start_fontSize;
 	}
 
 	public void delete() {
@@ -146,4 +152,6 @@ public class Text extends Cleanup {
 	public String getText() {
 		return textString;
 	}
+	
+	
 }

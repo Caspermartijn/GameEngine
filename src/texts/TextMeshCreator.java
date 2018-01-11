@@ -29,7 +29,7 @@ public class TextMeshCreator {
 		List<Line> lines = new ArrayList<Line>();
 		Line currentLine = new Line(metaData.getSpaceWidth(), text.getFontSize(), text.getMaxLineSize());
 		Word currentWord = new Word(text.getFontSize());
-		for (char c : chars) {
+		for (char c : chars) { 
 			int ascii = (int) c;
 			if (ascii == SPACE_ASCII) {
 				boolean added = currentLine.attemptToAddWord(currentWord);

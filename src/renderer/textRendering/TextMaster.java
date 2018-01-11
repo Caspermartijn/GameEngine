@@ -1,6 +1,7 @@
 package renderer.textRendering;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import texts.Text;
 import utils.tasks.Cleanup;
@@ -30,13 +31,19 @@ public class TextMaster {
 		}
 	}
 
+	public static void renderTexts(Collection<Text> textss) {
+		for (Text t : textss) {
+			renderer.renderText(t); 
+		}
+	}
+	
 	public static void delete() {
 		renderer.cleanUp();
 	}
 
 	public static void renderAll() {
 		for (Text t : texts) {
-			renderer.renderText(t);
+			renderer.renderText(t); 
 		}
 	}
 

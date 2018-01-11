@@ -29,7 +29,7 @@ public class FontType {
 	}
 
 	public TextMeshData loadText(Text text) {
-		return loader.createTextMesh(text); 
+		return loader.createTextMesh(text);  
 	}
 
 	public void setFontSettings(float width, float smoothness) {

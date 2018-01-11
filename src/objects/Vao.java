@@ -8,7 +8,7 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
-import main.Log;
+import log.Log;
 import utils.tasks.Cleanup;
 
 public class Vao extends Cleanup {

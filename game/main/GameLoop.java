@@ -2,10 +2,12 @@ package main;
 
 import static org.lwjgl.opengl.GL11.glClear;
 import static utils.tasks.Cleanup.cleanAll;
+
 import static scenes.Scene.renderScene;
 import static scenes.Scene.setCurrentScene;
 import static renderer.textRendering.TextMaster.renderAllTexts;
-import static renderer.textRendering.TextMaster.addText;
+import static renderer.hudRenderer.HudRenderer.renderAllHuds;
+import static renderer.hudRenderer.HudRenderer.renderAllHudTextures;
 import static utils.RenderItem.renderItems;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -25,15 +27,16 @@ import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
 import hitbox.HitBox;
+import hud.Hud;
 import hud.HudManager;
 import hud.HudTexture;
 import launcher.Launcher;
+import log.Log;
 import objects.Camera;
 import objects.FPS_Player;
 import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
-import renderer.hudRenderer.HudRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
 import texts.Text;
@@ -172,7 +175,7 @@ public class GameLoop {
 					.setSamples(8).setFpsCap(60));
 
 			Log.init();
-			Log.append("Log started");
+			Log.append("log initialized", new Vector3f(0.349019608f, 0, 1));
 			setMouseEnabled(true);
 
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
@@ -180,7 +183,6 @@ public class GameLoop {
 
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
-			HudRenderer hudRenderer = new HudRenderer();
 
 			spaceScene(master, skyboxRenderer);
 
@@ -190,32 +192,39 @@ public class GameLoop {
 			HudTexture hud = new HudTexture(sideTex, new Vector2f(0, (1 - scale.y) + 0.075f), scale);
 			hud.setRotation(180);
 
-			Text fps = new Text(Display.getFPS() + "", 0.75f, "candara", new Vector2f(0, 0), 10, false);
-			Text delta = new Text("delta: ", 0.75f, "candara", new Vector2f(0, 0.02f), 10, false);
-			Text ping = new Text("ping: ", 0.75f, "candara", new Vector2f(0, 0.04f), 10, false);
+			Text fps = new Text(Display.getFPS() + "", 0.78f, "candara", new Vector2f(0, 0), 10, false);
+			Text delta = new Text("delta: ", 0.78f, "candara", new Vector2f(0, 0.02f), 10, false);
+			Text ping = new Text("ping: ", 0.78f, "candara", new Vector2f(0, 0.04f), 10, false);
 
 			fps.setColor(0, 0.25f, 1);
 			delta.setColor(0, 0.25f, 1);
 			ping.setColor(0, 0.25f, 1);
-			addText(fps);
-			addText(delta);
-			addText(ping);
+
+			Hud test_hud = new Hud(1f, new Vector2f()) {
+				public void init() {
+					addHud(hud);
+					addText(fps);
+					addText(delta);
+					addText(ping);
+					for (Text text : Log.logTexts) {
+						addText(text);
+						text.applyChanges();
+					}
+				}
+			};
+
 			while (!Display.isCloseRequested()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-				fps.setText("fps: " + Display.getFPS());
-				fps.applyChanges();
 
-				delta.setText("delta: " + Display.getDelta());
-				delta.applyChanges();
-
-				ping.setText("ping: ");
-				ping.applyChanges();
+				updateData(fps, delta, ping);
 
 				renderItems();
 
 				renderScene(camera);
 
-				hudRenderer.render(HudManager.getAllHUDS());
+				renderAllHuds(test_hud);
+
+				renderAllHudTextures(HudManager.getAllHudTextures());
 
 				renderAllTexts();
 
@@ -233,6 +242,17 @@ public class GameLoop {
 			l.closeApp();
 		}
 
+	}
+
+	private static void updateData(Text fps, Text delta, Text ping) {
+		fps.setText("fps: " + Display.getFPS());
+		fps.applyChanges();
+
+		delta.setText("delta: " + Display.getDelta());
+		delta.applyChanges();
+
+		ping.setText("ping: ");
+		ping.applyChanges();
 	}
 
 }
