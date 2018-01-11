@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import main.Log;
 import utils.tasks.Cleanup;
 
 public class Vao extends Cleanup {
@@ -19,8 +20,8 @@ public class Vao extends Cleanup {
 	private int vertexCount;
 	private static Vao bound;
 
-	private static int vaosCreated;
-	private static int vaosDeleted;
+	public static int vaosCreated;
+	public static int vaosDeleted;
 
 	public static Vao create() {
 		vaosCreated++;
@@ -165,7 +166,7 @@ public class Vao extends Cleanup {
 		}
 		if (indexVbo != null)
 			indexVbo.delete();
-		
+
 		super.cleaned = true;
 	}
 
@@ -190,7 +191,7 @@ public class Vao extends Cleanup {
 	}
 
 	public static void printLog() {
-		System.out.println("Vao_Log[created: " + vaosCreated + " , deleted: " + vaosDeleted + "]");
+		Log.append("Vao_Log[created: " + vaosCreated + " , deleted: " + vaosDeleted + "]");
 	}
 
 	public Vao loadToVAO(float[] verticesArray, float[] texturesArray, float[] normalsArray, int[] indicesArray,
@@ -225,4 +226,11 @@ public class Vao extends Cleanup {
 		return this;
 	}
 
+	public Vao loadToVAO(float[] positions, int dimensions) {
+		bind();
+		vertexCount = positions.length;
+		createStaticAttribute(0, positions, 2);
+		unbind();
+		return this;
+	}
 }

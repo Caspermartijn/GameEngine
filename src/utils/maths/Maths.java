@@ -5,6 +5,8 @@ import java.util.Random;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engine.Display;
+
 public class Maths {
 
 	public static Random RANDOM = new Random();
@@ -20,7 +22,7 @@ public class Maths {
 	}
 
 	public static float linearInterpolationBlendToSinWave(float blend) {
-		return (float) Math.sin(Math.toRadians(blend * 90));
+		return (float) Math.sin(Math.toRadians(blend * 90)); 
 	}
 
 	public static float linearInterpolation(float a, float b, float blend) {
@@ -44,6 +46,16 @@ public class Maths {
 		return l1 * p1.y + l2 * p2.y + l3 * p3.y;
 	}
 
+	public static Vector2f getNormalizedSize(float sizeX, float sizeY) {
+
+		float xFac = Display.getWidth() / 1280;
+		float yFac = Display.getHeight() / 720;
+
+		float x = (sizeX / 1280) * xFac;
+		float y = (sizeY / 720) * yFac;
+		return new Vector2f(x, y);
+	}
+	
 	public static float[] controllerInterval(boolean b, float intervall, float[] value) {
 		if (b) {
 			float backupx = value[0];

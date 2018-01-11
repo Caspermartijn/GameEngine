@@ -40,7 +40,7 @@ public class TextMaster {
 		}
 	}
 
-	public static FontRenderer getRenderer() {
+	public static FontRenderer getRenderer() { 
 		return renderer;
 	}
 

@@ -1,6 +1,7 @@
 package utils.maths;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class Matrix {
@@ -17,8 +18,16 @@ public class Matrix {
 		return matrix;
 	}
 
+	public static Matrix4f createTransformationMatrix(Vector2f translation, Vector2f scale, float rotation) {
+		Matrix4f matrix = new Matrix4f();
+		matrix.setIdentity();
+		Matrix4f.translate(translation, matrix, matrix);
+		Matrix4f.rotate((float) Math.toRadians(rotation), new Vector3f(0, 0, 1), matrix, matrix);
+		Matrix4f.scale(new Vector3f(scale.x, scale.y, 1f), matrix, matrix);
+		return matrix;
+	}
 	// public static void store(Matrix3f matrix, FloatBuffer buffer) {
-	// buffer.put(0, matrix.m00()); 
+	// buffer.put(0, matrix.m00());
 	// buffer.put(1, matrix.m01());
 	// buffer.put(2, matrix.m02());
 	//

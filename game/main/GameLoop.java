@@ -18,25 +18,29 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import controlls.FreeCam;
 import engine.Display;
 import engine.DisplayBuilder;
-
-import engine.Mouse;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
 import hitbox.HitBox;
+import hud.HudManager;
+import hud.HudTexture;
 import launcher.Launcher;
 import objects.Camera;
 import objects.FPS_Player;
 import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
+import renderer.hudRenderer.HudRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
 import texts.Text;
+import textures.Texture;
 import utils.RenderItem;
 import utils.SourceFile;
+import utils.maths.Maths;
 import utils.models.ModelMaster;
 
 public class GameLoop {
@@ -45,13 +49,14 @@ public class GameLoop {
 	private static Camera camera;
 
 	public static void main(String[] args) {
-		l = new Launcher("testEngine") {
+		String title = "I am the best of the 2 of us. (Except in water and animation)";
+		l = new Launcher(title) {
 
 			private static final long serialVersionUID = 001L;
 
 			@Override
 			public void play() {
-				startGame();
+				startGame(this.getTitle());
 			}
 
 			@Override
@@ -99,18 +104,19 @@ public class GameLoop {
 		Scene scene = new Scene("TimeMasters", renderer, skyboxRenderer) {
 
 		};
-		Mouse.setMouseEnabled(false);
+		setMouseEnabled(false);
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
 		ship.setControllable(false);
 		HitBox playerHitBox = new HitBox(-3, 3, 0, 7, -3, 3);
 		FPS_Player player = new FPS_Player(ModelMaster.getModel("timecube_1"), new Vector3f(2000, 100, 2000),
 				new Vector3f(), playerHitBox, 0);
-		GameLoop.camera = player.getCamera();
+		FreeCam freecam = new FreeCam();
+		GameLoop.camera = freecam;
 		new RenderItem() {
 
 			@Override
 			public void render() {
-				player.updateInputs();
+				freecam.updateInputs();
 			}
 		};
 		player.getTransform().setPosition(new Vector3f(0, 100, 0));
@@ -160,10 +166,13 @@ public class GameLoop {
 		setCurrentScene(scene);
 	}
 
-	public static void startGame() {
+	public static void startGame(String title) {
 		try {
-			createDisplay(new DisplayBuilder(1280, 720).setTitle("GameEngine").setFullscreen(false).setVsync(false)
+			createDisplay(new DisplayBuilder(1280, 720).setTitle(title).setFullscreen(false).setVsync(false)
 					.setSamples(8).setFpsCap(60));
+
+			Log.init();
+			Log.append("Log started");
 			setMouseEnabled(true);
 
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
@@ -171,27 +180,48 @@ public class GameLoop {
 
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
+			HudRenderer hudRenderer = new HudRenderer();
 
 			spaceScene(master, skyboxRenderer);
 
 			master.setProjectionMatrix(camera.getProjectionMatrix());
+			Texture sideTex = Texture.getTextureBuilder(new SourceFile("/res/guis/hud/hud_side.png")).create();
+			Vector2f scale = Maths.getNormalizedSize(1280, 200);
+			HudTexture hud = new HudTexture(sideTex, new Vector2f(0, (1 - scale.y) + 0.075f), scale);
+			hud.setRotation(180);
 
-			Text testText = new Text("", 5, "candara", new Vector2f(0, 0), 10, false);
-			testText.setColor(1, 1, 1);
-			
-			addText(testText);
+			Text fps = new Text(Display.getFPS() + "", 0.75f, "candara", new Vector2f(0, 0), 10, false);
+			Text delta = new Text("delta: ", 0.75f, "candara", new Vector2f(0, 0.02f), 10, false);
+			Text ping = new Text("ping: ", 0.75f, "candara", new Vector2f(0, 0.04f), 10, false);
 
+			fps.setColor(0, 0.25f, 1);
+			delta.setColor(0, 0.25f, 1);
+			ping.setColor(0, 0.25f, 1);
+			addText(fps);
+			addText(delta);
+			addText(ping);
 			while (!Display.isCloseRequested()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+				fps.setText("fps: " + Display.getFPS());
+				fps.applyChanges();
+
+				delta.setText("delta: " + Display.getDelta());
+				delta.applyChanges();
+
+				ping.setText("ping: ");
+				ping.applyChanges();
 
 				renderItems();
 
 				renderScene(camera);
 
+				hudRenderer.render(HudManager.getAllHUDS());
+
 				renderAllTexts();
 
 				swapBuffers();
 				updateEvents();
+
 			}
 
 			cleanAll();

@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 
 import audio.Sound2DMaster;
 import files.EngineFileConfig;
+import main.Log;
 import panels.ImagePanel;
 import panels.LoadingScreenPanel;
 import utils.tasks.Task;
@@ -229,7 +230,7 @@ public abstract class Launcher extends JFrame implements ILauncher {
 				button.setContentAreaFilled(false);
 				button.setBorderPainted(false);
 				button.setFocusPainted(false);
-				button.setHorizontalAlignment(SwingConstants.RIGHT);
+				button.setHorizontalAlignment(SwingConstants.RIGHT); 
 				button.addMouseListener(new java.awt.event.MouseAdapter() {
 					public void mouseEntered(java.awt.event.MouseEvent evt) {
 						button.setFont(new Font(fonttype, Font.PLAIN, 37));
@@ -328,11 +329,11 @@ public abstract class Launcher extends JFrame implements ILauncher {
 				} catch (IOException e) {
 					writerError(e.getMessage());
 				}
-				System.out.println();
-				System.out.println("=====================================");
-				System.out.println("Version: " + launcherData.getString("version") + " -> " + newVersion);
-				System.out.println("=====================================");
-				System.out.println();
+				Log.append();
+				Log.append("=====================================");
+				Log.append("Version: " + launcherData.getString("version") + " -> " + newVersion);
+				Log.append("=====================================");
+				Log.append();
 			}
 		};
 		thread = new Thread(runnable);

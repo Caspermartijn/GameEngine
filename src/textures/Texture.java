@@ -3,6 +3,7 @@ package textures;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
+import main.Log;
 import utils.SourceFile;
 import utils.tasks.Cleanup;
 
@@ -44,7 +45,7 @@ public class Texture extends Cleanup {
 		GL11.glDeleteTextures(id);
 	}
 
-	public static void printLog() {
-		System.out.println("Texture_Log[created: " + created + " , deleted:" + deleted + "]");
+	public static void printLog() { 
+		Log.append("Texture_Log[created: " + created + " , deleted:" + deleted + "]");
 	}
 }

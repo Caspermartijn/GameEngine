@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
+import main.Log;
 import shaders.uniforms.Uniform;
 import utils.SourceFile;
 
@@ -139,7 +140,7 @@ public class ShaderProgram {
 	}
 
 	public static void printLog() {
-		System.out.println("Shader_Log[created: " + created + " , deleted: " + deleted + "]");
+		Log.append("Shader_Log[created: " + created + " , deleted: " + deleted + "]");
 	}
 
 }

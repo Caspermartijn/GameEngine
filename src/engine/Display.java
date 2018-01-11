@@ -39,7 +39,7 @@ public class Display {
 	private static long id;
 
 	private static DisplayBuilder builder;
-	
+
 	public static void createDisplay(DisplayBuilder builder) throws Exception {
 		Display.builder = builder;
 		GLFWErrorCallback.createPrint(System.err).set();
@@ -95,6 +95,7 @@ public class Display {
 		if (time > 1) {
 			time = 0;
 			fps = frames;
+			last_delta = delta;
 			frames = 0;
 		}
 		Mouse.update();
@@ -115,6 +116,12 @@ public class Display {
 
 	public static double getFrameTime() {
 		return delta;
+	}
+
+	private static double last_delta = 0;
+
+	public static float getDelta() {
+		return (float) last_delta * 100;
 	}
 
 	public static int getWidth() {

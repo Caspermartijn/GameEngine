@@ -33,7 +33,7 @@ public class FontRenderer {
 		
 		vao.unbind(0, 1);
 		
-		shader.stop();
+		shader.stop(); 
 	}
 	
 	public ShaderProgram getShader() {

@@ -60,7 +60,7 @@ public class GLSettings {
 
 	public static void setBackFaceCulling(boolean cull) {
 		if (cull && !cullingBackFace) {
-			GL11.glEnable(GL11.GL_CULL_FACE);
+			GL11.glEnable(GL11.GL_CULL_FACE); 
 			GL11.glCullFace(GL11.GL_BACK);
 			cullingBackFace = true;
 		} else if (!cull && cullingBackFace) {

@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector4f;
 import objects.Vao;
 import utils.tasks.Cleanup;
 
-public class Text extends Cleanup{
+public class Text extends Cleanup {
 
 	private String textString;
 	private float fontSize;
@@ -23,8 +23,7 @@ public class Text extends Cleanup{
 
 	private boolean centerText = false;
 
-	public Text(String text, float fontSize, String font, Vector2f position, float maxLineLength,
-			boolean centered) {
+	public Text(String text, float fontSize, String font, Vector2f position, float maxLineLength, boolean centered) {
 		this.textString = text;
 		this.fontSize = fontSize;
 		this.font = font;
@@ -32,15 +31,18 @@ public class Text extends Cleanup{
 		this.lineMaxSize = maxLineLength;
 		this.centerText = centered;
 		buildMesh();
-		
 	}
 
 	private void buildMesh() {
-		if (textMeshVao != null)
+		if (textMeshVao != null) {
 			textMeshVao.delete();
+		}
+
 		TextMeshData data = Fonts.getFont(font).loadText(this);
 		textMeshVao = data.toVao();
 		vertexCount = data.getVertexCount();
+		Vao.vaosDeleted--;
+		Vao.vaosCreated--;
 	}
 
 	public void delete() {
@@ -92,54 +94,55 @@ public class Text extends Cleanup{
 		return textString;
 	}
 
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		return textString;
 	}
-	
+
 	public void setText(String text) {
 		this.textString = text;
 	}
-	
+
 	public void setFontSize(float size) {
 		this.fontSize = size;
 	}
-	
+
 	public void setMaxLineLength(float length) {
 		this.lineMaxSize = length;
 	}
-	
+
 	public void setFont(String font) {
 		this.font = font;
 	}
-	
+
 	public void setTextCentered(boolean centered) {
 		this.centerText = centered;
 	}
-	
+
 	public void setColor(float r, float g, float b) {
 		color.set(r, g, b, 1.0f);
 	}
-	
+
 	public void setColor(float r, float g, float b, float a) {
 		color.set(r, g, b, a);
 	}
-	
+
 	public void setPosition(float x, float y) {
 		position.set(x, y);
 	}
-	
+
 	public void setPosition(Vector2f v) {
 		position = v;
 	}
-	
+
 	public void applyChanges() {
 		buildMesh();
 	}
-	
+
 	public Vector2f getCharacterPosition(int character) {
 		return Fonts.getFont(font).getCharacterPosition(character, this);
 	}
-	
+
 	public String getText() {
 		return textString;
 	}

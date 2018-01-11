@@ -26,7 +26,7 @@ public abstract class Cleanup {
 		Cleanup.list.add(this);
 	}
 
-	public abstract void delete();
+	public abstract void delete(); 
 
 	public boolean cleaned = false;
 
