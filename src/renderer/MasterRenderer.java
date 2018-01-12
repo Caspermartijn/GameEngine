@@ -90,7 +90,9 @@ public class MasterRenderer extends Cleanup {
 		entityShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());
 		entityRenderer.render(entities);
 		entityShader.stop();
+		if(HitBoxMaster.renderHitBoxes == true) {
 		linerenderer.renderHitBoxes(camera, HitBoxMaster.hitBoxes);
+		}
 		terrainShader.start();
 		terrainShader.loadLights(lights);
 		terrainShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());

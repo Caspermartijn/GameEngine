@@ -40,6 +40,7 @@ public class DebugGui extends GUI {
 		images();
 		texts();
 		texts2();
+		this.hideAll();
 	}
 
 	private void images() {

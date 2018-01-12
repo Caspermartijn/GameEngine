@@ -11,16 +11,16 @@ public class FontType {
 	private TextMeshCreator loader;
 
 	private float width = 0.5f, smoothness = 0.1f;
-	
+
 	protected FontType(SourceFile texture, SourceFile fontFile) {
-		this.textureAtlas = Texture.getTextureBuilder(texture).normalMipMap().create();
 		this.loader = new TextMeshCreator(fontFile);
+		this.textureAtlas = Texture.getTextureBuilder(texture).normalMipMap().create();
 	}
-	
+
 	protected FontType(SourceFile texture, SourceFile fontFile, float width, float smoothness) {
 		this.textureAtlas = Texture.getTextureBuilder(texture).normalMipMap().create();
 		this.loader = new TextMeshCreator(fontFile);
-		this.width = width; 
+		this.width = width;
 		this.smoothness = smoothness;
 	}
 
@@ -29,11 +29,11 @@ public class FontType {
 	}
 
 	public TextMeshData loadText(Text text) {
-		return loader.createTextMesh(text);  
+		return loader.createTextMesh(text);
 	}
 
 	public void setFontSettings(float width, float smoothness) {
-		this.width = width; 
+		this.width = width;
 		this.smoothness = smoothness;
 	}
 

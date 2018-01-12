@@ -5,7 +5,6 @@ import static utils.tasks.Cleanup.cleanAll;
 
 import static scenes.Scene.renderScene;
 import static scenes.Scene.setCurrentScene;
-import static renderer.textRendering.TextMaster.renderAllTexts;
 import static utils.RenderItem.renderItems;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -14,7 +13,6 @@ import static engine.Display.*;
 import static audio.Sound2DMaster.*;
 import static engine.Mouse.*;
 
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -24,6 +22,8 @@ import engine.DisplayBuilder;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
+import gamestates.GameState;
+import guis.MainMenu;
 import hitbox.HitBox;
 import launcher.Launcher;
 import log.Log;
@@ -36,7 +36,7 @@ import renderer.MasterRenderer;
 import renderer.imageRenderer.ImageRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
-import texts.Text;
+import texts.Fonts;
 import utils.RenderItem;
 import utils.SourceFile;
 import utils.models.ModelMaster;
@@ -164,12 +164,11 @@ public class GameLoop {
 		setCurrentScene(scene);
 	}
 
+	@SuppressWarnings("unused")
 	public static void startGame(String title) {
 		try {
-			createDisplay(new DisplayBuilder(1920, 1080).setTitle(title).setFullscreen(false).setVsync(false)
+			createDisplay(new DisplayBuilder(1920, 1080).setTitle(title).setFullscreen(true).setVsync(false)
 					.setSamples(8).setFpsCap(60));
-
-			setMouseEnabled(true);
 
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
 			setDepthTesting(true);
@@ -178,30 +177,53 @@ public class GameLoop {
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
 
-			spaceScene(master, skyboxRenderer);
-
-			master.setProjectionMatrix(camera.getProjectionMatrix());
-
+			Fonts.addFont("pdark", new SourceFile("/res/fonts/pdark.png"),  new SourceFile("/res/fonts/pdark.fnt"));
+			
 			DebugGui debug = new DebugGui();
 			Log.init(debug);
 			Log.append("log initialized", new Vector3f(0.349019608f, 0, 1));
-			debug.showAll();
+			debug.hideAll();
+			
+			spaceScene(master, skyboxRenderer);
 
-			Text fps = new Text(Display.getFPS() + "", 0.78f, "candara", new Vector2f(0, 0), 10, false);
-			Text delta = new Text("delta: ", 0.78f, "candara", new Vector2f(0, 0.02f), 10, false);
-			Text ping = new Text("ping: ", 0.78f, "candara", new Vector2f(0, 0.04f), 10, false);
+			GameState inGame = new GameState("ingame") {
 
-			fps.setColor(0, 0.25f, 1);
-			delta.setColor(0, 0.25f, 1);
-			ping.setColor(0, 0.25f, 1);
+				@Override
+				public void render() {
+					renderItems();
+					renderScene(camera);
+				}
 
+				@Override
+				public void start() {
+					setMouseEnabled(false);
+				}
+			};
+
+			master.setProjectionMatrix(camera.getProjectionMatrix());
+
+			MainMenu main = new MainMenu(master, skyboxRenderer);
+
+			GameState mainMenu = new GameState("main_menu") {
+
+				@Override
+				public void render() {
+					main.renderComponents();
+				}
+
+				@Override
+				public void start() {
+					setMouseEnabled(true);
+				}
+			};
+			mainMenu.setCurrentState();
 			while (!Display.isCloseRequested()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-				updateData(fps, delta, ping);
-				renderItems();
-				renderScene(camera);
+
+				GameState.currentState.render();
 				debug.update(camera);
 				debug.renderComponents();
+
 				swapBuffers();
 				updateEvents();
 			}
@@ -215,17 +237,6 @@ public class GameLoop {
 			l.closeApp();
 		}
 
-	}
-
-	private static void updateData(Text fps, Text delta, Text ping) {
-		fps.setText("fps: " + Display.getFPS());
-		fps.applyChanges();
-
-		delta.setText("delta: " + Display.getDelta());
-		delta.applyChanges();
-
-		ping.setText("ping: ");
-		ping.applyChanges();
 	}
 
 }

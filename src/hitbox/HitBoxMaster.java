@@ -9,6 +9,7 @@ import utils.maths.Maths;
 public class HitBoxMaster {
 
 	public static List<HBox> hitBoxes = new ArrayList<HBox>();
+	public static boolean renderHitBoxes = false;
 
 	public static boolean isInBox(HBox hitbox) {
 		boolean inbox = false;

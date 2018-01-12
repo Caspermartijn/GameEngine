@@ -1,5 +1,7 @@
 package guis;
 
+import org.lwjgl.util.vector.Vector2f;
+
 import images.Image;
 import renderer.imageRenderer.ImageRenderer;
 import utils.SourceFile;
@@ -37,6 +39,11 @@ public class ImageComponent extends GUIComponent {
 	public void setSize(float width, float height) {
 		img.setWidth(width);
 		img.setHeight(height);
+	}
+
+	public void setSize(Vector2f vec) {
+		img.setWidth(vec.x);
+		img.setHeight(vec.y);
 	}
 
 	public void setScale(float scale) {
