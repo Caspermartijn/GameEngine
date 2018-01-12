@@ -1,6 +1,10 @@
 package renderer.entityRenderer;
 
-import shaders.ShaderProgram;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import shaders.uniforms.ShaderProgram;
 import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformFloat;
 import shaders.uniforms.UniformMat4;
@@ -23,8 +27,8 @@ public class EntityShader extends ShaderProgram {
 	public UniformSampler texture = new UniformSampler("modelTexture");
 
 	public EntityShader() {
-		super(ShaderProgram.newShaderProgram().addInput(0, "position")
-				.addInput(1, "textureCoords").addOutput(0, "out_Color"));
+		super.init(ShaderProgram.newShaderProgram().addInput(0, "position").addInput(1, "textureCoords").addOutput(0,
+				"out_Color"));
 		start();
 		texture.loadTexUnit(0);
 		stop();
@@ -44,6 +48,20 @@ public class EntityShader extends ShaderProgram {
 	protected Uniform[] getAllUniforms() {
 		return new Uniform[] { texture, location_lightColour, location_lightPosition, location_projectionMatrix,
 				location_reflectivity, location_shineDamper, location_transformationMatrix, location_viewMatrix };
+	}
+
+	@Override
+	protected Collection<Uniform> getAllUnis() {
+		List<Uniform> uniforms = new ArrayList<Uniform>();
+		uniforms.add(texture);
+		uniforms.add(location_lightColour);
+		uniforms.add(location_lightPosition);
+		uniforms.add(location_projectionMatrix);
+		uniforms.add(location_reflectivity);
+		uniforms.add(location_shineDamper);
+		uniforms.add(location_transformationMatrix);
+		uniforms.add(location_viewMatrix);
+		return uniforms;
 	}
 
 }

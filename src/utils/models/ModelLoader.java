@@ -36,4 +36,9 @@ public class ModelLoader {
 		return new Model_3D(vao, texture);
 	}
 
+	public static Texture loadTexture(SourceFile textureFile) {
+		Texture texture = Texture.getTextureBuilder(textureFile).create();
+		return texture;
+	}
+
 }

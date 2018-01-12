@@ -1,0 +1,124 @@
+package objects;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.lwjgl.util.vector.Vector2f;
+
+import engine.Display;
+import guis.GUI;
+import guis.ImageComponent;
+import guis.TextComponent;
+import renderer.MasterRenderer;
+import shaders.uniforms.ShaderProgram;
+import textures.Texture;
+import utils.SourceFile;
+import utils.maths.Maths;
+
+public class DebugGui extends GUI {
+
+	private TextComponent fps;
+	private TextComponent delta;
+	private TextComponent ping;
+
+	private TextComponent campos;
+	private TextComponent vaos;
+	private TextComponent vbos;
+	private TextComponent textures;
+	private TextComponent shaders;
+
+	private TextComponent entities;
+	private TextComponent terrains;
+	private TextComponent lights;
+
+	private TextComponent scenes;
+
+	private List<TextComponent> texts = new ArrayList<TextComponent>();
+
+	public DebugGui() {
+		super.setPosition(0f, 0.0f);
+		images();
+		texts();
+		texts2();
+	}
+
+	private void images() {
+		ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/hud/hud_side.png"));
+		background.setScale(1f);
+		Vector2f vec = Maths.getFrom720toCurrentDisplaySize(new Vector2f(1280, 200));
+		background.setSize(vec.x, vec.y);
+		background.setPosition(0.5f, 0.08f);
+		background.setRotation(180);
+		background.show();
+	}
+
+	private void texts2() {
+		campos = new TextComponent(this, "Campos: ", "candara", 0.775f, 200, false);
+		vaos = new TextComponent(this, "Vao: ", "candara", 0.775f, 200, false);
+		vbos = new TextComponent(this, "Vbo: ", "candara", 0.775f, 200, false);
+		textures = new TextComponent(this, "Textures: ", "candara", 0.775f, 200, false);
+		shaders = new TextComponent(this, "Shaders: ", "candara", 0.775f, 200, false);
+
+		entities = new TextComponent(this, "Entities: ", "candara", 0.775f, 200, false);
+		terrains = new TextComponent(this, "Terrains: ", "candara", 0.775f, 200, false);
+		lights = new TextComponent(this, "Lights: ", "candara", 0.775f, 200, false);
+
+		scenes = new TextComponent(this, "Scenes: ", "candara", 0.775f, 200, false);
+
+		texts.add(campos);
+		texts.add(vaos);
+		texts.add(vbos);
+		texts.add(textures);
+		texts.add(shaders);
+
+		texts.add(entities);
+		texts.add(terrains);
+		texts.add(lights);
+
+		texts.add(scenes);
+
+		float f = 0;
+
+		float f2 = 0.1f;
+
+		int i = 0;
+
+		for (TextComponent component : texts) {
+			component.setPosition(0.001f + f2, 0f + f);
+			f += 0.017f;
+			component.setColor(1, 1, 1, 1);
+			i++;
+			if (i == 5 || i == 8 || i == 1) {
+				f += 0.017f;
+			}
+		}
+	}
+
+	private void texts() {
+		fps = new TextComponent(this, "fps: ", "candara", 0.8f, 200, false);
+		delta = new TextComponent(this, "delta:", "candara", 0.8f, 200, false);
+		ping = new TextComponent(this, "ping: ", "candara", 0.8f, 200, false);
+		fps.setPosition(0.001f, 0f);
+		delta.setPosition(0.001f, 0.02f);
+		ping.setPosition(0.001f, 0.04f);
+		fps.setColor(1f, 1f, 1f, 1f);
+		delta.setColor(1f, 1f, 1f, 1f);
+		ping.setColor(1f, 1f, 1f, 1f);
+	}
+
+	public void update(Camera camera) {
+		fps.setText("FPS: " + Display.getFPS());
+		delta.setText("DELTA: " + (Display.getDeltaSeccond() * 100));
+		ping.setText("ping: " + 0);
+
+		campos.setText("campos: " + (short) camera.x + " " + (short) camera.y + " " + (short) camera.z);
+		vaos.setText("vao: " + Vao.vaosCreated);
+		vbos.setText("vbo: " + Vbo.vbosCreated);
+		textures.setText("textures: " + Texture.created);
+		shaders.setText("shaders: " + ShaderProgram.created);
+
+		entities.setText("entities: " + MasterRenderer.getEntitiesAmount());
+		terrains.setText("terrains: " + MasterRenderer.getTerrainsAmount());
+		lights.setText("lights: " + MasterRenderer.getLightsAmount());
+	}
+}

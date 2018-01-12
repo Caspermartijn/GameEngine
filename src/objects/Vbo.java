@@ -8,8 +8,9 @@ import org.lwjgl.opengl.GL15;
 
 import utils.tasks.Cleanup;
 
-public class Vbo extends Cleanup{
+public class Vbo extends Cleanup {
 
+	public static int vbosCreated;
 	private final int vboId;
 	private final int type;
 	private final boolean isStatic;
@@ -22,11 +23,13 @@ public class Vbo extends Cleanup{
 	}
 
 	public static Vbo createStaticVbo(int type) {
+		vbosCreated++;
 		int id = GL15.glGenBuffers();
 		return new Vbo(id, type, true);
 	}
 
 	public static Vbo createVbo(int type) {
+		vbosCreated++;
 		int id = GL15.glGenBuffers();
 		return new Vbo(id, type, false);
 	}
@@ -96,6 +99,7 @@ public class Vbo extends Cleanup{
 	}
 
 	public void delete() {
+		vbosCreated--;
 		GL15.glDeleteBuffers(vboId);
 	}
 

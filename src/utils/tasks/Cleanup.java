@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import objects.Vao;
-import shaders.ShaderProgram;
+import shaders.uniforms.ShaderProgram;
 import textures.Texture;
 
 public abstract class Cleanup {

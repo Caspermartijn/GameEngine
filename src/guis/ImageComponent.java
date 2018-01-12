@@ -8,16 +8,15 @@ public class ImageComponent extends GUIComponent {
 
 	private Image img;
 	private float x, y;
-	
+
 	public ImageComponent(GUI container, SourceFile file) {
 		super(container);
 		img = new Image(file);
 	}
-	
+
 	@Override
 	public void render() {
 		img.setPosition(super.getContainer().getPosition().getX() + x, super.getContainer().getPosition().getY() + y);
-		
 		ImageRenderer.renderImage(img);
 	}
 
@@ -25,14 +24,27 @@ public class ImageComponent extends GUIComponent {
 	public void delete() {
 		img.delete();
 	}
-		
+
 	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
 	}
-	
+
+	public float[] getSize() {
+		return new float[] { img.getWidth(), img.getHeight() };
+	}
+
+	public void setSize(float width, float height) {
+		img.setWidth(width);
+		img.setHeight(height);
+	}
+
 	public void setScale(float scale) {
 		img.setScale(scale);
 	}
-	
+
+	public void setRotation(float rotation) {
+		img.setRotation(rotation);
+	}
+
 }

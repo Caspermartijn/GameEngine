@@ -12,7 +12,6 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.GLSettings;
 import entities.Entity;
 import entities.Light;
-import guis.QuadRenderer;
 import hitbox.HitBoxMaster;
 import objects.Camera;
 import objects.Model_3D;
@@ -21,6 +20,7 @@ import renderer.entityRenderer.EntityRenderer;
 import renderer.entityRenderer.EntityShader;
 import renderer.imageRenderer.ImageRenderer;
 import renderer.lineRenderer.LineRenderer;
+import renderer.quadRenderer.QuadRenderer;
 import renderer.terrainRenderer.TerrainRenderer;
 import renderer.terrainRenderer.TerrainShader;
 import renderer.textRendering.FontRenderer;
@@ -40,7 +40,7 @@ public class MasterRenderer extends Cleanup {
 	private EntityShader entityShader = new EntityShader();
 	private EntityRenderer entityRenderer;
 
-	private TerrainShader terrainShader = new TerrainShader(); 
+	private TerrainShader terrainShader = new TerrainShader();
 	private TerrainRenderer terrainRenderer;
 
 	public LineRenderer linerenderer;
@@ -52,6 +52,12 @@ public class MasterRenderer extends Cleanup {
 		entityRenderer = new EntityRenderer(entityShader);
 		terrainRenderer = new TerrainRenderer(terrainShader);
 		linerenderer = new LineRenderer();
+		new ImageRenderer();
+		new FontRenderer();
+		new QuadRenderer();
+		new LineRenderer();
+		new ImageRenderer();
+		init();
 	}
 
 	public void setProjectionMatrix(Matrix4f matrix) {
@@ -62,6 +68,7 @@ public class MasterRenderer extends Cleanup {
 
 	private void updateEntities(List<Entity> entities) {
 		for (Entity ent : entities) {
+			entititesAmount++;
 			ent.update();
 			processEntity(ent);
 			updateEntities(ent.getChildrenEntities());
@@ -71,6 +78,7 @@ public class MasterRenderer extends Cleanup {
 	public void render(Camera camera, List<Light> light, List<Entity> entities) {
 		updateEntities(entities);
 		render(light, camera, new Vector4f(0, 0, 1, 0));
+		lightsAmount = light.size();
 	}
 
 	public void render(List<Light> lights, Camera camera, Vector4f clipPlane) {
@@ -116,28 +124,45 @@ public class MasterRenderer extends Cleanup {
 	}
 
 	public void delete() {
-		FontRenderer.delete();
-		QuadRenderer.delete();
-		ImageRenderer.delete();
-		quad.delete();
 	}
 
 	private static Vao quad;
-	
+
+	private static int entititesAmount;
+	private static int terrainsAmount;
+	private static int lightsAmount;
+
+	public static int getEntitiesAmount() {
+		int i = entititesAmount;
+		entititesAmount = 0;
+		return i;
+	}
+
+	public static int getTerrainsAmount() {
+		int i = terrainsAmount;
+		terrainsAmount = 0;
+		return i;
+	}
+
+	public static int getLightsAmount() {
+		int i = lightsAmount;
+		lightsAmount = 0;
+		return i;
+	}
+
 	public static void init() {
 		FontRenderer.init();
 		QuadRenderer.init();
 		ImageRenderer.init();
 		quad = Vao.create();
-		quad.bind();
-		quad.createStaticAttribute(0, new float[] {-1, -1, 1, -1, -1, 1, 1, -1, 1, 1, -1, 1}, 2);
-		quad.unbind();
+		float[] positions = { -1, 1, -1, -1, 1, 1, 1, -1 };
+		quad = quad.loadToVAO(positions, 2);
 	}
-	
+
 	public static void renderQuad() {
 		quad.bind(0);
-		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, 8);
+		GL11.glDrawArrays(GL11.GL_TRIANGLE_STRIP, 0, 4);
 		quad.unbind(0);
 	}
-	
+
 }

@@ -3,26 +3,26 @@ package shaders.uniforms;
 import org.lwjgl.opengl.GL20;
 
 public abstract class Uniform {
-	
+
 	private static final int NOT_FOUND = -1;
-	
+
 	private String name;
 	private int location;
-	
-	protected Uniform(String name){
+
+	public Uniform(String name) {
 		this.name = name;
 	}
-	
-	public boolean storeUniformLocation(int programID){
+
+	protected boolean storeUniformLocation(int programID) {
 		location = GL20.glGetUniformLocation(programID, name);
-		if(location == NOT_FOUND){
+		if (location == NOT_FOUND) {
 			System.err.println("No uniform variable called " + name + " found!");
 			return false;
 		}
 		return true;
 	}
-	
-	protected int getLocation(){
+
+	protected int getLocation() {
 		return location;
 	}
 

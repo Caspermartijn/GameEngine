@@ -7,10 +7,10 @@ import org.lwjgl.util.vector.Vector3f;
 import objects.Camera;
 import objects.Skybox;
 import objects.Vao;
-import shaders.ShaderProgram;
+import shaders.uniforms.ShaderProgram;
 import utils.tasks.Cleanup;
 
-public class SkyboxRenderer extends Cleanup{
+public class SkyboxRenderer extends Cleanup {
 
 	private final int SIZE = 1;
 	private final float[] VERTICES = { -SIZE, SIZE, -SIZE, -SIZE, -SIZE, -SIZE, SIZE, -SIZE, -SIZE, SIZE, -SIZE, -SIZE,
@@ -23,15 +23,16 @@ public class SkyboxRenderer extends Cleanup{
 
 	private Vao cube;
 	private SkyboxShader shader;
-	
+
 	public SkyboxRenderer() {
+		super();
 		init();
 	}
 
 	public void init() {
 		cube = Vao.create();
 		cube.bind();
-		cube.createStaticAttribute(0, VERTICES, 3); 
+		cube.createStaticAttribute(0, VERTICES, 3);
 		cube.unbind();
 
 		shader = new SkyboxShader();
@@ -62,7 +63,7 @@ public class SkyboxRenderer extends Cleanup{
 		cube.delete();
 		shader.delete();
 	}
-	
+
 	public ShaderProgram getShader() {
 		return shader;
 	}

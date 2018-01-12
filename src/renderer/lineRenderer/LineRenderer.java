@@ -7,7 +7,7 @@ import static org.lwjgl.opengl.GL11.*;
 import hitbox.HBox;
 import objects.Camera;
 import objects.Vao;
-import shaders.ShaderProgram;
+import shaders.uniforms.ShaderProgram;
 import utils.maths.Matrix;
 import utils.tasks.Cleanup;
 
@@ -15,6 +15,10 @@ public class LineRenderer extends Cleanup {
 
 	private LineShader shader = new LineShader();
 
+	public LineRenderer() {
+		super();
+	}
+	
 	public void setProjectionMatrix(Matrix4f matrix) {
 		shader.start();
 		shader.location_projectionViewMatrix.loadMatrix(matrix);

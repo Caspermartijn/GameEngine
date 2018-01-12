@@ -4,13 +4,18 @@ import org.lwjgl.opengl.GL11;
 
 import engine.GLSettings;
 import objects.Vao;
-import shaders.ShaderProgram;
+import shaders.uniforms.ShaderProgram;
 import texts.Fonts;
 import texts.Text;
+import utils.tasks.Cleanup;
 
-public class FontRenderer {
+public class FontRenderer extends Cleanup{
 
 	private static FontShader shader = new FontShader();
+	
+	public FontRenderer() {
+		super();
+	}
 	
 	public static void cleanUp() {
 		shader.delete();
@@ -44,7 +49,7 @@ public class FontRenderer {
 		
 	}
 
-	public static void delete() {
+	public void delete() {
 		cleanUp();
 	}
 	

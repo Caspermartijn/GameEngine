@@ -12,11 +12,12 @@ import objects.Model_3D;
 import objects.Vao;
 import utils.tasks.Cleanup;
 
-public class EntityRenderer extends Cleanup{
+public class EntityRenderer extends Cleanup {
 
 	private EntityShader shader;
 
 	public EntityRenderer(EntityShader shader) {
+		super();
 		this.shader = shader;
 	}
 

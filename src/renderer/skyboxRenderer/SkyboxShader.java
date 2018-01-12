@@ -1,6 +1,10 @@
 package renderer.skyboxRenderer;
 
-import shaders.ShaderProgram;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import shaders.uniforms.ShaderProgram;
 import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformCubeMap;
 import shaders.uniforms.UniformFloat;
@@ -18,9 +22,9 @@ public class SkyboxShader extends ShaderProgram {
 	public UniformFloat size = new UniformFloat("scale");
 
 	protected SkyboxShader() {
-		super(ShaderProgram.newShaderProgram().addInput(0, "position").addOutput(0, "out_Color"));
+		super.init(ShaderProgram.newShaderProgram().addInput(0, "position").addOutput(0, "out_Color"));
 		start();
-		cubeMap.loadTexUnit(0); 
+		cubeMap.loadTexUnit(0);
 		stop();
 	}
 
@@ -36,7 +40,17 @@ public class SkyboxShader extends ShaderProgram {
 
 	@Override
 	protected Uniform[] getAllUniforms() {
-		return new Uniform[] {cubeMap};
+		return new Uniform[] { cubeMap, projectionMatrix, viewMatrix, size };
+	}
+
+	@Override
+	protected Collection<Uniform> getAllUnis() {
+		List<Uniform> uniforms = new ArrayList<Uniform>();
+		uniforms.add(cubeMap);
+		uniforms.add(projectionMatrix);
+		uniforms.add(viewMatrix);
+		uniforms.add(size);
+		return uniforms;
 	}
 
 }

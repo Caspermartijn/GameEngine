@@ -8,5 +8,5 @@ uniform mat4 matrix;
 
 void main(void) {
 	gl_Position = matrix * vec4(in_Position, 0.0f, 1.0f);
-	textureCoords = in_Position * vec2(0.5f, -0.5f) + vec2(0.5f, -0.5f);
+	textureCoords = vec2((in_Position.x+1.0)/2.0, 1 - (in_Position.y+1.0)/2.0);
 }

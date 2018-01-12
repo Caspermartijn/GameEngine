@@ -7,7 +7,7 @@ import textures.Texture;
 public class UniformSampler extends Uniform {
 
 	private int currentValue;
-	
+
 	public UniformSampler(String name) {
 		super(name);
 	}
@@ -18,7 +18,7 @@ public class UniformSampler extends Uniform {
 			currentValue = texUnit;
 		}
 	}
-	
+
 	public void bindTexture(Texture texture) {
 		texture.bindToUnit(currentValue);
 	}

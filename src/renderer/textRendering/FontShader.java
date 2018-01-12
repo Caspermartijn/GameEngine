@@ -1,6 +1,10 @@
 package renderer.textRendering;
 
-import shaders.ShaderProgram;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import shaders.uniforms.ShaderProgram;
 import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformSampler;
 import shaders.uniforms.UniformVec2;
@@ -19,7 +23,7 @@ public class FontShader extends ShaderProgram {
 	public UniformVec2 fontSettings = new UniformVec2("fontSettings");
 
 	protected FontShader() {
-		super(ShaderProgram.newShaderProgram().addInput(0, "inPosition").addInput(1, "inTextureCoords").addOutput(0,
+		super.init(ShaderProgram.newShaderProgram().addInput(0, "inPosition").addInput(1, "inTextureCoords").addOutput(0,
 				"outColor"));
 		super.start();
 		texture.loadTexUnit(0);
@@ -41,4 +45,14 @@ public class FontShader extends ShaderProgram {
 		return new Uniform[] { color, texture, translation, fontSettings };
 	}
 
+	@Override
+	protected Collection<Uniform> getAllUnis() {
+		List<Uniform> uniforms = new ArrayList<Uniform>();
+		uniforms.add(color);
+		uniforms.add(texture);
+		uniforms.add(translation);
+		uniforms.add(fontSettings);
+		return uniforms;
+	}
+	
 }

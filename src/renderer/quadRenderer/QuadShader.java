@@ -1,6 +1,10 @@
 package renderer.quadRenderer;
 
-import shaders.ShaderProgram;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import shaders.uniforms.ShaderProgram;
 import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformMat4;
 import shaders.uniforms.UniformVec4;
@@ -17,7 +21,7 @@ public class QuadShader extends ShaderProgram {
 	public UniformVec4 outlineColor = new UniformVec4("outlineColor");
 
 	protected QuadShader() {
-		super(ShaderProgram.newShaderProgram().addInput(0, "inPosition")
+		super.init(ShaderProgram.newShaderProgram().addInput(0, "inPosition")
 				.addOutput(0, "outColor"));
 	}
 
@@ -34,6 +38,16 @@ public class QuadShader extends ShaderProgram {
 	@Override
 	protected Uniform[] getAllUniforms() {
 		return new Uniform[] {transform, color, outlineColor, dimensions};
+	}
+	
+	@Override
+	protected Collection<Uniform> getAllUnis() {
+		List<Uniform> uniforms = new ArrayList<Uniform>();
+		uniforms.add(transform);
+		uniforms.add(color);
+		uniforms.add(outlineColor);
+		uniforms.add(dimensions);
+		return uniforms;
 	}
 
 }

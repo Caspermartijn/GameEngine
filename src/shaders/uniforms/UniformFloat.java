@@ -2,7 +2,7 @@ package shaders.uniforms;
 
 import org.lwjgl.opengl.GL20;
 
-public class UniformFloat extends Uniform{
+public class UniformFloat extends Uniform {
 	
 	private float currentValue;
 	

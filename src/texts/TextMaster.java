@@ -18,12 +18,12 @@ public class TextMaster {
 	}
 	
 	public static void cleanUp() {
-		renderer.cleanUp();
+		FontRenderer.cleanUp();
 	}
 	
 	public static void renderAll() {
 		for (Text t : texts) {
-			renderer.renderText(t);
+			FontRenderer.renderText(t);
 		}
 	}
 

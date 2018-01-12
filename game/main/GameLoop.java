@@ -28,17 +28,17 @@ import hitbox.HitBox;
 import launcher.Launcher;
 import log.Log;
 import objects.Camera;
+import objects.DebugGui;
 import objects.FPS_Player;
 import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
+import renderer.imageRenderer.ImageRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
 import texts.Text;
-import textures.Texture;
 import utils.RenderItem;
 import utils.SourceFile;
-import utils.maths.Maths;
 import utils.models.ModelMaster;
 
 public class GameLoop {
@@ -47,7 +47,7 @@ public class GameLoop {
 	private static Camera camera;
 
 	public static void main(String[] args) {
-		String title = "I am the best of the 2 of us. (Except in water and animation)";
+		String title = "VectorEngine";
 		l = new Launcher(title) {
 
 			private static final long serialVersionUID = 001L;
@@ -166,24 +166,26 @@ public class GameLoop {
 
 	public static void startGame(String title) {
 		try {
-			createDisplay(new DisplayBuilder(1280, 720).setTitle(title).setFullscreen(false).setVsync(false)
+			createDisplay(new DisplayBuilder(1920, 1080).setTitle(title).setFullscreen(false).setVsync(false)
 					.setSamples(8).setFpsCap(60));
 
-			Log.init();
-			Log.append("log initialized", new Vector3f(0.349019608f, 0, 1));
 			setMouseEnabled(true);
 
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
 			setDepthTesting(true);
 
+			ImageRenderer.init();
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
 
 			spaceScene(master, skyboxRenderer);
 
 			master.setProjectionMatrix(camera.getProjectionMatrix());
-			Texture sideTex = Texture.getTextureBuilder(new SourceFile("/res/guis/hud/hud_side.png")).create();
-			Vector2f scale = Maths.getNormalizedSize(1280, 200);
+
+			DebugGui debug = new DebugGui();
+			Log.init(debug);
+			Log.append("log initialized", new Vector3f(0.349019608f, 0, 1));
+			debug.showAll();
 
 			Text fps = new Text(Display.getFPS() + "", 0.78f, "candara", new Vector2f(0, 0), 10, false);
 			Text delta = new Text("delta: ", 0.78f, "candara", new Vector2f(0, 0.02f), 10, false);
@@ -198,7 +200,8 @@ public class GameLoop {
 				updateData(fps, delta, ping);
 				renderItems();
 				renderScene(camera);
-				renderAllTexts();
+				debug.update(camera);
+				debug.renderComponents();
 				swapBuffers();
 				updateEvents();
 			}

@@ -1,7 +1,13 @@
 package renderer.imageRenderer;
 
-import shaders.ShaderProgram;
-import shaders.uniforms.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import shaders.uniforms.ShaderProgram;
+import shaders.uniforms.Uniform;
+import shaders.uniforms.UniformMat4;
+import shaders.uniforms.UniformSampler;
 import utils.SourceFile;
 
 public class ImageShader extends ShaderProgram {
@@ -13,23 +19,28 @@ public class ImageShader extends ShaderProgram {
 	public UniformMat4 matrix = new UniformMat4("matrix");
 
 	protected ImageShader() {
-		super(ShaderProgram.newShaderProgram().addInput(0, "in_Position").addInput(1, "in_TextureCoords").addOutput(0,
+		super.init(ShaderProgram.newShaderProgram().addInput(0, "in_Position").addInput(1, "in_TextureCoords").addOutput(0,
 				"out_Color"));
 	}
 
-	@Override
 	protected SourceFile getVertexFile() {
 		return VERTEX_FILE;
 	}
 
-	@Override
 	protected SourceFile getFragmentFile() {
 		return FRAGMENT_FILE;
 	}
 
-	@Override
 	protected Uniform[] getAllUniforms() {
 		return new Uniform[] { texture, matrix };
+	}
+
+	@Override
+	protected Collection<Uniform> getAllUnis() {
+		List<Uniform> uniforms = new ArrayList<Uniform>();
+		uniforms.add(texture);
+		uniforms.add(matrix);
+		return uniforms;
 	}
 
 }

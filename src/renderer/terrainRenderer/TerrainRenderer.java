@@ -8,7 +8,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
 import objects.Vao;
-import shaders.ShaderProgram;
+import shaders.uniforms.ShaderProgram;
 import terrains.Terrain;
 import terrains.terrainTexture.TerrainTexturePack;
 import textures.Texture;
@@ -19,6 +19,7 @@ public class TerrainRenderer extends Cleanup {
 	private TerrainShader shader;
 
 	public TerrainRenderer(TerrainShader shader) {
+		super();
 		this.shader = shader;
 
 		shader.start();

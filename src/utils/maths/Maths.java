@@ -135,4 +135,10 @@ public class Maths {
 		return returnVec;
 	}
 
+	public static Vector2f getFrom720toCurrentDisplaySize(Vector2f size) {
+		float x = size.x / 1280;
+		float y = size.y / 720;
+		return new Vector2f(Display.getWidth() * x, Display.getHeight() * y);
+	}
+
 }

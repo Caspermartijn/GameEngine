@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.Display;
+import renderer.quadRenderer.QuadRenderer;
 
 public class QuadComponent extends GUIComponent {
 
