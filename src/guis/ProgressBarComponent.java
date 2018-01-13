@@ -38,12 +38,12 @@ public class ProgressBarComponent extends QuadComponent {
 			} else if (direction == Direction.UP) {
 				progressBar.setX(super.getX());
 				progressBar.setWidth(super.getWidth());
-				progressBar.setY(super.getY() + super.getHeight() - (1 - progress) * super.getHeight());
+				progressBar.setY(super.getY() + super.getHeight() - (progress) * super.getHeight());
 				progressBar.setHeight(super.getHeight() * progress);
 			} else if (direction == Direction.LEFT) {
 				progressBar.setY(super.getY());
 				progressBar.setHeight(super.getHeight());
-				progressBar.setX(super.getX() + super.getWidth() - (1 - progress) * super.getWidth());
+				progressBar.setX(super.getX() + super.getWidth() - (progress) * super.getWidth());
 				progressBar.setWidth(super.getWidth() * progress);
 			}
 			progressBar.show();
