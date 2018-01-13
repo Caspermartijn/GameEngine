@@ -4,11 +4,9 @@ import static engine.Mouse.setMouseEnabled;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector4f;
 
 import engine.Display;
 import gamestates.GamePerspective;
-import guis.ProgressBarComponent.Direction;
 import utils.SourceFile;
 import utils.maths.Maths;
 import utils.tasks.Task;
@@ -55,8 +53,6 @@ public abstract class LoadingGui extends GUI {
 
 	private ImageComponent hourglass;
 
-	private ProgressBarComponent testBar;
-	
 	private void images() {
 		ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/loading/background_2.png"));
 		Vector2f size = Maths.getFrom720toCurrentDisplaySize(new Vector2f(1280, 720));
@@ -72,12 +68,6 @@ public abstract class LoadingGui extends GUI {
 		Vector2f size_3 = Maths.getFrom720toCurrentDisplaySize(new Vector2f(95, 95));
 		circle.setSize(new Vector2f(size_3.x, size_3.y));
 		circle.setPosition(0.90f, 0.85f);
-		
-		
-		testBar = new ProgressBarComponent(this, 0, 0, 1, 1);testBar.setBackgroundColor(new Vector4f(0.7f, 0.7f, 0.7f, 1));
-		testBar.setProgressBarColor(new Vector4f(1, 0, 0, 1));
-		testBar.setProgress(0.5f);
-		testBar.setDirection(Direction.UP);
 	}
 
 	public void renderComps() {
