@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector4f;
 
 import engine.Display;
 import gamestates.GamePerspective;
+import guis.ProgressBarComponent.Direction;
 import utils.SourceFile;
 import utils.maths.Maths;
 import utils.tasks.Task;
@@ -75,7 +76,8 @@ public abstract class LoadingGui extends GUI {
 		
 		testBar = new ProgressBarComponent(this, 0, 0, 1, 1);testBar.setBackgroundColor(new Vector4f(0.7f, 0.7f, 0.7f, 1));
 		testBar.setProgressBarColor(new Vector4f(1, 0, 0, 1));
-		testBar.setProgress(1);
+		testBar.setProgress(0.5f);
+		testBar.setDirection(Direction.UP);
 	}
 
 	public void renderComps() {

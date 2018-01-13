@@ -73,6 +73,10 @@ public class ProgressBarComponent extends QuadComponent {
 		this.progress = Maths.clamp(0, 1, progress);
 	}
 
+	public void setProgressPercentage(float progress) {
+		this.progress= Maths.clamp(0, 100, progress)/100;
+	}
+	
 	@Override
 	public void setOutlineWidth(float width) {
 		super.setOutlineWidth(width);
