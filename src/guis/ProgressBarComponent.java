@@ -4,7 +4,7 @@ import org.lwjgl.util.vector.Vector4f;
 
 import utils.maths.Maths;
 
-public class ProgressBar extends QuadComponent {
+public class ProgressBarComponent extends QuadComponent {
 
 	private QuadComponent progressBar;
 	private float progress;
@@ -14,7 +14,7 @@ public class ProgressBar extends QuadComponent {
 		UP, DOWN, LEFT, RIGHT;
 	}
 
-	public ProgressBar(GUI container, float x, float y, float width, float height) {
+	public ProgressBarComponent(GUI container, float x, float y, float width, float height) {
 		super(container, x, y, width, height);
 		progressBar = new QuadComponent(null, 0, 0, 0, 0);
 	}
