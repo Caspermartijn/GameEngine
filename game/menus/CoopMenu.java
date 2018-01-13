@@ -19,7 +19,6 @@ import guis.GUI;
 import guis.ImageComponent;
 import guis.QuadComponent;
 import guis.TextComponent;
-import log.Log;
 import menus.coop.HostMenu;
 import menus.coop.JoinMenu;
 import objects.Camera;
@@ -186,7 +185,6 @@ public class CoopMenu extends GUI {
 	@Override
 	public void renderComponents() {
 		camera.yaw += 20 * Display.getFrameTime();
-		Log.append(camera.yaw + "", false);
 		skyboxRenderer.render(skybox, camera);
 		master.render(camera, lights, entities);
 		master.unprepare();

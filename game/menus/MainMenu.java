@@ -233,9 +233,9 @@ public class MainMenu extends GUI {
 	}
 
 	public void images() {
-		ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/menus/main/back.png"));
-		background.setPosition(0.15f, 0.5f);
-		background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(600, 720)));
+		//ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/menus/menus_background.png"));//ori: "/res/guis/menus/main/back.png"
+		//background.setPosition(0.15f, 0.5f);
+		//background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(600, 720)));
 	}
 
 	float speed = 200;
