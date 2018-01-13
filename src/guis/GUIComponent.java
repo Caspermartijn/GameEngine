@@ -8,7 +8,8 @@ public abstract class GUIComponent {
 	
 	public GUIComponent(GUI container) {
 		this.container = container;
-		container.addComponent(this);
+		if (container != null)
+			container.addComponent(this);
 	}
 	
 	public void show() {
