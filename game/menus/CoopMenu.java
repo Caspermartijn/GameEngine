@@ -19,6 +19,7 @@ import guis.GUI;
 import guis.ImageComponent;
 import guis.QuadComponent;
 import guis.TextComponent;
+import log.Log;
 import menus.scenes.HostMenu;
 import menus.scenes.JoinMenu;
 import objects.Camera;
@@ -41,7 +42,8 @@ public class CoopMenu extends GUI {
 	private MasterRenderer master;
 	private SkyboxRenderer skyboxRenderer;
 
-	private Entity timematers;
+	private Entity timeship_1;
+	private Entity timeship_2;
 
 	private JoinMenu joinMenu;
 	private HostMenu hostMenu;
@@ -57,12 +59,12 @@ public class CoopMenu extends GUI {
 		camera = new Camera();
 		camera.setNewProj();
 
-		camera.x = -793;
-		camera.y = 47;
-		camera.z = 58;
+		camera.x = 0;
+		camera.y = -5f;
+		camera.z = 20;
 
-		camera.pitch = -4.814f;
-		camera.yaw = 117.0847f + 3;
+		camera.pitch = 4;
+		camera.yaw = 35;
 		camera.updateMatrix();
 
 		Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
@@ -80,15 +82,11 @@ public class CoopMenu extends GUI {
 		this.skybox = skybox;
 
 		Model_3D timemastersHQ = ModelMaster.getModel("timemasters_hq_1");
-		timematers = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 4.6f);
-		TimeShip timeship_1 = new TimeShip(new Vector3f(0, -20.5f, 10f), new Vector3f(0, 90, 0), 0.4f);
-		TimeShip timeship_2 = new TimeShip(new Vector3f(0, -20.5f, -10f), new Vector3f(0, -90, 0), 0.4f);
-		TimeShip timeship_3 = new TimeShip(new Vector3f(10f, -20.5f, 0), new Vector3f(0, 180, 0), 0.4f);
-		timematers.addChild(timeship_1);
-		timematers.addChild(timeship_2);
-		timematers.addChild(timeship_3);
+		timeship_1 = new TimeShip(new Vector3f(0, -2f, 0f), new Vector3f(-35, -180+10, 10), 0.4f);
+		timeship_2 = new TimeShip(new Vector3f(0, -10f, 0f), new Vector3f(-20, -180+10, 15), 0.4f);
 
-		entities.add(timematers);
+		entities.add(timeship_1);
+		entities.add(timeship_2);
 
 		GamePerspective settingsMenu = new GamePerspective("coop_menu") {
 
@@ -153,7 +151,7 @@ public class CoopMenu extends GUI {
 			}
 
 		});
-		
+
 		join_button.setClickEvent(new Runnable() {
 
 			@Override
@@ -187,8 +185,8 @@ public class CoopMenu extends GUI {
 
 	@Override
 	public void renderComponents() {
-		timematers.getTransform().rotY += 5 * Display.getFrameTime();
-
+		camera.yaw += 20 * Display.getFrameTime();
+		Log.append(camera.yaw + "", false);
 		skyboxRenderer.render(skybox, camera);
 		master.render(camera, lights, entities);
 		master.unprepare();

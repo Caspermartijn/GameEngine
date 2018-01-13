@@ -31,7 +31,6 @@ public class LoadingGui extends GUI {
 		Vector2f size_3 = Maths.getFrom720toCurrentDisplaySize(new Vector2f(95, 95));
 		circle.setSize(new Vector2f(size_3.x, size_3.y));
 		circle.setPosition(0.90f, 0.85f);
-
 	}
 
 	public void renderComps() {

@@ -166,9 +166,9 @@ public class GameLoop {
 
 		skybox.setRotationSpeed(20);
 		scene.lights.add(sun);
-		// scene.entities.add(ent);
-		// scene.entities.add(ship);
-		// scene.entities.add(inner);
+		scene.entities.add(ent);
+		scene.entities.add(ship);
+		scene.entities.add(inner);
 		setCurrentScene(scene);
 	}
 
@@ -202,7 +202,7 @@ public class GameLoop {
 			SettingsMenu settings = new SettingsMenu(master, skyboxRenderer);
 			CoopMenu coop = new CoopMenu(master, skyboxRenderer);
 			LoadingGui loadingGui = new LoadingGui();
-			
+
 			GamePerspective inGame = new GamePerspective("ingame") {
 
 				@Override
@@ -237,9 +237,11 @@ public class GameLoop {
 
 				}
 			};
-			
-			new RenderItem() {//This is for us right now. The only time this exception is made is when the gameprespective is ingame then we need to make an escape menu
+
+			new RenderItem() {// This is for us right now. The only time this exception is made is when the
+								// gameprespective is ingame then we need to make an escape menu
 				boolean button = false;
+
 				@Override
 				public void render() {
 					if (!GamePerspective.currentState.getGameStateName().equalsIgnoreCase("ingame")) {
@@ -254,7 +256,7 @@ public class GameLoop {
 					}
 				}
 			};
-			
+
 			GamePerspective.switchGameState("loading");
 
 			while (!Display.isCloseRequested() && !Display.hasToClose()) {

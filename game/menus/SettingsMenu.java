@@ -5,13 +5,11 @@ import static engine.Mouse.setMouseEnabled;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.Display;
-import engine.Keyboard;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
@@ -27,7 +25,6 @@ import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
-import utils.RenderItem;
 import utils.SourceFile;
 import utils.maths.Maths;
 import utils.models.ModelMaster;
