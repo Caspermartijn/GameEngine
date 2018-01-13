@@ -1,4 +1,4 @@
-package menus.scenes;
+package menus.coop;
 
 public class IP_Encryptor {
 

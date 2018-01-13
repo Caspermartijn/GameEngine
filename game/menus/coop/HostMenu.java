@@ -1,4 +1,4 @@
-package menus.scenes;
+package menus.coop;
 
 import java.util.ArrayList;
 import java.util.List;

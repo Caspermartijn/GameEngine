@@ -1,4 +1,4 @@
-package menus.scenes;
+package menus.coop;
 
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector4f;
