@@ -175,7 +175,7 @@ public class GameLoop {
 	@SuppressWarnings("unused")
 	public static void startGame(String title) {
 		try {
-			createDisplay(new DisplayBuilder(1920, 1080).setTitle(title).setFullscreen(true).setVsync(true)
+			createDisplay(new DisplayBuilder(1920, 1080).setTitle(title).setFullscreen(true).setVsync(false)
 					.setSamples(8).setFpsCap(60));
 
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
@@ -201,7 +201,7 @@ public class GameLoop {
 			MainMenu main = new MainMenu(master, skyboxRenderer);
 			SettingsMenu settings = new SettingsMenu(master, skyboxRenderer);
 			CoopMenu coop = new CoopMenu(master, skyboxRenderer);
-			LoadingGui loadingGui = new LoadingGui();
+			
 
 			GamePerspective inGame = new GamePerspective("ingame") {
 
@@ -220,31 +220,14 @@ public class GameLoop {
 
 				}
 			};
-			GamePerspective loading = new GamePerspective("loading") {
-
-				@Override
-				public void render() {
-					loadingGui.renderComps();
-				}
-
-				@Override
-				public void start() {
-					setMouseEnabled(true);
-				}
-
-				@Override
-				public void stop() {
-
-				}
-			};
-
 			new RenderItem() {// This is for us right now. The only time this exception is made is when the
 								// gameprespective is ingame then we need to make an escape menu
 				boolean button = false;
 
 				@Override
 				public void render() {
-					if (!GamePerspective.currentState.getGameStateName().equalsIgnoreCase("ingame")) {
+					if (!(GamePerspective.currentState.getGameStateName().equalsIgnoreCase("ingame")
+							&& GamePerspective.currentState.getGameStateName().equalsIgnoreCase("loading"))) {
 						if (Keyboard.isKeyDown(GLFW.GLFW_KEY_ESCAPE)) {
 							if (!button) {
 								GamePerspective.switchGameState("main_menu");
@@ -257,7 +240,19 @@ public class GameLoop {
 				}
 			};
 
-			GamePerspective.switchGameState("loading");
+			new LoadingGui(4000) {
+
+				@Override
+				public void afterLoad() {
+					GamePerspective.switchGameState("main_menu");
+				}
+
+				@Override
+				public void midLoad() {
+					
+				}};
+			
+			
 
 			while (!Display.isCloseRequested() && !Display.hasToClose()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
