@@ -191,7 +191,7 @@ public class Vao extends Cleanup {
 	}
 
 	public static void printLog() {
-		Log.append("Vao_Log[created: " + vaosCreated + " , deleted: " + vaosDeleted + "]");
+		Log.append("Vao_Log[created: " + vaosCreated + " , deleted: " + vaosDeleted + "]", true);
 	}
 
 	public Vao loadToVAO(float[] verticesArray, float[] texturesArray, float[] normalsArray, int[] indicesArray,

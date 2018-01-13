@@ -1,4 +1,6 @@
-package guis;
+package menus;
+
+import static engine.Mouse.setMouseEnabled;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,10 @@ import engine.Display;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
-import log.Log;
+import gamestates.GameState;
+import guis.ButtonComponent;
+import guis.GUI;
+import guis.ImageComponent;
 import objects.Camera;
 import objects.Model_3D;
 import objects.Skybox;
@@ -35,6 +40,7 @@ public class MainMenu extends GUI {
 
 	private Entity movingTimeShip;
 
+	@SuppressWarnings("unused")
 	public MainMenu(MasterRenderer master, SkyboxRenderer skyboxRenderer) {
 		this.skyboxRenderer = skyboxRenderer;
 		this.master = master;
@@ -77,6 +83,24 @@ public class MainMenu extends GUI {
 		movingTimeShip = new Entity(timeship_1.getModel(), new Vector3f(-400, 131, 266), new Vector3f(0, 0, 0), 1f);
 		entities.add(ent);
 		entities.add(movingTimeShip);
+		
+		GameState mainMenu = new GameState("main_menu") {
+
+			@Override
+			public void render() {
+				renderComponents();
+			}
+
+			@Override
+			public void start() {
+				setMouseEnabled(true);
+			}
+
+			@Override
+			public void stop() {
+				
+			}
+		};
 
 	}
 
@@ -86,13 +110,15 @@ public class MainMenu extends GUI {
 
 	List<ButtonComponent> buttons = new ArrayList<ButtonComponent>();
 
+	public ButtonComponent caimpain_button, scenes_button, coop_button, settings_button, quit_button;
+
 	public void buttons() {
 		float spaceBetw = 0.12f;
-		ButtonComponent caimpain_button = new ButtonComponent(this, 0.06f, 0.35f, 0.2f, 0.1f);
-		ButtonComponent scenes_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw, 0.2f, 0.1f);
-		ButtonComponent coop_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 2, 0.2f, 0.1f);
-		ButtonComponent settings_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 3, 0.2f, 0.1f);
-		ButtonComponent quit_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 4, 0.2f, 0.1f);
+		caimpain_button = new ButtonComponent(this, 0.06f, 0.35f, 0.2f, 0.1f);
+		scenes_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw, 0.2f, 0.1f);
+		coop_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 2, 0.2f, 0.1f);
+		settings_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 3, 0.2f, 0.1f);
+		quit_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 4, 0.2f, 0.1f);
 		buttons.add(caimpain_button);
 		buttons.add(scenes_button);
 		buttons.add(coop_button);
@@ -101,13 +127,100 @@ public class MainMenu extends GUI {
 
 		for (ButtonComponent button : buttons) {
 			button.setBackgroundColor(new Vector4f(0.7f, 0.7f, 0.7f, 0.7f));
-			button.setTextPosition(new Vector2f(0,0.01f ));
+			button.setTextPosition(new Vector2f(0, 0.01f));
+			button.setClickDelay(500);
 		}
 		caimpain_button.setText("Campain", "candara", 3f);
 		scenes_button.setText("Scenes", "candara", 3f);
 		coop_button.setText("Co-op", "candara", 3f);
 		settings_button.setText("Settings", "candara", 3f);
 		quit_button.setText("Quit", "candara", 3f);
+
+		caimpain_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				campainButtonClick();
+			}
+
+		});
+
+		scenes_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				scenesButtonClick();
+			}
+
+		});
+
+		coop_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				coopButtonClick();
+			}
+
+		});
+
+		settings_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				settingsButtonClick();
+			}
+
+		});
+
+		quit_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				quitButtonClick();
+			}
+
+		});
+	}
+
+	public void campainButtonClick() {
+		GameState.switchGameState("ingame");
+	}
+
+	public void scenesButtonClick() {
+
+	}
+
+	public void coopButtonClick() {
+
+	}
+
+	public void settingsButtonClick() {
+
+	}
+
+	public void quitButtonClick() {
+		Display.closeDisplay();
+	}
+
+	// =================Hover=================
+
+	public void campainButtonHover() {
+	}
+
+	public void scenesButtonHover() {
+
+	}
+
+	public void coopButtonHover() {
+
+	}
+
+	public void settingsButtonHover() {
+
+	}
+
+	public void quitButtonHover() {
+
 	}
 
 	public void images() {

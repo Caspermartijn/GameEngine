@@ -63,8 +63,10 @@ public class Log {
 		}
 	}
 
-	public static void error(String s) {
-		System.err.println(s);
+	public static void error(String s, boolean out) {
+		if (out) {
+			System.err.println(s);
+		}
 		if (log.size() == 0) {
 			initLines();
 		}
@@ -74,9 +76,11 @@ public class Log {
 		update();
 	}
 
-	public static void append(String s, Vector3f color) {
+	public static void append(String s, boolean out, Vector3f color) {
 
-		System.out.println(s);
+		if (out) {
+			System.out.println(s);
+		}
 		if (log.size() == 0) {
 			initLines();
 		}
@@ -87,9 +91,10 @@ public class Log {
 		update();
 	}
 
-	public static void append(String s) {
-
-		System.out.println(s);
+	public static void append(String s, boolean out) {
+		if (out) {
+			System.out.println(s);
+		}
 		if (log.size() == 0) {
 			initLines();
 		}
@@ -100,9 +105,11 @@ public class Log {
 		update();
 	}
 
-	public static void append() {
+	public static void append(boolean out) {
 		String s = " ";
-		System.out.println(s);
+		if (out) {
+			System.out.println(s);
+		}
 		if (log.size() == 0) {
 			initLines();
 		}

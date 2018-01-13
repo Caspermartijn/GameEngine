@@ -11,6 +11,7 @@ public abstract class GameState {
 	public abstract void render();
 	
 	public abstract void start();
+	public abstract void stop();
 	
 	private String gamestateName;
 
@@ -27,8 +28,17 @@ public abstract class GameState {
 	}
 
 	
-	public void setCurrentState() {
+	public void switchState() {
+		GameState.currentState.stop();
 		GameState.currentState = this;
 		start();
+	}
+	
+	public static void renderGameState() {
+		GameState.currentState.render();
+	}
+
+	public static void switchGameState(String gamestate) {
+		GameState.gameStates.get(gamestate).switchState();
 	}
 }

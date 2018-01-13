@@ -28,7 +28,6 @@ public class EngineFileWriter {
 			}
 		}
 		this.file = f;
-		System.out.print("Ready to write engine file config");
 	}
 
 	public void start() throws IOException {

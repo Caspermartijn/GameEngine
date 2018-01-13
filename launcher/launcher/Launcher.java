@@ -335,11 +335,11 @@ public abstract class Launcher extends JFrame implements ILauncher {
 					writerError(e.getMessage());
 				}
 				Vector3f green = new Vector3f(0.1f, 0.9f, 0.1f);
-				Log.append();
-				Log.append("=====================================", green);
-				Log.append("Version: " + launcherData.getString("version") + " -> " + newVersion, green);
-				Log.append("=====================================", green);
-				Log.append();
+				Log.append(true);
+				Log.append("=====================================", true, green);
+				Log.append("Version: " + launcherData.getString("version") + " -> " + newVersion, true, green);
+				Log.append("=====================================", true, green);
+				Log.append(true);
 			}
 		};
 		thread = new Thread(runnable);

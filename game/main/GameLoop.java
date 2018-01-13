@@ -2,10 +2,10 @@ package main;
 
 import static org.lwjgl.opengl.GL11.glClear;
 import static utils.tasks.Cleanup.cleanAll;
-
 import static scenes.Scene.renderScene;
 import static scenes.Scene.setCurrentScene;
 import static utils.RenderItem.renderItems;
+import static gamestates.GameState.renderGameState;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static engine.GLSettings.*;
@@ -23,10 +23,12 @@ import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
 import gamestates.GameState;
-import guis.MainMenu;
 import hitbox.HitBox;
 import launcher.Launcher;
 import log.Log;
+import main.gameloading.GameLoader;
+import menus.MainMenu;
+import menus.SettingsMenu;
 import objects.Camera;
 import objects.DebugGui;
 import objects.FPS_Player;
@@ -167,7 +169,7 @@ public class GameLoop {
 	@SuppressWarnings("unused")
 	public static void startGame(String title) {
 		try {
-			createDisplay(new DisplayBuilder(1920, 1080).setTitle(title).setFullscreen(true).setVsync(false)
+			createDisplay(new DisplayBuilder(1280, 720).setTitle(title).setFullscreen(false).setVsync(false)
 					.setSamples(8).setFpsCap(60));
 
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
@@ -177,20 +179,26 @@ public class GameLoop {
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
 
-			Fonts.addFont("pdark", new SourceFile("/res/fonts/pdark.png"),  new SourceFile("/res/fonts/pdark.fnt"));
+			GameLoader.init();
 			
+			Fonts.addFont("pdark", new SourceFile("/res/fonts/pdark.png"), new SourceFile("/res/fonts/pdark.fnt"));
+
 			DebugGui debug = new DebugGui();
 			Log.init(debug);
-			Log.append("log initialized", new Vector3f(0.349019608f, 0, 1));
-			debug.hideAll();
-			
+			Log.append("log added to debug", false, new Vector3f(0.349019608f, 0, 1));
+			debug.hide();
+
 			spaceScene(master, skyboxRenderer);
 
+			master.setProjectionMatrix(camera.getProjectionMatrix());
+
+			MainMenu main = new MainMenu(master, skyboxRenderer);
+			SettingsMenu settings = new SettingsMenu(master, skyboxRenderer);
+			
 			GameState inGame = new GameState("ingame") {
 
 				@Override
 				public void render() {
-					renderItems();
 					renderScene(camera);
 				}
 
@@ -198,32 +206,24 @@ public class GameLoop {
 				public void start() {
 					setMouseEnabled(false);
 				}
-			};
-
-			master.setProjectionMatrix(camera.getProjectionMatrix());
-
-			MainMenu main = new MainMenu(master, skyboxRenderer);
-
-			GameState mainMenu = new GameState("main_menu") {
 
 				@Override
-				public void render() {
-					main.renderComponents();
-				}
+				public void stop() {
 
-				@Override
-				public void start() {
-					setMouseEnabled(true);
 				}
 			};
-			mainMenu.setCurrentState();
-			while (!Display.isCloseRequested()) {
+
+			GameState.switchGameState("main_menu");
+
+			while (!Display.isCloseRequested() && !Display.hasToClose()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-				GameState.currentState.render();
+				renderItems();
+				renderGameState();
+
 				debug.update(camera);
 				debug.renderComponents();
-
+				
 				swapBuffers();
 				updateEvents();
 			}

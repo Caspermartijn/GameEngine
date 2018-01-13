@@ -3,15 +3,20 @@ package objects;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
 import engine.Display;
+import engine.Keyboard;
 import guis.GUI;
 import guis.ImageComponent;
 import guis.TextComponent;
+import log.Log;
 import renderer.MasterRenderer;
 import shaders.uniforms.ShaderProgram;
 import textures.Texture;
+import utils.RenderItem;
 import utils.SourceFile;
 import utils.maths.Maths;
 
@@ -35,7 +40,31 @@ public class DebugGui extends GUI {
 
 	private List<TextComponent> texts = new ArrayList<TextComponent>();
 
+	private boolean hidden = true;
+
 	public DebugGui() {
+		new RenderItem() {
+			boolean b = false;
+
+			@Override
+			public void render() {
+				if (Keyboard.isKeyDown(GLFW.GLFW_KEY_F1)) {
+					if (!b) {
+						b = true;
+						if (hidden) {
+							show();
+							Log.append("Debug menu enabled", false, new Vector3f(0.1f, 1, 0.1f));
+						} else {
+							hide();
+							Log.append("Debug menu disabled", false, new Vector3f(0.1f, 1, 0.1f));
+						}
+					}
+				} else {
+					b = false;
+				}
+			}
+		};
+
 		super.setPosition(0f, 0.0f);
 		images();
 		texts();
@@ -121,5 +150,19 @@ public class DebugGui extends GUI {
 		entities.setText("entities: " + MasterRenderer.getEntitiesAmount());
 		terrains.setText("terrains: " + MasterRenderer.getTerrainsAmount());
 		lights.setText("lights: " + MasterRenderer.getLightsAmount());
+	}
+
+	public boolean isHidden() {
+		return hidden;
+	}
+
+	public void hide() {
+		hidden = true;
+		this.hideAll();
+	}
+
+	public void show() {
+		hidden = false;
+		this.showAll();
 	}
 }

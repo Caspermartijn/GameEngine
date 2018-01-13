@@ -16,12 +16,14 @@ public class Display {
 	private static long lastTime;
 	private static double delta;
 	private static double delta_seccond;
-	
+
 	private static int fps = 0;
 	private static int frames = 0;
 	private static double time;
 
 	private static long id;
+
+	private static boolean closeDisplay = false;
 
 	public static void createDisplay(DisplayBuilder builder) {
 		GLFWErrorCallback.createPrint(System.err).set();
@@ -132,5 +134,13 @@ public class Display {
 
 	public static float getDeltaSeccond() {
 		return (float) delta_seccond;
+	}
+
+	public static void closeDisplay() {
+		closeDisplay = true;
+	}
+	
+	public static boolean hasToClose() {
+		return closeDisplay;
 	}
 }
