@@ -1,22 +1,59 @@
 package guis;
 
+import static engine.Mouse.setMouseEnabled;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector2f;
 
 import engine.Display;
+import gamestates.GamePerspective;
 import utils.SourceFile;
 import utils.maths.Maths;
+import utils.tasks.Task;
 
-public class LoadingGui extends GUI {
+public abstract class LoadingGui extends GUI {
 
-	public LoadingGui() {
+	public LoadingGui(float timeInMilisecconds) {
 		images();
+		GamePerspective loading = new GamePerspective("loading") {
+
+			@Override
+			public void render() {
+				renderComps();
+			}
+
+			@Override
+			public void start() {
+				setMouseEnabled(true);
+			}
+
+			@Override
+			public void stop() {
+
+			}
+		};
+		new Task(timeInMilisecconds/2) {
+
+			@Override
+			public void run() {
+				midLoad();
+				new Task(timeInMilisecconds/2) {
+
+					@Override
+					public void run() {
+						afterLoad();
+					}
+					
+				};
+			}
+			
+		};
+		loading.switchState();
 	}
 
 	private ImageComponent hourglass;
 
 	private void images() {
-
 		ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/loading/background_2.png"));
 		Vector2f size = Maths.getFrom720toCurrentDisplaySize(new Vector2f(1280, 720));
 		background.setSize(new Vector2f(size.x, size.y));
@@ -39,4 +76,12 @@ public class LoadingGui extends GUI {
 		super.renderComponents();
 	}
 
+	
+	@Override
+	public void showAll() {
+		super.showAll();
+	}
+
+	public abstract void afterLoad();
+	public abstract void midLoad();
 }
