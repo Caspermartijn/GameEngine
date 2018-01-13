@@ -13,7 +13,7 @@ import engine.Display;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
-import gamestates.GameState;
+import gamestates.GamePerspective;
 import guis.ButtonComponent;
 import guis.GUI;
 import guis.ImageComponent;
@@ -80,11 +80,11 @@ public class MainMenu extends GUI {
 		ent.addChild(timeship_2);
 		ent.addChild(timeship_3);
 
-		movingTimeShip = new Entity(timeship_1.getModel(), new Vector3f(-400, 131, 266), new Vector3f(0, 0, 0), 1f);
+		movingTimeShip = new TimeShip(new Vector3f(-400, 131, 266), new Vector3f(0, 0, 0), 1f);
 		entities.add(ent);
 		entities.add(movingTimeShip);
 		
-		GameState mainMenu = new GameState("main_menu") {
+		GamePerspective mainMenu = new GamePerspective("main_menu") {
 
 			@Override
 			public void render() {
@@ -129,6 +129,12 @@ public class MainMenu extends GUI {
 			button.setBackgroundColor(new Vector4f(0.7f, 0.7f, 0.7f, 0.7f));
 			button.setTextPosition(new Vector2f(0, 0.01f));
 			button.setClickDelay(500);
+			button.setHoverEvent(new Runnable() {
+				@Override
+				public void run() {
+					button.playHover(1.05f);
+				}
+			});
 		}
 		caimpain_button.setText("Campain", "candara", 3f);
 		scenes_button.setText("Scenes", "candara", 3f);
@@ -183,7 +189,7 @@ public class MainMenu extends GUI {
 	}
 
 	public void campainButtonClick() {
-		GameState.switchGameState("ingame");
+		GamePerspective.switchGameState("ingame");
 	}
 
 	public void scenesButtonClick() {
@@ -195,7 +201,7 @@ public class MainMenu extends GUI {
 	}
 
 	public void settingsButtonClick() {
-
+		GamePerspective.switchGameState("settings_menu");
 	}
 
 	public void quitButtonClick() {

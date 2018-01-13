@@ -13,23 +13,30 @@ import utils.guis.Collision;
 public class ButtonComponent extends QuadComponent {
 
 	private int button = GLFW.GLFW_MOUSE_BUTTON_1;
-	private Runnable clickEvent;
+	private Runnable clickEvent, hoverEvent;
 	private Delay delay = new Delay(200);
 	private Text text;
 	private Vector2f textPosition = new Vector2f();
 
-	public float ori_width, ori_height;
+	public float ori_width, ori_height, ori_x, ori_y, ori_fontSize;
 
 	public ButtonComponent(GUI container, float x, float y, float width, float height) {
 		super(container, x, y, width, height);
 		ori_width = width;
 		ori_height = height;
+		ori_x = x;
+		ori_y = y;
 	}
 
 	@Override
 	public void render() {
+		Vector2f mouse = new Vector2f(Mouse.getMouseX(), Mouse.getMouseY());
+		if (Collision.rectanglePointCollision(mouse, new Vector4f(getX(), getY(), getWidth(), getHeight()))) {
+			if (hoverEvent != null) {
+				hoverEvent.run();
+			}
+		}
 		if (Mouse.buttonPressed(button) && clickEvent != null) {
-			Vector2f mouse = new Vector2f(Mouse.getMouseX(), Mouse.getMouseY());
 			if (Collision.rectanglePointCollision(mouse, new Vector4f(getX(), getY(), getWidth(), getHeight()))
 					&& delay.activate()) {
 				clickEvent.run();
@@ -40,10 +47,17 @@ public class ButtonComponent extends QuadComponent {
 
 		super.setWidth(ori_width);
 		super.setHeight(ori_height);
-		
+		super.setX(ori_x);
+		super.setY(ori_y);
 		if (text != null) {
 			text.setPosition(Vector2f.add(new Vector2f(getX(), getY()), textPosition, null));
 			FontRenderer.renderText(text);
+
+			if (text.getFontSize() != ori_fontSize) {
+				text.setFontSize(ori_fontSize);
+				text.applyChanges();
+			}
+
 		}
 	}
 
@@ -51,9 +65,29 @@ public class ButtonComponent extends QuadComponent {
 		return button;
 	}
 
-	public void playHover(float factor) {
-		super.setWidth(ori_width * factor);
-		super.setWidth(ori_height * factor);
+	public Runnable getHoverEvent() {
+		return hoverEvent;
+	}
+
+	public void playHover(float scale) {
+
+		super.setWidth(ori_width * scale);
+		super.setHeight(ori_height * scale);
+
+		float xOff = (super.getWidth() - ori_width) / 2;
+		float yOff = (super.getHeight() - ori_height) / 2;
+
+		super.setX(ori_x - xOff);
+		super.setY(ori_y - yOff);
+
+		if (text != null) {
+			text.setFontSize(ori_fontSize * scale);
+			text.applyChanges();
+		}
+	}
+
+	public void setHoverEvent(Runnable hoverEvent) {
+		this.hoverEvent = hoverEvent;
 	}
 
 	public void setButton(int button) {
@@ -75,6 +109,7 @@ public class ButtonComponent extends QuadComponent {
 	public void setText(String message, String font, float fontSize) {
 		if (text != null)
 			text.delete();
+		ori_fontSize = fontSize;
 		text = new Text(message, fontSize, font, new Vector2f(super.getX(), super.getY()), super.getWidth(), true);
 	}
 

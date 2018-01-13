@@ -19,7 +19,8 @@ import guis.GUI;
 import guis.ImageComponent;
 import guis.QuadComponent;
 import guis.TextComponent;
-import menus.settings.DisplayMenu;
+import menus.scenes.HostMenu;
+import menus.scenes.JoinMenu;
 import objects.Camera;
 import objects.Model_3D;
 import objects.Skybox;
@@ -29,7 +30,7 @@ import utils.SourceFile;
 import utils.maths.Maths;
 import utils.models.ModelMaster;
 
-public class SettingsMenu extends GUI {
+public class CoopMenu extends GUI {
 	private ArrayList<Entity> entities = new ArrayList<Entity>();
 	private ArrayList<Light> lights = new ArrayList<Light>();
 
@@ -42,10 +43,11 @@ public class SettingsMenu extends GUI {
 
 	private Entity timematers;
 
-	private DisplayMenu displaySettings;
+	private JoinMenu joinMenu;
+	private HostMenu hostMenu;
 
 	@SuppressWarnings("unused")
-	public SettingsMenu(MasterRenderer master, SkyboxRenderer skyboxRenderer) {
+	public CoopMenu(MasterRenderer master, SkyboxRenderer skyboxRenderer) {
 		this.skyboxRenderer = skyboxRenderer;
 		this.master = master;
 		super.setPosition(0f, 0.0f);
@@ -67,6 +69,9 @@ public class SettingsMenu extends GUI {
 		lights.add(sun);
 		master.setProjectionMatrix(camera.getProjectionMatrix());
 
+		joinMenu = new JoinMenu();
+		hostMenu = new HostMenu();
+
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
 				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
@@ -85,7 +90,7 @@ public class SettingsMenu extends GUI {
 
 		entities.add(timematers);
 
-		GamePerspective settingsMenu = new GamePerspective("settings_menu") {
+		GamePerspective settingsMenu = new GamePerspective("coop_menu") {
 
 			@Override
 			public void render() {
@@ -103,13 +108,14 @@ public class SettingsMenu extends GUI {
 			}
 		};
 
-		displaySettings = new DisplayMenu();
+		joinMenu.showAll();
+		hostMenu.hideAll();
 
 	}
 
 	List<ButtonComponent> buttons = new ArrayList<ButtonComponent>();
 
-	public ButtonComponent display_button, graphics_button, audio_button, keybindings_button, controller_button;
+	public ButtonComponent host_button, join_button;
 
 	public void buttons() {
 		float spaceBetw = 0.11f;
@@ -117,16 +123,10 @@ public class SettingsMenu extends GUI {
 
 		float y = 0.25f;
 
-		display_button = new ButtonComponent(this, startFloat, y, 0.1f, 0.06f);
-		graphics_button = new ButtonComponent(this, startFloat + spaceBetw, y, 0.1f, 0.06f);
-		audio_button = new ButtonComponent(this, startFloat + spaceBetw * 2, y, 0.1f, 0.06f);
-		keybindings_button = new ButtonComponent(this, startFloat + spaceBetw * 3, y, 0.1f, 0.06f);
-		controller_button = new ButtonComponent(this, startFloat + spaceBetw * 4, y, 0.1f, 0.06f);
-		buttons.add(display_button);
-		buttons.add(graphics_button);
-		buttons.add(audio_button);
-		buttons.add(keybindings_button);
-		buttons.add(controller_button);
+		host_button = new ButtonComponent(this, startFloat, y, 0.1f, 0.06f);
+		join_button = new ButtonComponent(this, startFloat + spaceBetw, y, 0.1f, 0.06f);
+		buttons.add(host_button);
+		buttons.add(join_button);
 
 		for (ButtonComponent button : buttons) {
 			button.setBackgroundColor(new Vector4f(0.7f, 0.7f, 0.7f, 0.7f));
@@ -141,11 +141,33 @@ public class SettingsMenu extends GUI {
 
 			});
 		}
-		display_button.setText("Display", "candara", 1.3f);
-		graphics_button.setText("Graphics", "candara", 1.3f);
-		audio_button.setText("Audio", "candara", 1.3f);
-		keybindings_button.setText("Keybindings", "candara", 1.3f);
-		controller_button.setText("Controller", "candara", 1.3f);
+		host_button.setText("Host game", "candara", 1.3f);
+		join_button.setText("Join game", "candara", 1.3f);
+
+		host_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				resetGuis();
+				hostMenu.showAll();
+			}
+
+		});
+		
+		join_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				resetGuis();
+				joinMenu.showAll();
+			}
+
+		});
+	}
+
+	private void resetGuis() {
+		joinMenu.hideAll();
+		hostMenu.hideAll();
 	}
 
 	public void images() {
@@ -158,8 +180,7 @@ public class SettingsMenu extends GUI {
 	}
 
 	private void texts() {
-		TextComponent settings = new TextComponent(this, "Settings (this will be an image)", "candara", 3.4f, 200,
-				false);
+		TextComponent settings = new TextComponent(this, "Co-op (this will be an image)", "candara", 3.4f, 200, false);
 		settings.setColor(0, 0, 0, 1);
 		settings.setPosition(0.41f, 0.075f);
 	}
@@ -172,6 +193,7 @@ public class SettingsMenu extends GUI {
 		master.render(camera, lights, entities);
 		master.unprepare();
 		super.renderComponents();
-		displaySettings.renderComponents();
+		joinMenu.renderComponents();
+		hostMenu.renderComponents();
 	}
 }

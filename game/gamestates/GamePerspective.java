@@ -2,11 +2,11 @@ package gamestates;
 
 import java.util.HashMap;
 
-public abstract class GameState {
+public abstract class GamePerspective {
 
-	public static HashMap<String,GameState> gameStates = new HashMap<String,GameState>();
+	public static HashMap<String,GamePerspective> gameStates = new HashMap<String,GamePerspective>();
 	
-	public static GameState currentState;
+	public static GamePerspective currentState;
 	
 	public abstract void render();
 	
@@ -15,9 +15,9 @@ public abstract class GameState {
 	
 	private String gamestateName;
 
-	public GameState(String gamestateName) {
+	public GamePerspective(String gamestateName) {
 		this.gamestateName = gamestateName;
-		GameState.gameStates.put(gamestateName, this);
+		GamePerspective.gameStates.put(gamestateName, this);
 		if(currentState == null) {
 			currentState = this;
 		}
@@ -29,16 +29,16 @@ public abstract class GameState {
 
 	
 	public void switchState() {
-		GameState.currentState.stop();
-		GameState.currentState = this;
+		GamePerspective.currentState.stop();
+		GamePerspective.currentState = this;
 		start();
 	}
 	
 	public static void renderGameState() {
-		GameState.currentState.render();
+		GamePerspective.currentState.render();
 	}
 
 	public static void switchGameState(String gamestate) {
-		GameState.gameStates.get(gamestate).switchState();
+		GamePerspective.gameStates.get(gamestate).switchState();
 	}
 }

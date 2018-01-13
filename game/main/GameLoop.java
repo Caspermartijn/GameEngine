@@ -5,7 +5,7 @@ import static utils.tasks.Cleanup.cleanAll;
 import static scenes.Scene.renderScene;
 import static scenes.Scene.setCurrentScene;
 import static utils.RenderItem.renderItems;
-import static gamestates.GameState.renderGameState;
+import static gamestates.GamePerspective.renderGameState;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static engine.GLSettings.*;
@@ -22,11 +22,12 @@ import engine.DisplayBuilder;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
-import gamestates.GameState;
+import gamestates.GamePerspective;
 import hitbox.HitBox;
 import launcher.Launcher;
 import log.Log;
 import main.gameloading.GameLoader;
+import menus.CoopMenu;
 import menus.MainMenu;
 import menus.SettingsMenu;
 import objects.Camera;
@@ -194,8 +195,9 @@ public class GameLoop {
 
 			MainMenu main = new MainMenu(master, skyboxRenderer);
 			SettingsMenu settings = new SettingsMenu(master, skyboxRenderer);
+			CoopMenu coop = new CoopMenu(master, skyboxRenderer);
 			
-			GameState inGame = new GameState("ingame") {
+			GamePerspective inGame = new GamePerspective("ingame") {
 
 				@Override
 				public void render() {
@@ -213,7 +215,7 @@ public class GameLoop {
 				}
 			};
 
-			GameState.switchGameState("main_menu");
+			GamePerspective.switchGameState("coop_menu");
 
 			while (!Display.isCloseRequested() && !Display.hasToClose()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
