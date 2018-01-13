@@ -23,6 +23,7 @@ import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
+import utils.RenderItem;
 import utils.SourceFile;
 import utils.models.ModelMaster;
 
@@ -40,6 +41,8 @@ public class MainMenu extends GUI {
 
 	private Entity movingTimeShip;
 
+	private boolean moveToInGame = false;
+	
 	@SuppressWarnings("unused")
 	public MainMenu(MasterRenderer master, SkyboxRenderer skyboxRenderer) {
 		this.skyboxRenderer = skyboxRenderer;
@@ -83,7 +86,7 @@ public class MainMenu extends GUI {
 		movingTimeShip = new TimeShip(new Vector3f(-400, 131, 266), new Vector3f(0, 0, 0), 1f);
 		entities.add(ent);
 		entities.add(movingTimeShip);
-		
+
 		GamePerspective mainMenu = new GamePerspective("main_menu") {
 
 			@Override
@@ -98,7 +101,18 @@ public class MainMenu extends GUI {
 
 			@Override
 			public void stop() {
-				
+
+			}
+		};
+		
+		new RenderItem() {
+			
+			@Override
+			public void render() {
+				if(moveToInGame) {
+					GamePerspective.switchGameState("ingame");
+					moveToInGame=false;
+				}
 			}
 		};
 
@@ -119,7 +133,7 @@ public class MainMenu extends GUI {
 		coop_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 2, 0.2f, 0.1f);
 		settings_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 3, 0.2f, 0.1f);
 		quit_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 4, 0.2f, 0.1f);
-		
+
 		buttons.add(caimpain_button);
 		buttons.add(scenes_button);
 		buttons.add(coop_button);
@@ -193,19 +207,17 @@ public class MainMenu extends GUI {
 
 	public void campainButtonClick() {
 		new LoadingGui(4000) {
-			
+
 			@Override
 			public void midLoad() {
 				
 			}
-			
+
 			@Override
 			public void afterLoad() {
-				Mouse.setMouseEnabled(false);
-				GamePerspective.switchGameState("ingame");
+				moveToInGame = true;
 			}
 		};
-		
 	}
 
 	public void scenesButtonClick() {
@@ -246,9 +258,12 @@ public class MainMenu extends GUI {
 	}
 
 	public void images() {
-		//ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/menus/menus_background.png"));//ori: "/res/guis/menus/main/back.png"
-		//background.setPosition(0.15f, 0.5f);
-		//background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(600, 720)));
+		// ImageComponent background = new ImageComponent(this, new
+		// SourceFile("/res/guis/menus/menus_background.png"));//ori:
+		// "/res/guis/menus/main/back.png"
+		// background.setPosition(0.15f, 0.5f);
+		// background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(600,
+		// 720)));
 	}
 
 	float speed = 200;
