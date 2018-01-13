@@ -127,7 +127,7 @@ public class GameLoop {
 		};
 		player.getTransform().setPosition(new Vector3f(0, 100, 0));
 
-		SourceFile ame_nebula = new SourceFile("/res/skybox/timestream_1");
+		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
 				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
 				new SourceFile(ame_nebula, "face_top.png"), new SourceFile(ame_nebula, "face_back.png"),
@@ -255,7 +255,7 @@ public class GameLoop {
 				}
 			};
 			
-			GamePerspective.switchGameState("main_menu");
+			GamePerspective.switchGameState("loading");
 
 			while (!Display.isCloseRequested() && !Display.hasToClose()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

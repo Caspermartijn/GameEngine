@@ -53,5 +53,10 @@ public class ImageComponent extends GUIComponent {
 	public void setRotation(float rotation) {
 		img.setRotation(rotation);
 	}
+	
+	public float getRotation() {
+		return img.getRotation();
+	}
+	
 
 }
