@@ -197,7 +197,7 @@ public class MainMenu extends GUI {
 	}
 
 	public void coopButtonClick() {
-
+		GamePerspective.switchGameState("coop_menu");
 	}
 
 	public void settingsButtonClick() {

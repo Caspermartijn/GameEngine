@@ -24,6 +24,8 @@ public class TextFieldComponent extends QuadComponent {
 	private Switch showCurser = new Switch(500L);
 	private Runnable changeEvent;
 
+	private boolean editable = true;
+	
 	private KeyboardListener listener = new KeyboardListener() {
 		@Override
 		public void keyInput(char c) {
@@ -119,5 +121,13 @@ public class TextFieldComponent extends QuadComponent {
 
 	public void setChangeEvent(Runnable changeEvent) {
 		this.changeEvent = changeEvent;
+	}
+
+	public void setEditable(boolean b) {
+		editable = b;
+	}
+	
+	public boolean isEditable() {
+		return editable;
 	}
 }

@@ -19,8 +19,8 @@ public class ImageRenderer extends Cleanup {
 
 	public static void renderImage(Image image) {
 		GLSettings.enableAlphaBlending();
-		GLSettings.setDepthTesting(true);
-
+		//GLSettings.setDepthTesting(true);
+		
 		shader.start();
 		shader.matrix.loadMatrix(image.getMatrix());
 		shader.texture.bindTexture(image.getTexture());
@@ -28,7 +28,7 @@ public class ImageRenderer extends Cleanup {
 		shader.stop();
 		
 		GLSettings.disableBlending();
-		GLSettings.setDepthTesting(false);
+		//GLSettings.setDepthTesting(false);
 		
 	}
 

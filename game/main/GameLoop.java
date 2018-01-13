@@ -13,16 +13,19 @@ import static engine.Display.*;
 import static audio.Sound2DMaster.*;
 import static engine.Mouse.*;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import controlls.FreeCam;
 import engine.Display;
 import engine.DisplayBuilder;
+import engine.Keyboard;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
 import gamestates.GamePerspective;
+import guis.LoadingGui;
 import hitbox.HitBox;
 import launcher.Launcher;
 import log.Log;
@@ -51,6 +54,8 @@ public class GameLoop {
 
 	public static void main(String[] args) {
 		String title = "VectorEngine";
+		startGame(title);
+
 		l = new Launcher(title) {
 
 			private static final long serialVersionUID = 001L;
@@ -98,7 +103,7 @@ public class GameLoop {
 			}
 
 		};
-		l.create();
+		// l.create();
 	}
 
 	public static void spaceScene(MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
@@ -122,7 +127,7 @@ public class GameLoop {
 		};
 		player.getTransform().setPosition(new Vector3f(0, 100, 0));
 
-		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
+		SourceFile ame_nebula = new SourceFile("/res/skybox/timestream_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
 				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
 				new SourceFile(ame_nebula, "face_top.png"), new SourceFile(ame_nebula, "face_back.png"),
@@ -161,16 +166,16 @@ public class GameLoop {
 
 		skybox.setRotationSpeed(20);
 		scene.lights.add(sun);
-		scene.entities.add(ent);
-		scene.entities.add(ship);
-		scene.entities.add(inner);
+		// scene.entities.add(ent);
+		// scene.entities.add(ship);
+		// scene.entities.add(inner);
 		setCurrentScene(scene);
 	}
 
 	@SuppressWarnings("unused")
 	public static void startGame(String title) {
 		try {
-			createDisplay(new DisplayBuilder(1280, 720).setTitle(title).setFullscreen(false).setVsync(false)
+			createDisplay(new DisplayBuilder(1920, 1080).setTitle(title).setFullscreen(true).setVsync(true)
 					.setSamples(8).setFpsCap(60));
 
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
@@ -181,7 +186,7 @@ public class GameLoop {
 			MasterRenderer master = new MasterRenderer();
 
 			GameLoader.init();
-			
+
 			Fonts.addFont("pdark", new SourceFile("/res/fonts/pdark.png"), new SourceFile("/res/fonts/pdark.fnt"));
 
 			DebugGui debug = new DebugGui();
@@ -196,6 +201,7 @@ public class GameLoop {
 			MainMenu main = new MainMenu(master, skyboxRenderer);
 			SettingsMenu settings = new SettingsMenu(master, skyboxRenderer);
 			CoopMenu coop = new CoopMenu(master, skyboxRenderer);
+			LoadingGui loadingGui = new LoadingGui();
 			
 			GamePerspective inGame = new GamePerspective("ingame") {
 
@@ -214,8 +220,42 @@ public class GameLoop {
 
 				}
 			};
+			GamePerspective loading = new GamePerspective("loading") {
 
-			GamePerspective.switchGameState("coop_menu");
+				@Override
+				public void render() {
+					loadingGui.renderComps();
+				}
+
+				@Override
+				public void start() {
+					setMouseEnabled(true);
+				}
+
+				@Override
+				public void stop() {
+
+				}
+			};
+			
+			new RenderItem() {//This is for us right now. The only time this exception is made is when the gameprespective is ingame then we need to make an escape menu
+				boolean button = false;
+				@Override
+				public void render() {
+					if (!GamePerspective.currentState.getGameStateName().equalsIgnoreCase("ingame")) {
+						if (Keyboard.isKeyDown(GLFW.GLFW_KEY_ESCAPE)) {
+							if (!button) {
+								GamePerspective.switchGameState("main_menu");
+								button = true;
+							}
+						} else {
+							button = false;
+						}
+					}
+				}
+			};
+			
+			GamePerspective.switchGameState("main_menu");
 
 			while (!Display.isCloseRequested() && !Display.hasToClose()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -225,7 +265,7 @@ public class GameLoop {
 
 				debug.update(camera);
 				debug.renderComponents();
-				
+
 				swapBuffers();
 				updateEvents();
 			}

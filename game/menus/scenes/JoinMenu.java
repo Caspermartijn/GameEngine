@@ -24,6 +24,7 @@ public class JoinMenu extends GUI {
 				false);
 		server_key_field.setBackgroundColor(new Vector4f(0.5f, 0.5f, 0.5f, 1));
 		server_key_field.setText("Server key");
+		server_key_field.setEditable(false);
 		ButtonComponent join_button = new ButtonComponent(this, 0.42f, 0.4f + 0.05f + 0.02f, 0.2f, 0.1f);
 		join_button.setBackgroundColor(new Vector4f(0.3f, 0.3f, 0.3f, 1));
 		join_button.setText("Join", "candara", 3f);join_button.setTextPosition(new Vector2f(0, 0.01f));
