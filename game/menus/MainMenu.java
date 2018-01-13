@@ -10,20 +10,20 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.Display;
+import engine.Mouse;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
 import gamestates.GamePerspective;
 import guis.ButtonComponent;
 import guis.GUI;
-import guis.ImageComponent;
+import guis.LoadingGui;
 import objects.Camera;
 import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import utils.SourceFile;
-import utils.maths.Maths;
 import utils.models.ModelMaster;
 
 public class MainMenu extends GUI {
@@ -192,7 +192,20 @@ public class MainMenu extends GUI {
 	}
 
 	public void campainButtonClick() {
-		GamePerspective.switchGameState("ingame");
+		new LoadingGui(4000) {
+			
+			@Override
+			public void midLoad() {
+				
+			}
+			
+			@Override
+			public void afterLoad() {
+				Mouse.setMouseEnabled(false);
+				GamePerspective.switchGameState("ingame");
+			}
+		};
+		
 	}
 
 	public void scenesButtonClick() {
