@@ -119,6 +119,17 @@ public class MainMenu extends GUI {
 		coop_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 2, 0.2f, 0.1f);
 		settings_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 3, 0.2f, 0.1f);
 		quit_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 4, 0.2f, 0.1f);
+		caimpain_button.setOutlineWidth(0.002f);
+		scenes_button.setOutlineWidth(0.002f);
+		coop_button.setOutlineWidth(0.002f);
+		settings_button.setOutlineWidth(0.002f);
+		quit_button.setOutlineWidth(0.002f);
+		caimpain_button.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
+		scenes_button.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
+		coop_button.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
+		settings_button.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
+		quit_button.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
+		
 		buttons.add(caimpain_button);
 		buttons.add(scenes_button);
 		buttons.add(coop_button);
