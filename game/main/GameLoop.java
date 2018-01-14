@@ -13,7 +13,6 @@ import static engine.Display.*;
 import static audio.Sound2DMaster.*;
 import static engine.Mouse.*;
 
-import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -21,7 +20,6 @@ import controlls.FreeCam;
 import debug.DebugGui;
 import engine.Display;
 import engine.DisplayBuilder;
-import engine.Keyboard;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
@@ -176,8 +174,9 @@ public class GameLoop {
 	@SuppressWarnings("unused")
 	public static void startGame(String title) {
 		try {
-			createDisplay(new DisplayBuilder(1920, 1080).setTitle(title).setFullscreen(true).setVsync(false)
-					.setSamples(8).setFpsCap(60));
+			Settings.load();
+			createDisplay(new DisplayBuilder(Settings.windowSizeValues[0], Settings.windowSizeValues[1]).setTitle(title)
+					.setFullscreen(Settings.fullscreenValue).setVsync(Settings.vsyncValue).setSamples(8).setFpsCap(60));
 
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
 			setDepthTesting(true);
@@ -185,7 +184,6 @@ public class GameLoop {
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
 
-			Settings.load();
 			GameLoader.init();
 
 			Fonts.addFont("pdark", new SourceFile("/res/fonts/pdark.png"), new SourceFile("/res/fonts/pdark.fnt"));
@@ -220,27 +218,6 @@ public class GameLoop {
 
 				}
 			};
-			new RenderItem() {// This is for us right now. The only time this exception is made is when the
-								// gameprespective is ingame then we need to make an escape menu
-				boolean button = false;
-
-				@Override
-				public void render() {
-					if (!(GamePerspective.currentState.getGameStateName().equalsIgnoreCase("ingame"))) {
-						if (!(GamePerspective.currentState.getGameStateName().equalsIgnoreCase("loading"))) {
-							if (Keyboard.isKeyDown(GLFW.GLFW_KEY_ESCAPE)) {
-								if (!button) {
-									GamePerspective.switchGameState("main_menu");
-									button = true;
-								}
-							} else {
-								button = false;
-							}
-						}
-					}
-				}
-			};
-
 			new LoadingGui(1000) {
 
 				@Override
@@ -267,7 +244,6 @@ public class GameLoop {
 				updateEvents();
 			}
 
-			
 			Settings.save();
 			cleanAll();
 			disposeDisplay();

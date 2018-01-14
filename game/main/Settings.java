@@ -31,6 +31,10 @@ public class Settings {
 
 	private static EngineFileConfig config;
 
+	public static int[] windowSizeValues;
+	public static boolean fullscreenValue;
+	public static boolean vsyncValue;
+	
 	public static void load() {
 		File f = new File("settings.cnfg");
 		if (!f.exists()) {
@@ -52,6 +56,25 @@ public class Settings {
 			shadows = Graphics.getCofigSettingEnum(config.getString("shadows"));
 			postproccesing = Graphics.getCofigSettingEnum(config.getString("postproccesing"));
 			water = Graphics.getCofigSettingEnum(config.getString("water"));
+		}
+		
+		if (Settings.windowSize == main.settings.Display.Size_720) {
+			windowSizeValues = new int[] { 1280, 720 };
+		} else {
+			windowSizeValues = new int[] { 1920, 1080 };
+		}
+
+		if (Settings.displayMode == main.settings.Display.fullscreen) {
+			fullscreenValue = true;
+			windowSizeValues = new int[] { 1920, 1080 };
+		} else {
+			fullscreenValue = false;
+		}
+
+		if (Settings.vsync == main.settings.Display.vSync_true) {
+			vsyncValue = true;
+		} else {
+			vsyncValue = false;
 		}
 	}
 

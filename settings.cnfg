@@ -1,8 +1,8 @@
 s:windowsize:1920x1080
-s:textures:potatoe
-s:vsync:vsyncdisabled
-s:postproccesing:ultra
-s:shadows:high
-s:terrain:medium
+s:textures:medium
+s:vsync:vsyncenabled
+s:postproccesing:high
+s:shadows:ultra
+s:terrain:high
 s:water:medium
 s:displaymode:fullscreen
