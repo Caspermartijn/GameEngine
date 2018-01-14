@@ -1,5 +1,7 @@
 package debug;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import hitbox.HitBoxMaster;
 import log.Log;
 
@@ -27,6 +29,19 @@ public class DefaultCommands {
 						break;
 					}
 				}
+			}
+		});
+
+		Command commands = new Command("commands");
+		commands.setCommandHandler(new CommandRunnable() {
+
+			@Override
+			public void run(String commandLine, String[] args) {
+				Log.append("=========Commands========", false, new Vector3f(1, 0.2f, 0.2f));
+					for(Command c  :CommandHandler.getCommands()) {
+						Log.append("/" + c.getCommand(), false, new Vector3f(1, 0.2f, 0.2f));
+					}
+				Log.append("=========Commands========", false, new Vector3f(1, 0.2f, 0.2f));
 			}
 		});
 

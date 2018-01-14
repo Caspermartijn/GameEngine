@@ -35,4 +35,8 @@ public class CommandHandler {
 		return ran;
 	}
 
+	public static List<Command> getCommands() {
+		return commands;
+	}
+
 }

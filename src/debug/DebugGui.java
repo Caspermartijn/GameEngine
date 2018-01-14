@@ -95,10 +95,7 @@ public class DebugGui extends GUI {
 									boolean accepted = CommandHandler.runCommand(command_field.getText());
 									if(!accepted) {
 										Log.append("That command doesn't exist!", false, new Vector3f(0.98f, 0.019607f, 1));
-									}else {
-										Log.append(command_field.getText(), false, new Vector3f(0.98f, 0.019607f, 1));
-									}
-									
+									}									
 									command_field.setText("");
 								} else {
 									Log.append("Not an command specified (Use / for commands)", false, new Vector3f(0.98f, 0.019607f, 1));
