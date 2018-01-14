@@ -51,7 +51,7 @@ public class SettingsMenu extends GUI {
 		super.setPosition(0f, 0.0f);
 		images();
 		buttons();
-		texts();
+		// texts();
 		camera = new Camera();
 		camera.setNewProj();
 
@@ -149,14 +149,19 @@ public class SettingsMenu extends GUI {
 	}
 
 	public void images() {
-		ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/menus/menus_background.png"));
+		ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/menus/menus_background_2.png"));
 		background.setPosition(0.65f, 0.5f);
 		background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(1000, 720)));
 		background.setRotation(180);
 		QuadComponent quad = new QuadComponent(this, 0.41f, 0.2f + 0.15f, 0.541f, 0.5f);
 		quad.setBackgroundColor(new Vector4f(0.16078f, 0.34118f, 0.6f, 1f));
+
+		ImageComponent text = new ImageComponent(this, new SourceFile("/res/guis/menus/titles/Settings.png"));
+		text.setPosition(0.515f, 0.15f);
+		text.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(510, 150)));
 	}
 
+	@SuppressWarnings("unused")
 	private void texts() {
 		TextComponent settings = new TextComponent(this, "Settings (this will be an image)", "candara", 3.4f, 200,
 				false);

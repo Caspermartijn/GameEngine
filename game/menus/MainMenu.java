@@ -125,17 +125,17 @@ public class MainMenu extends GUI {
 
 	List<ButtonComponent> buttons = new ArrayList<ButtonComponent>();
 
-	public ButtonComponent caimpain_button, scenes_button, coop_button, settings_button, quit_button;
+	public ButtonComponent caimpaign_button, scenes_button, coop_button, settings_button, quit_button;
 
 	public void buttons() {
 		float spaceBetw = 0.12f;
-		caimpain_button = new ButtonComponent(this, 0.06f, 0.35f, 0.2f, 0.1f);
+		caimpaign_button = new ButtonComponent(this, 0.06f, 0.35f, 0.2f, 0.1f);
 		scenes_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw, 0.2f, 0.1f);
 		coop_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 2, 0.2f, 0.1f);
 		settings_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 3, 0.2f, 0.1f);
 		quit_button = new ButtonComponent(this, 0.06f, 0.35f + spaceBetw * 4, 0.2f, 0.1f);
 
-		buttons.add(caimpain_button);
+		buttons.add(caimpaign_button);
 		buttons.add(scenes_button);
 		buttons.add(coop_button);
 		buttons.add(settings_button);
@@ -154,17 +154,17 @@ public class MainMenu extends GUI {
 				}
 			});
 		}
-		caimpain_button.setText("Campain", "candara", 3f);
+		caimpaign_button.setText("Campaign", "candara", 3f);
 		scenes_button.setText("Scenes", "candara", 3f);
 		coop_button.setText("Co-op", "candara", 3f);
 		settings_button.setText("Settings", "candara", 3f);
 		quit_button.setText("Quit", "candara", 3f);
 
-		caimpain_button.setClickEvent(new Runnable() {
+		caimpaign_button.setClickEvent(new Runnable() {
 
 			@Override
 			public void run() {
-				campainButtonClick();
+				campaignButtonClick();
 			}
 
 		});
@@ -206,7 +206,7 @@ public class MainMenu extends GUI {
 		});
 	}
 
-	public void campainButtonClick() {
+	public void campaignButtonClick() {
 		new LoadingGui(4000) {
 
 			@Override
@@ -237,29 +237,8 @@ public class MainMenu extends GUI {
 		Display.closeDisplay();
 	}
 
-	// =================Hover=================
-
-	public void campainButtonHover() {
-	}
-
-	public void scenesButtonHover() {
-
-	}
-
-	public void coopButtonHover() {
-
-	}
-
-	public void settingsButtonHover() {
-
-	}
-
-	public void quitButtonHover() {
-
-	}
-
 	public void images() {
-		 ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/main.png"));//ori:"/res/guis/menus/main/back.png
+		 ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/main.png"));
 		 background.setPosition(0.15f, 0.5f);
 		 background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(600,
 		 720)));
