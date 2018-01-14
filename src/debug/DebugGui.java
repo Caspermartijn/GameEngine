@@ -1,4 +1,4 @@
-package objects;
+package debug;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,19 +6,26 @@ import java.util.List;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import engine.Display;
 import engine.Keyboard;
+import engine.Mouse;
 import guis.GUI;
 import guis.ImageComponent;
 import guis.TextComponent;
+import guis.TextFieldComponent;
 import log.Log;
+import objects.Camera;
+import objects.Vao;
+import objects.Vbo;
 import renderer.MasterRenderer;
 import shaders.uniforms.ShaderProgram;
 import textures.Texture;
 import utils.RenderItem;
 import utils.SourceFile;
 import utils.maths.Maths;
+import utils.tasks.Task;
 
 public class DebugGui extends GUI {
 
@@ -41,6 +48,8 @@ public class DebugGui extends GUI {
 	private List<TextComponent> texts = new ArrayList<TextComponent>();
 
 	private boolean hidden = true;
+
+	private boolean enter_pressed = false;
 
 	public DebugGui() {
 		new RenderItem() {
@@ -66,9 +75,45 @@ public class DebugGui extends GUI {
 
 		super.setPosition(0f, 0.0f);
 		images();
+		buttons();
 		texts();
 		texts2();
 		this.hideAll();
+	}
+
+	private void buttons() {
+		TextFieldComponent command_field = new TextFieldComponent(this, 0.3f, 0.211f, 0.4f, 0.03f, "candara", 1f,
+				false);
+		command_field.setBackgroundColor(new Vector4f(0.7f, 0.7f, 0.7f, 1));
+
+		new RenderItem() {
+			@Override
+			public void render() {
+				if (!hidden) {
+					if (command_field.isActive()) {
+						String text = command_field.getText();
+						if (text != "") {
+							if (Keyboard.isKeyDown(GLFW.GLFW_KEY_ENTER)) {
+								if (text.startsWith("/") || text.startsWith("-")) {
+									boolean accepted = CommandHandler.runCommand(command_field.getText());
+									if(!accepted) {
+										Log.append("That command doesn't exist!", false, new Vector3f(0.98f, 0.019607f, 1));
+									}else {
+										Log.append(command_field.getText(), false, new Vector3f(0.98f, 0.019607f, 1));
+									}
+									
+									command_field.setText("");
+								} else {
+									Log.append("Not an command specified (Use / for commands)", false, new Vector3f(0.98f, 0.019607f, 1));
+									command_field.setText("");
+								}
+							}
+						}
+					}
+				}
+			}
+
+		};
 	}
 
 	private void images() {
@@ -76,7 +121,7 @@ public class DebugGui extends GUI {
 		background.setScale(1f);
 		Vector2f vec = Maths.getFrom720toCurrentDisplaySize(new Vector2f(1280, 200));
 		background.setSize(vec.x, vec.y);
-		background.setPosition(0.5f, 0.08f);
+		background.setPosition(0.5f, 0.11f);
 		background.setRotation(180);
 		background.show();
 	}
@@ -155,12 +200,17 @@ public class DebugGui extends GUI {
 		return hidden;
 	}
 
+	private boolean wasMousEnabled = false;
+
 	public void hide() {
+		Mouse.setMouseEnabled(wasMousEnabled);
 		hidden = true;
 		this.hideAll();
 	}
 
 	public void show() {
+		wasMousEnabled = Mouse.isCursorActivated();
+		Mouse.setMouseEnabled(true);
 		hidden = false;
 		this.showAll();
 	}

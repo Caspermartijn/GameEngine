@@ -18,6 +18,7 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import controlls.FreeCam;
+import debug.DebugGui;
 import engine.Display;
 import engine.DisplayBuilder;
 import engine.Keyboard;
@@ -34,7 +35,6 @@ import menus.CoopMenu;
 import menus.MainMenu;
 import menus.SettingsMenu;
 import objects.Camera;
-import objects.DebugGui;
 import objects.FPS_Player;
 import objects.Model_3D;
 import objects.Skybox;
