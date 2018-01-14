@@ -240,7 +240,7 @@ public class GameLoop {
 				}
 			};
 
-			new LoadingGui(4000) {
+			new LoadingGui(1000) {
 
 				@Override
 				public void afterLoad() {

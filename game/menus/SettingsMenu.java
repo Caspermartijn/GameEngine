@@ -19,7 +19,9 @@ import guis.GUI;
 import guis.ImageComponent;
 import guis.QuadComponent;
 import guis.TextComponent;
+import menus.settings.AudioMenu;
 import menus.settings.DisplayMenu;
+import menus.settings.GraphicsMenu;
 import objects.Camera;
 import objects.Model_3D;
 import objects.Skybox;
@@ -43,6 +45,8 @@ public class SettingsMenu extends GUI {
 	private Entity timematers;
 
 	private DisplayMenu displaySettings;
+	private GraphicsMenu graphicsSettings;
+	private AudioMenu audioSettings;
 
 	@SuppressWarnings("unused")
 	public SettingsMenu(MasterRenderer master, SkyboxRenderer skyboxRenderer) {
@@ -104,7 +108,10 @@ public class SettingsMenu extends GUI {
 		};
 
 		displaySettings = new DisplayMenu();
+		graphicsSettings = new GraphicsMenu();
+		audioSettings = new AudioMenu();
 
+		graphicsSettings.showAll();
 	}
 
 	List<ButtonComponent> buttons = new ArrayList<ButtonComponent>();
@@ -148,6 +155,42 @@ public class SettingsMenu extends GUI {
 		audio_button.setText("Audio", "candara", 1.3f);
 		keybindings_button.setText("Keybindings", "candara", 1.3f);
 		controller_button.setText("Controller", "candara", 1.3f);
+
+		display_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				hideAllSubGuis();
+				displaySettings.showAll();
+			}
+
+		});
+
+		graphics_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				hideAllSubGuis();
+				graphicsSettings.showAll();
+			}
+
+		});
+
+		audio_button.setClickEvent(new Runnable() {
+
+			@Override
+			public void run() {
+				hideAllSubGuis();
+				audioSettings.showAll();
+			}
+
+		});
+	}
+
+	private void hideAllSubGuis() {
+		displaySettings.hideAll();
+		audioSettings.hideAll();
+		graphicsSettings.hideAll();
 	}
 
 	public void images() {
@@ -173,6 +216,8 @@ public class SettingsMenu extends GUI {
 
 	@Override
 	public void renderComponents() {
+		displaySettings.updateText();
+
 		timematers.getTransform().rotY += 5 * Display.getFrameTime();
 
 		skyboxRenderer.render(skybox, camera);
@@ -180,5 +225,7 @@ public class SettingsMenu extends GUI {
 		master.unprepare();
 		super.renderComponents();
 		displaySettings.renderComponents();
+		audioSettings.renderComponents();
+		graphicsSettings.renderComponents();
 	}
 }

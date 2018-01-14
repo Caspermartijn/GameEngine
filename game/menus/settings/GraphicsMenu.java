@@ -1,5 +1,7 @@
 package menus.settings;
 
-public class GraphicsMenu {
+import guis.GUI;
+
+public class GraphicsMenu extends GUI{
 
 }

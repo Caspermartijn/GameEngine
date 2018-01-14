@@ -11,6 +11,7 @@ import org.lwjgl.util.vector.Vector4f;
 import engine.Display;
 import engine.Keyboard;
 import engine.Mouse;
+import gamestates.GamePerspective;
 import guis.GUI;
 import guis.ImageComponent;
 import guis.TextComponent;
@@ -33,6 +34,8 @@ public class DebugGui extends GUI {
 	private TextComponent ping;
 
 	private TextComponent campos;
+	private TextComponent camrot;
+
 	private TextComponent vaos;
 	private TextComponent vbos;
 	private TextComponent textures;
@@ -43,6 +46,7 @@ public class DebugGui extends GUI {
 	private TextComponent lights;
 
 	private TextComponent scenes;
+	private TextComponent perspective;
 
 	private List<TextComponent> texts = new ArrayList<TextComponent>();
 
@@ -93,12 +97,14 @@ public class DebugGui extends GUI {
 							if (Keyboard.isKeyDown(GLFW.GLFW_KEY_ENTER)) {
 								if (text.startsWith("/") || text.startsWith("-")) {
 									boolean accepted = CommandHandler.runCommand(command_field.getText());
-									if(!accepted) {
-										Log.append("That command doesn't exist!", false, new Vector3f(0.98f, 0.019607f, 1));
-									}									
+									if (!accepted) {
+										Log.append("That command doesn't exist!", false,
+												new Vector3f(0.98f, 0.019607f, 1));
+									}
 									command_field.setText("");
 								} else {
-									Log.append("Not an command specified (Use / for commands)", false, new Vector3f(0.98f, 0.019607f, 1));
+									Log.append("Not an command specified (Use / for commands)", false,
+											new Vector3f(0.98f, 0.019607f, 1));
 									command_field.setText("");
 								}
 							}
@@ -122,6 +128,8 @@ public class DebugGui extends GUI {
 
 	private void texts2() {
 		campos = new TextComponent(this, "Campos: ", "candara", 0.775f, 200, false);
+		camrot = new TextComponent(this, "Camrot: ", "candara", 0.775f, 200, false);
+
 		vaos = new TextComponent(this, "Vao: ", "candara", 0.775f, 200, false);
 		vbos = new TextComponent(this, "Vbo: ", "candara", 0.775f, 200, false);
 		textures = new TextComponent(this, "Textures: ", "candara", 0.775f, 200, false);
@@ -131,9 +139,13 @@ public class DebugGui extends GUI {
 		terrains = new TextComponent(this, "Terrains: ", "candara", 0.775f, 200, false);
 		lights = new TextComponent(this, "Lights: ", "candara", 0.775f, 200, false);
 
-		scenes = new TextComponent(this, "Scenes: ", "candara", 0.775f, 200, false);
+		scenes = new TextComponent(this, "scenes: 0", "candara", 0.775f, 200, false);
+
+		perspective = new TextComponent(this, "perspective: ", "candara", 0.775f, 200, false);
 
 		texts.add(campos);
+		texts.add(camrot);
+
 		texts.add(vaos);
 		texts.add(vbos);
 		texts.add(textures);
@@ -144,7 +156,7 @@ public class DebugGui extends GUI {
 		texts.add(lights);
 
 		texts.add(scenes);
-
+		texts.add(perspective);
 		float f = 0;
 
 		float f2 = 0.1f;
@@ -156,7 +168,7 @@ public class DebugGui extends GUI {
 			f += 0.017f;
 			component.setColor(1, 1, 1, 1);
 			i++;
-			if (i == 5 || i == 8 || i == 1) {
+			if (i == 6 || i == 9 || i == 2) {
 				f += 0.017f;
 			}
 		}
@@ -175,19 +187,24 @@ public class DebugGui extends GUI {
 	}
 
 	public void update(Camera camera) {
-		fps.setText("FPS: " + Display.getFPS());
-		delta.setText("DELTA: " + (Display.getDeltaSeccond() * 100));
-		ping.setText("ping: " + 0);
+		if (!hidden) {
+			fps.setText("FPS: " + Display.getFPS());
+			delta.setText("DELTA: " + (Display.getDeltaSeccond() * 100));
+			ping.setText("ping: " + 0);
 
-		campos.setText("campos: " + (short) camera.x + " " + (short) camera.y + " " + (short) camera.z);
-		vaos.setText("vao: " + Vao.vaosCreated);
-		vbos.setText("vbo: " + Vbo.vbosCreated);
-		textures.setText("textures: " + Texture.created);
-		shaders.setText("shaders: " + ShaderProgram.created);
+			campos.setText("campos: " + (short) camera.x + " " + (short) camera.y + " " + (short) camera.z);
+			camrot.setText("camrot: " + (short) camera.pitch + " " + (short) camera.yaw + " " + (short) camera.roll);
+			vaos.setText("vao: " + Vao.vaosCreated);
+			vbos.setText("vbo: " + Vbo.vbosCreated);
+			textures.setText("textures: " + Texture.created);
+			shaders.setText("shaders: " + ShaderProgram.created);
 
-		entities.setText("entities: " + MasterRenderer.getEntitiesAmount());
-		terrains.setText("terrains: " + MasterRenderer.getTerrainsAmount());
-		lights.setText("lights: " + MasterRenderer.getLightsAmount());
+			entities.setText("entities: " + MasterRenderer.getEntitiesAmount());
+			terrains.setText("terrains: " + MasterRenderer.getTerrainsAmount());
+			lights.setText("lights: " + MasterRenderer.getLightsAmount());
+
+			perspective.setText("perspective: " + GamePerspective.currentState.getGameStateName());
+		}
 	}
 
 	public boolean isHidden() {

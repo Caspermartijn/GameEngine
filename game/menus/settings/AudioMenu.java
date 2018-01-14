@@ -1,5 +1,7 @@
 package menus.settings;
 
-public class AudioMenu {
+import guis.GUI;
+
+public class AudioMenu extends GUI{
 
 }

@@ -46,14 +46,16 @@ public class Text extends Cleanup {
 		Vao.vaosDeleted--;
 		Vao.vaosCreated--;
 	}
-	
+
 	public float getStartFontSize() {
 		return start_fontSize;
 	}
 
 	public void delete() {
-		textMeshVao.delete();
-		textMeshVao = null;
+		if (textMeshVao != null) {
+			textMeshVao.delete();
+			textMeshVao = null;
+		}
 	}
 
 	public String getFont() {
@@ -152,6 +154,5 @@ public class Text extends Cleanup {
 	public String getText() {
 		return textString;
 	}
-	
-	
+
 }
