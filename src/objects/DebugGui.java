@@ -56,7 +56,6 @@ public class DebugGui extends GUI {
 							Log.append("Debug menu enabled", false, new Vector3f(0.1f, 1, 0.1f));
 						} else {
 							hide();
-							Log.append("Debug menu disabled", false, new Vector3f(0.1f, 1, 0.1f));
 						}
 					}
 				} else {

@@ -13,25 +13,11 @@ import utils.tasks.Task;
 
 public abstract class LoadingGui extends GUI {
 
+	private static boolean hasInited = false;
+
 	public LoadingGui(float timeInMilisecconds) {
 		images();
-		GamePerspective loading = new GamePerspective("loading") {
-
-			@Override
-			public void render() {
-				renderComps();
-			}
-
-			@Override
-			public void start() {
-				setMouseEnabled(true);
-			}
-
-			@Override
-			public void stop() {
-
-			}
-		};
+		init();
 		new Task(timeInMilisecconds / 2) {
 
 			@Override
@@ -48,7 +34,31 @@ public abstract class LoadingGui extends GUI {
 			}
 
 		};
-		loading.switchState();
+		GamePerspective.switchGameState("loading");
+	}
+
+	@SuppressWarnings("unused")
+	private void init() {
+		if (!hasInited) {
+			GamePerspective loading = new GamePerspective("loading") {
+
+				@Override
+				public void render() {
+					renderComps();
+				}
+
+				@Override
+				public void start() {
+					setMouseEnabled(true);
+				}
+
+				@Override
+				public void stop() {
+
+				}
+			};
+			hasInited = true;
+		}
 	}
 
 	private ImageComponent hourglass;
