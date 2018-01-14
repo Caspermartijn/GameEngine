@@ -47,13 +47,14 @@ public class DisplayMenu extends GUI {
 		displayMode.setBackgroundColor(new Vector4f(0.6f, 0.6f, 0.6f, 1));
 		displayMode.setTextPosition(new Vector2f(0, 0.005f));
 
-		windowSize = new ButtonComponent(this, left_1_x + 0.08f, left_1_y + 0.0365f, 0.08f, 0.035f);
+		windowSize = new ButtonComponent(this, left_1_x + 0.08f, left_1_y + 0.0365f + 0.0005f, 0.08f, 0.035f);
 		windowSize.setOutlineWidth(0.001f);
 		windowSize.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
 		windowSize.setBackgroundColor(new Vector4f(0.6f, 0.6f, 0.6f, 1));
 		windowSize.setTextPosition(new Vector2f(0, 0.005f));
 
-		vSync = new ButtonComponent(this, left_1_x + 0.08f, left_1_y + 0.0365f + 0.0365f + 0.0005f, 0.08f, 0.035f);
+		vSync = new ButtonComponent(this, left_1_x + 0.08f, left_1_y + 0.0365f + 0.0365f + 0.0005f + 0.0005f, 0.08f,
+				0.035f);
 		vSync.setOutlineWidth(0.001f);
 		vSync.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
 		vSync.setBackgroundColor(new Vector4f(0.6f, 0.6f, 0.6f, 1));
