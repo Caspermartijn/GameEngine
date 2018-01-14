@@ -51,7 +51,7 @@ public class GameLoop {
 
 	public static void main(String[] args) {
 		String title = "VectorEngine";
-		startGame(title);
+		startApplication(title);
 
 		l = new Launcher(title) {
 
@@ -59,7 +59,7 @@ public class GameLoop {
 
 			@Override
 			public void play() {
-				startGame(this.getTitle());
+				startApplication(this.getTitle());
 			}
 
 			@Override
@@ -172,7 +172,7 @@ public class GameLoop {
 	}
 
 	@SuppressWarnings("unused")
-	public static void startGame(String title) {
+	public static void startApplication(String title) {
 		try {
 			Settings.load();
 			createDisplay(new DisplayBuilder(Settings.windowSizeValues[0], Settings.windowSizeValues[1]).setTitle(title)
