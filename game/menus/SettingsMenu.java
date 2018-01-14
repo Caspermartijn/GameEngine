@@ -111,7 +111,8 @@ public class SettingsMenu extends GUI {
 		graphicsSettings = new GraphicsMenu();
 		audioSettings = new AudioMenu();
 
-		graphicsSettings.showAll();
+		hideAllSubGuis();
+		displaySettings.showAll();
 	}
 
 	List<ButtonComponent> buttons = new ArrayList<ButtonComponent>();
@@ -216,8 +217,6 @@ public class SettingsMenu extends GUI {
 
 	@Override
 	public void renderComponents() {
-		displaySettings.updateText();
-
 		timematers.getTransform().rotY += 5 * Display.getFrameTime();
 
 		skyboxRenderer.render(skybox, camera);

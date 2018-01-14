@@ -47,6 +47,10 @@ public class QuadComponent extends GUIComponent {
 	public void setBackgroundColor(Vector4f backgroundColor) {
 		this.backgroundColor = backgroundColor;
 	}
+	
+	public void setTempBackgroundColor(Vector4f color) {
+		this.backgroundColor = color;
+	}
 
 	public Vector4f getOutlineColor() {
 		return outlineColor;

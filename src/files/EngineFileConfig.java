@@ -87,7 +87,6 @@ public class EngineFileConfig {
 	public void set(String dat, String s) {
 		ConfigString cf = new ConfigString(dat, s);
 		strings.put(dat, cf);
-		System.out.println("test");
 	}
 
 	public void set(String dat, boolean b) {

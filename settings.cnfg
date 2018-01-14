@@ -1,0 +1,8 @@
+s:windowsize:1920x1080
+s:textures:potatoe
+s:vsync:vsyncdisabled
+s:postproccesing:ultra
+s:shadows:high
+s:terrain:medium
+s:water:medium
+s:displaymode:fullscreen

@@ -31,7 +31,7 @@ public class DisplayMenu extends GUI {
 
 		TextComponent windowSizeText = new TextComponent(this, "Window size", "candara", 1f, 200, false);
 		windowSizeText.setPosition(left_1_x, left_1_y + 0.0365f + 0.005f);
-		
+
 		TextComponent vSyncText = new TextComponent(this, "vSync", "candara", 1f, 200, false);
 		vSyncText.setPosition(left_1_x, left_1_y + 0.0365f + 0.0365f + 0.005f);
 	}
@@ -42,14 +42,20 @@ public class DisplayMenu extends GUI {
 
 	private void buttons() {
 		displayMode = new ButtonComponent(this, left_1_x + 0.08f, left_1_y, 0.08f, 0.035f);
+		displayMode.setOutlineWidth(0.001f);
+		displayMode.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
 		displayMode.setBackgroundColor(new Vector4f(0.6f, 0.6f, 0.6f, 1));
 		displayMode.setTextPosition(new Vector2f(0, 0.005f));
 
 		windowSize = new ButtonComponent(this, left_1_x + 0.08f, left_1_y + 0.0365f, 0.08f, 0.035f);
+		windowSize.setOutlineWidth(0.001f);
+		windowSize.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
 		windowSize.setBackgroundColor(new Vector4f(0.6f, 0.6f, 0.6f, 1));
 		windowSize.setTextPosition(new Vector2f(0, 0.005f));
 
-		vSync = new ButtonComponent(this, left_1_x + 0.08f, left_1_y + 0.0365f + 0.0365f, 0.08f, 0.035f);
+		vSync = new ButtonComponent(this, left_1_x + 0.08f, left_1_y + 0.0365f + 0.0365f + 0.0005f, 0.08f, 0.035f);
+		vSync.setOutlineWidth(0.001f);
+		vSync.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
 		vSync.setBackgroundColor(new Vector4f(0.6f, 0.6f, 0.6f, 1));
 		vSync.setTextPosition(new Vector2f(0, 0.005f));
 
@@ -97,6 +103,12 @@ public class DisplayMenu extends GUI {
 		displayMode.setText(Display.getSettingString(Settings.displayMode), "candara", 1f);
 		windowSize.setText(Display.getSettingString(Settings.windowSize), "candara", 1f);
 		vSync.setText(Display.getSettingString(Settings.vsync), "candara", 1f);
+	}
+
+	@Override
+	public void renderComponents() {
+		updateText();
+		super.renderComponents();
 	}
 
 }

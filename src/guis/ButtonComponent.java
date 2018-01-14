@@ -49,6 +49,7 @@ public class ButtonComponent extends QuadComponent {
 		super.setHeight(ori_height);
 		super.setX(ori_x);
 		super.setY(ori_y);
+		
 		if (text != null) {
 			text.setPosition(Vector2f.add(new Vector2f(getX(), getY()), textPosition, null));
 			FontRenderer.renderText(text);
@@ -60,7 +61,11 @@ public class ButtonComponent extends QuadComponent {
 
 		}
 	}
-
+	
+	public void setTempColor(Vector4f color) {
+		super.setBackgroundColor(color);
+	}
+	
 	public int getButton() {
 		return button;
 	}

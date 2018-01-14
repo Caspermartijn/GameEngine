@@ -185,8 +185,9 @@ public class GameLoop {
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
 
+			Settings.load();
 			GameLoader.init();
-			
+
 			Fonts.addFont("pdark", new SourceFile("/res/fonts/pdark.png"), new SourceFile("/res/fonts/pdark.fnt"));
 
 			DebugGui debug = new DebugGui();
@@ -266,10 +267,14 @@ public class GameLoop {
 				updateEvents();
 			}
 
+			
+			Settings.save();
 			cleanAll();
 			disposeDisplay();
 
-			l.closeApp();
+			if (l != null) {
+				l.closeApp();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			l.closeApp();

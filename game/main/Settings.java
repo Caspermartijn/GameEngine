@@ -1,5 +1,9 @@
 package main;
 
+import java.io.File;
+import java.io.IOException;
+
+import files.EngineFileConfig;
 import main.settings.Display;
 import main.settings.Graphics;
 
@@ -19,9 +23,53 @@ public class Settings {
 	public static Graphics water = Graphics.Graphics_Medium;
 	// Graphics settings
 
-	//Audio settings
+	// Audio settings
 	public static int master_gain = 50;
 	public static int music_gain = 50;
 	public static int effects_gain = 50;
-	//Audio settings
+	// Audio settings
+
+	private static EngineFileConfig config;
+
+	public static void load() {
+		File f = new File("settings.cnfg");
+		if (!f.exists()) {
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			config = new EngineFileConfig("", "settings.cnfg");
+		} else {
+			config = new EngineFileConfig("", "settings.cnfg");
+
+			displayMode = Display.getCofigSettingEnum(config.getString("displaymode"));
+			windowSize = Display.getCofigSettingEnum(config.getString("windowsize"));
+			vsync = Display.getCofigSettingEnum(config.getString("vsync"));
+
+			textures = Graphics.getCofigSettingEnum(config.getString("textures"));
+			terrain = Graphics.getCofigSettingEnum(config.getString("terrain"));
+			shadows = Graphics.getCofigSettingEnum(config.getString("shadows"));
+			postproccesing = Graphics.getCofigSettingEnum(config.getString("postproccesing"));
+			water = Graphics.getCofigSettingEnum(config.getString("water"));
+		}
+	}
+
+	public static void save() {
+		config.set("displaymode", Display.getCnofigSettingString(displayMode));
+		config.set("windowsize", Display.getCnofigSettingString(windowSize));
+		config.set("vsync", Display.getCnofigSettingString(vsync));
+
+		config.set("textures", Graphics.getCnofigSettingString(textures));
+		config.set("terrain", Graphics.getCnofigSettingString(terrain));
+		config.set("shadows", Graphics.getCnofigSettingString(shadows));
+		config.set("postproccesing", Graphics.getCnofigSettingString(postproccesing));
+		config.set("water", Graphics.getCnofigSettingString(water));
+
+		try {
+			config.saveConfig();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
