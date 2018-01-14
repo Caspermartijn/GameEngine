@@ -3,6 +3,8 @@ package main.gameloading;
 import java.util.ArrayList;
 import java.util.List;
 
+import debug.DefaultCommands;
+
 public class GameLoader {
 
 	private static List<LoadItem> loadItems = new ArrayList<LoadItem>();
@@ -12,6 +14,8 @@ public class GameLoader {
 	static List<LoadItemMedium> medium = new ArrayList<LoadItemMedium>();
 
 	public static void init() {
+		DefaultCommands.compile();
+		
 		sort();
 		load();
 	}

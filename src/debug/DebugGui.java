@@ -25,7 +25,6 @@ import textures.Texture;
 import utils.RenderItem;
 import utils.SourceFile;
 import utils.maths.Maths;
-import utils.tasks.Task;
 
 public class DebugGui extends GUI {
 
@@ -48,8 +47,6 @@ public class DebugGui extends GUI {
 	private List<TextComponent> texts = new ArrayList<TextComponent>();
 
 	private boolean hidden = true;
-
-	private boolean enter_pressed = false;
 
 	public DebugGui() {
 		new RenderItem() {

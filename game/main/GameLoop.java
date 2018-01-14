@@ -39,7 +39,6 @@ import objects.FPS_Player;
 import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
-import renderer.imageRenderer.ImageRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
 import texts.Fonts;
@@ -187,7 +186,7 @@ public class GameLoop {
 			MasterRenderer master = new MasterRenderer();
 
 			GameLoader.init();
-
+			
 			Fonts.addFont("pdark", new SourceFile("/res/fonts/pdark.png"), new SourceFile("/res/fonts/pdark.fnt"));
 
 			DebugGui debug = new DebugGui();
