@@ -129,6 +129,8 @@ public class SettingsMenu extends GUI {
 		buttons.add(controller_button);
 
 		for (ButtonComponent button : buttons) {
+			button.setOutlineWidth(0.001f);
+			button.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
 			button.setBackgroundColor(new Vector4f(0.7f, 0.7f, 0.7f, 0.7f));
 			button.setTextPosition(new Vector2f(0, 0.0137f));
 			button.setClickDelay(500);
@@ -154,7 +156,7 @@ public class SettingsMenu extends GUI {
 		background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(1000, 720)));
 		background.setRotation(180);
 		QuadComponent quad = new QuadComponent(this, 0.41f, 0.2f + 0.15f, 0.541f, 0.5f);
-		quad.setBackgroundColor(new Vector4f(0.16078f, 0.34118f, 0.6f, 1f));
+		quad.setBackgroundColor(new Vector4f(0.078431f, 0.168627f, 0.29803f, 1f));
 
 		ImageComponent text = new ImageComponent(this, new SourceFile("/res/guis/menus/titles/Settings.png"));
 		text.setPosition(0.515f, 0.15f);

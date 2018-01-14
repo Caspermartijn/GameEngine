@@ -52,10 +52,8 @@ public class MasterRenderer extends Cleanup {
 		entityRenderer = new EntityRenderer(entityShader);
 		terrainRenderer = new TerrainRenderer(terrainShader);
 		linerenderer = new LineRenderer();
-		new ImageRenderer();
 		new FontRenderer();
 		new QuadRenderer();
-		new LineRenderer();
 		new ImageRenderer();
 		init();
 	}

@@ -32,29 +32,49 @@ public abstract class LoadingGui extends GUI {
 
 			}
 		};
-		new Task(timeInMilisecconds/2) {
+		new Task(timeInMilisecconds / 2) {
 
 			@Override
 			public void run() {
 				midLoad();
-				new Task(timeInMilisecconds/2) {
+				new Task(timeInMilisecconds / 2) {
 
 					@Override
 					public void run() {
 						afterLoad();
 					}
-					
+
 				};
 			}
-			
+
 		};
 		loading.switchState();
 	}
 
 	private ImageComponent hourglass;
 
+	SourceFile loading_1 = new SourceFile("/res/guis/loading/background_1.png");
+	SourceFile loading_2 = new SourceFile("/res/guis/loading/background_2.png");
+	SourceFile loading_3 = new SourceFile("/res/guis/loading/background_3.png");
+
 	private void images() {
-		ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/loading/background_2.png"));
+
+		SourceFile file = null;
+		int image = Maths.RANDOM.nextInt(3);
+
+		switch (image) {
+		case 0:
+			file = loading_1;
+			break;
+		case 1:
+			file = loading_2;
+			break;
+		case 2:
+			file = loading_3;
+			break;
+		}
+
+		ImageComponent background = new ImageComponent(this, file);
 		Vector2f size = Maths.getFrom720toCurrentDisplaySize(new Vector2f(1280, 720));
 		background.setSize(new Vector2f(size.x, size.y));
 		background.setPosition(0.5f, 0.5f);
@@ -76,12 +96,12 @@ public abstract class LoadingGui extends GUI {
 		super.renderComponents();
 	}
 
-	
 	@Override
 	public void showAll() {
 		super.showAll();
 	}
 
 	public abstract void afterLoad();
+
 	public abstract void midLoad();
 }

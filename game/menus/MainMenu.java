@@ -72,7 +72,8 @@ public class MainMenu extends GUI {
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
 				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
 				new SourceFile(ame_nebula, "face_top.png"), new SourceFile(ame_nebula, "face_back.png"),
-				new SourceFile(ame_nebula, "face_front.png") }, 512);skybox.setSize(0.4f);
+				new SourceFile(ame_nebula, "face_front.png") }, 512);
+		skybox.setSize(0.4f);
 		this.skybox = skybox;
 
 		Model_3D timemastersHQ = ModelMaster.getModel("timemasters_hq_1");
@@ -84,7 +85,7 @@ public class MainMenu extends GUI {
 		ent.addChild(timeship_2);
 		ent.addChild(timeship_3);
 
-		movingTimeShip = new TimeShip(new Vector3f(-400, 131, 266), new Vector3f(0, 0, 0), 1f);
+		movingTimeShip = new TimeShip(new Vector3f(-400, 131, 266), new Vector3f(0, 0, 5), 1f);
 		entities.add(ent);
 		entities.add(movingTimeShip);
 
@@ -142,7 +143,7 @@ public class MainMenu extends GUI {
 		buttons.add(quit_button);
 
 		for (ButtonComponent button : buttons) {
-			button.setOutlineWidth(0.002f);
+			button.setOutlineWidth(0.001f);
 			button.setOutlineColor(new Vector4f(0.3f, 0.3f, 0.3f, 0.7f));
 			button.setBackgroundColor(new Vector4f(0.7f, 0.7f, 0.7f, 0.7f));
 			button.setTextPosition(new Vector2f(0, 0.01f));
@@ -238,10 +239,9 @@ public class MainMenu extends GUI {
 	}
 
 	public void images() {
-		 ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/main.png"));
-		 background.setPosition(0.15f, 0.5f);
-		 background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(600,
-		 720)));
+		ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/main.png"));
+		background.setPosition(0.15f, 0.5f);
+		background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(600, 720)));
 	}
 
 	float speed = 200;
@@ -254,6 +254,7 @@ public class MainMenu extends GUI {
 			movingTimeShip.getTransform().posZ = (float) (movingTimeShip.getTransform().getPosition().z
 					- 200 * Display.getFrameTime());
 			if (movingTimeShip.getTransform().getPosition().z < -800) {
+				movingTimeShip.getTransform().posY = -40;
 				movingTimeShip.getTransform().rotY = -180;
 				movingTimeShip.getTransform().rotZ = -5;
 				enabled = false;
@@ -262,6 +263,7 @@ public class MainMenu extends GUI {
 			movingTimeShip.getTransform().posZ = (float) (movingTimeShip.getTransform().getPosition().z
 					+ 200 * Display.getFrameTime());
 			if (movingTimeShip.getTransform().getPosition().z > 800) {
+				movingTimeShip.getTransform().posY = 131;
 				movingTimeShip.getTransform().rotZ = 5;
 				movingTimeShip.getTransform().rotY = 0;
 				enabled = true;

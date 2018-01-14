@@ -122,7 +122,9 @@ public class GameLoop {
 
 			@Override
 			public void render() {
-				freecam.updateInputs();
+				if (GamePerspective.currentState.getGameStateName().equalsIgnoreCase("ingame")) {
+					freecam.updateInputs();
+				}
 			}
 		};
 		player.getTransform().setPosition(new Vector3f(0, 100, 0));
@@ -181,7 +183,6 @@ public class GameLoop {
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
 			setDepthTesting(true);
 
-			ImageRenderer.init();
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
 
@@ -201,7 +202,6 @@ public class GameLoop {
 			MainMenu main = new MainMenu(master, skyboxRenderer);
 			SettingsMenu settings = new SettingsMenu(master, skyboxRenderer);
 			CoopMenu coop = new CoopMenu(master, skyboxRenderer);
-			
 
 			GamePerspective inGame = new GamePerspective("ingame") {
 
@@ -226,15 +226,16 @@ public class GameLoop {
 
 				@Override
 				public void render() {
-					if (!(GamePerspective.currentState.getGameStateName().equalsIgnoreCase("ingame")
-							&& GamePerspective.currentState.getGameStateName().equalsIgnoreCase("loading"))) {
-						if (Keyboard.isKeyDown(GLFW.GLFW_KEY_ESCAPE)) {
-							if (!button) {
-								GamePerspective.switchGameState("main_menu");
-								button = true;
+					if (!(GamePerspective.currentState.getGameStateName().equalsIgnoreCase("ingame"))) {
+						if (!(GamePerspective.currentState.getGameStateName().equalsIgnoreCase("loading"))) {
+							if (Keyboard.isKeyDown(GLFW.GLFW_KEY_ESCAPE)) {
+								if (!button) {
+									GamePerspective.switchGameState("main_menu");
+									button = true;
+								}
+							} else {
+								button = false;
 							}
-						} else {
-							button = false;
 						}
 					}
 				}
@@ -249,10 +250,9 @@ public class GameLoop {
 
 				@Override
 				public void midLoad() {
-					
-				}};
-			
-			
+
+				}
+			};
 
 			while (!Display.isCloseRequested() && !Display.hasToClose()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
