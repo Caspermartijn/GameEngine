@@ -10,13 +10,13 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.Display;
-import engine.Mouse;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
 import gamestates.GamePerspective;
 import guis.ButtonComponent;
 import guis.GUI;
+import guis.ImageComponent;
 import guis.LoadingGui;
 import objects.Camera;
 import objects.Model_3D;
@@ -25,6 +25,7 @@ import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import utils.RenderItem;
 import utils.SourceFile;
+import utils.maths.Maths;
 import utils.models.ModelMaster;
 
 public class MainMenu extends GUI {
@@ -42,7 +43,7 @@ public class MainMenu extends GUI {
 	private Entity movingTimeShip;
 
 	private boolean moveToInGame = false;
-	
+
 	@SuppressWarnings("unused")
 	public MainMenu(MasterRenderer master, SkyboxRenderer skyboxRenderer) {
 		this.skyboxRenderer = skyboxRenderer;
@@ -71,7 +72,7 @@ public class MainMenu extends GUI {
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
 				new SourceFile(ame_nebula, "face_left.png"), new SourceFile(ame_nebula, "face_bottom.png"),
 				new SourceFile(ame_nebula, "face_top.png"), new SourceFile(ame_nebula, "face_back.png"),
-				new SourceFile(ame_nebula, "face_front.png") }, 512);
+				new SourceFile(ame_nebula, "face_front.png") }, 512);skybox.setSize(0.4f);
 		this.skybox = skybox;
 
 		Model_3D timemastersHQ = ModelMaster.getModel("timemasters_hq_1");
@@ -104,14 +105,14 @@ public class MainMenu extends GUI {
 
 			}
 		};
-		
+
 		new RenderItem() {
-			
+
 			@Override
 			public void render() {
-				if(moveToInGame) {
+				if (moveToInGame) {
 					GamePerspective.switchGameState("ingame");
-					moveToInGame=false;
+					moveToInGame = false;
 				}
 			}
 		};
@@ -210,7 +211,7 @@ public class MainMenu extends GUI {
 
 			@Override
 			public void midLoad() {
-				
+
 			}
 
 			@Override
@@ -258,12 +259,10 @@ public class MainMenu extends GUI {
 	}
 
 	public void images() {
-		// ImageComponent background = new ImageComponent(this, new
-		// SourceFile("/res/guis/menus/menus_background.png"));//ori:
-		// "/res/guis/menus/main/back.png"
-		// background.setPosition(0.15f, 0.5f);
-		// background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(600,
-		// 720)));
+		 ImageComponent background = new ImageComponent(this, new SourceFile("/res/guis/main.png"));//ori:"/res/guis/menus/main/back.png
+		 background.setPosition(0.15f, 0.5f);
+		 background.setSize(Maths.getFrom720toCurrentDisplaySize(new Vector2f(600,
+		 720)));
 	}
 
 	float speed = 200;
