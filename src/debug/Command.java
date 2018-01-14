@@ -7,6 +7,7 @@ public class Command {
 
 	public Command(String commandLine) {
 		this.commandLine = commandLine;
+		CommandHandler.addCommand(this);
 	}
 
 	public void setCommandHandler(Runnable runnable) {
@@ -15,10 +16,12 @@ public class Command {
 
 	public boolean runCommand(String checkCommand) {
 		boolean run = false;
-		String s = checkCommand.replaceAll("/", "");
-		if (s == commandLine) {
-			commandHandler.run();
-			run = true;
+		if (commandHandler != null) {
+			String s = checkCommand.replaceAll("/", "");
+			if (s == commandLine) {
+				commandHandler.run();
+				run = true;
+			}
 		}
 		return run;
 	}
