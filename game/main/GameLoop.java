@@ -146,8 +146,6 @@ public class GameLoop {
 		ent.addChild(timeship_2);
 		ent.addChild(timeship_3);
 
-		ent.addComponent(new TracerComponent());
-		
 		Entity inner = new Entity(timeship_1_inner, new Vector3f(0, 0, -0), new Vector3f(), 4);
 
 		float uppderDeck_ymin = 12.5f;
