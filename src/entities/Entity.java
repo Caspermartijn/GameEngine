@@ -73,7 +73,7 @@ public class Entity implements IEntity {
 
 			if (component instanceof TracerComponent) {
 				TracerComponent comp = (TracerComponent) component;
-				comp.setEnd(this.getTransform().getPosition());
+				comp.setOrigen(getTransform().getPosition());
 			}
 		}
 	}

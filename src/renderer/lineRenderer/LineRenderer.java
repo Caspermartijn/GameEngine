@@ -52,7 +52,8 @@ public class LineRenderer extends Cleanup {
 			tracer.updateVao();
 			tracer.vao.bind(0);
 
-			shader.location_transformationMatrix.loadMatrix(Matrix.createTransformationMatrix());
+			shader.location_transformationMatrix.loadMatrix(
+					Matrix.createTransformationMatrix(new Vector3f(camera.x, camera.y, camera.z), 0f, 0f, 0f, 1f));
 			shader.location__viewMatrix.loadMatrix(camera.getViewMatrix());
 			shader.color.loadVec4(1, 0, 0, 1);// 100% red
 			glDrawArrays(GL_LINE_STRIP, 0, tracer.vao.getVertexCount());

@@ -14,28 +14,26 @@ public class TracerComponent implements Component {
 	public Vao vao;
 
 	private Vector3f origen = new Vector3f();
-	private Vector3f end = new Vector3f();
 
 	public TracerComponent() {
 		vao = Vao.create();
-		vao.createAttribute(0, 2, 3);
+		vao.createStaticAttribute(0, new float[] { origen.x, origen.y, origen.z, }, 3);
 		vao.setVertexCount(2);
-		vao.setVboData(new float[] { origen.x, origen.y, origen.z, end.x, end.y, end.z }, 0);
 		allComponents.add(this);
 	}
 
 	@Override
 	public void update() {
-		
-	}
-	
-	public void updateVao() {
-		vao.setVboData(new float[] { origen.x, origen.y, origen.z, end.x, end.y, end.z }, 0);
+
 	}
 
-	public void setPoisition(Vector3f origen, Vector3f end) {
-		this.origen = origen;
-		this.end = end;
+	public void updateVao() {
+		Vao.vaosCreated--;
+		Vao.vaosDeleted--;
+		vao.delete();
+		vao = Vao.create();
+		vao.createStaticAttribute(0, new float[] { origen.x, origen.y, origen.z, }, 3);
+		vao.setVertexCount(2);
 	}
 
 	public Vector3f getOrigen() {
@@ -44,14 +42,6 @@ public class TracerComponent implements Component {
 
 	public void setOrigen(Vector3f origen) {
 		this.origen = origen;
-	}
-
-	public Vector3f getEnd() {
-		return end;
-	}
-
-	public void setEnd(Vector3f end) {
-		this.end = end;
 	}
 
 	@Override
