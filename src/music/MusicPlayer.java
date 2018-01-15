@@ -1,10 +1,11 @@
 package music;
 
 import audio.SoundSource;
+import utils.binary.BinaryReader;
+import utils.binary.BinaryWriter;
+
 import java.util.ArrayList;
 import java.util.List;
-import utils.BinaryReader;
-import utils.BinaryWriter;
 
 public class MusicPlayer
 {
