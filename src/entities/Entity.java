@@ -6,6 +6,8 @@ import java.util.List;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import components.Component;
+import components.TracerComponent;
 import hitbox.HBox;
 import objects.Model_3D;
 import utils.transformations.EulerTransform;
@@ -21,6 +23,8 @@ public class Entity implements IEntity {
 	private List<Entity> children = new ArrayList<Entity>();
 
 	private List<HBox> hitboxes = new ArrayList<HBox>();
+
+	private List<Component> components = new ArrayList<Component>();
 
 	public Entity(Model_3D model, Vector3f position, Vector3f rotation, float scale) {
 		transform = new EulerTransform();
@@ -55,6 +59,14 @@ public class Entity implements IEntity {
 	public void update() {
 		for (HBox box : hitboxes) {
 			box.setPosition(this.getTransform().getPosition());
+		}
+		for (Component component : components) {
+			component.update();
+
+			if (component instanceof TracerComponent) {
+				TracerComponent comp = (TracerComponent) component;
+				comp.setEnd(this.getTransform().getPosition());
+			}
 		}
 	}
 

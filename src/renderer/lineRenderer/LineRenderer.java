@@ -3,6 +3,10 @@ package renderer.lineRenderer;
 import java.util.Collection;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+
+import components.TracerComponent;
+
 import static org.lwjgl.opengl.GL11.*;
 import hitbox.HBox;
 import objects.Camera;
@@ -18,7 +22,7 @@ public class LineRenderer extends Cleanup {
 	public LineRenderer() {
 		super();
 	}
-	
+
 	public void setProjectionMatrix(Matrix4f matrix) {
 		shader.start();
 		shader.location_projectionViewMatrix.loadMatrix(matrix);
@@ -41,10 +45,31 @@ public class LineRenderer extends Cleanup {
 		shader.stop();
 	}
 
+	public void renderTracers(Camera camera, Collection<TracerComponent> tracers) {
+		shader.start();
+		for (TracerComponent tracer : tracers) {
+			tracer.setOrigen(new Vector3f(camera.x, camera.y, camera.z));
+			tracer.updateVao();
+			prepareTracer(tracer);
+			
+			
+			
+			unbind(tracer);
+		}
+		shader.start();
+	}
 	/*
 	 * private float distance(Camera c, Vector3f p) { float xOff = p.x - c.x; float
 	 * zOff = p.z - c.z; return (float) Math.sqrt((xOff * xOff) + (zOff * zOff)); }
 	 */
+
+	private void prepareTracer(TracerComponent tracer) {
+		tracer.vao.bind(0);
+	}
+
+	private void unbind(TracerComponent tracer) {
+		tracer.vao.unbind(0);
+	}
 
 	private void prepareHitBox(HBox box) {
 		Vao model = box.getRawModel();

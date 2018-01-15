@@ -16,6 +16,7 @@ import static engine.Mouse.*;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import components.TracerComponent;
 import controlls.FreeCam;
 import debug.DebugGui;
 import engine.Display;
@@ -183,7 +184,7 @@ public class GameLoop {
 
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
-
+			
 			GameLoader.init();
 
 			Fonts.addFont("pdark", new SourceFile("/res/fonts/pdark.png"), new SourceFile("/res/fonts/pdark.fnt"));
@@ -205,6 +206,7 @@ public class GameLoop {
 
 				@Override
 				public void render() {
+					TracerComponent.update(camera);
 					renderScene(camera);
 				}
 
