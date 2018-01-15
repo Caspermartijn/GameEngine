@@ -3,11 +3,13 @@ package animation;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joml.Matrix4f;
+import org.lwjgl.util.vector.Matrix4f;
 
 import utils.transformations.QuaternionTransform;
 
 public class Joint {
+	
+	public static final int MAX_WEIGHTS = 3;
 	
 	public final int index;
 	public final String name;
@@ -19,9 +21,6 @@ public class Joint {
 	public final Matrix4f localBindTransform;
 	private Matrix4f inverseBindTransform = new Matrix4f();
 
-	public static final int MAX_JOINTS = 50;
-	public static final int MAX_WEIGHTS = 3;
-	
 	public Joint(int index, String name, String parentName, Matrix4f localBindTransform) {
 		this.index = index;
 		this.name = name;
@@ -36,10 +35,8 @@ public class Joint {
 	}
 
 	public void calcInverseBindTransform(Matrix4f parentBindTransform) {
-		Matrix4f bindTransform = parentBindTransform.mul(localBindTransform);
-		bindTransform.invert(inverseBindTransform);
-//		Matrix4f bindTransform = Matrix4f.mul(parentBindTransform, localBindTransform, null);
-//		Matrix4f.invert(bindTransform, inverseBindTransform);
+		Matrix4f bindTransform = Matrix4f.mul(parentBindTransform, localBindTransform, null);
+		Matrix4f.invert(bindTransform, inverseBindTransform);
 		for (Joint child : children) {
 			child.calcInverseBindTransform(bindTransform);
 		}
@@ -47,15 +44,14 @@ public class Joint {
 	
 	public void calculateTotalTransform(Matrix4f[] matrices, Matrix4f parentTransform) {
 		Matrix4f currentTransform = new Matrix4f();
-		currentTransform = localBindTransform.mul(transform.toMatrix());
-		localBindTransform.mul(transform.toMatrix());
+		Matrix4f.mul(localBindTransform, transform.toMatrix(), currentTransform);
 		if (parentTransform != null) {
-			parentTransform.mul(currentTransform);
+			Matrix4f.mul(parentTransform, currentTransform, currentTransform);
 		} 
 		for (Joint j : children) {
 			j.calculateTotalTransform(matrices, currentTransform);
 		}
-		matrices[index] = currentTransform.mul(inverseBindTransform);
+		matrices[index] = Matrix4f.mul(currentTransform, inverseBindTransform, null);
 	}
 
 	public QuaternionTransform getTransform() {

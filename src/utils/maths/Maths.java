@@ -2,8 +2,8 @@ package utils.maths;
 
 import java.util.Random;
 
-import org.joml.Vector2f;
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
 import engine.Display;
 
@@ -121,9 +121,9 @@ public class Maths {
 		return value;
 	}
 
-	public static float distance(Vector3f position, Vector3f position2) {
-		float x = position.x - position2.x;
-		float z = position.z - position2.z;
+	public static float distance(org.lwjgl.util.vector.Vector3f vector3f, org.lwjgl.util.vector.Vector3f vector3f2) {
+		float x = vector3f.x - vector3f2.x;
+		float z = vector3f.z - vector3f2.z;
 		float dis = (float) Math.sqrt(x * x + z * z);
 		return dis;
 	}

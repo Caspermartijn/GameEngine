@@ -1,7 +1,7 @@
 package utils.transformations;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import utils.maths.Maths;
 
@@ -15,9 +15,9 @@ public class QuaternionTransform {
 	}
 	
 	public QuaternionTransform(Matrix4f matrix) {
-		x = matrix.m03();
-		y = matrix.m13();
-		z = matrix.m23();
+		x = matrix.m03;
+		y = matrix.m13;
+		z = matrix.m23;
 		quaternion = new Quaternion(matrix);
 	}
 
@@ -55,13 +55,10 @@ public class QuaternionTransform {
 	
 	public Matrix4f toMatrix() {
 		Matrix4f matrix = new Matrix4f();
-		matrix.identity();
-		matrix.scale(new Vector3f(scaleX, scaleY, scaleZ));
-		matrix.translate(new Vector3f(x, y, z));
-		matrix.mul(quaternion.toRotationMatrix());
-//		Matrix4f.scale(new Vector3f(scaleX, scaleY, scaleZ), matrix, matrix);
-//		Matrix4f.translate(new Vector3f(x, y, z), matrix, matrix);
-//		Matrix4f.mul(matrix, quaternion.toRotationMatrix(), matrix);
+		matrix.setIdentity();
+		Matrix4f.scale(new Vector3f(scaleX, scaleY, scaleZ), matrix, matrix);
+		Matrix4f.translate(new Vector3f(x, y, z), matrix, matrix);
+		Matrix4f.mul(matrix, quaternion.toRotationMatrix(), matrix);
 		return matrix;
 	}
 	
@@ -79,8 +76,8 @@ public class QuaternionTransform {
 	
 	public QuaternionTransform interpolate(QuaternionTransform start, QuaternionTransform end, float blend) {
 		blend = Maths.clamp(0, 1, blend);
-		Vector3f position = Maths.linearInterpolation(start.getTranslation(), end.getTranslation(), blend);
-		Vector3f scale = Maths.linearInterpolation(start.getScale(), end.getScale(), blend);
+		Vector3f position = Maths.interpolate(start.getTranslation(), end.getTranslation(), blend);
+		Vector3f scale = Maths.interpolate(start.getScale(), end.getScale(), blend);
 		Quaternion rot = Quaternion.slerp(start.getRotation(), end.getRotation(), blend);
 		return new QuaternionTransform(position, scale, rot);
 	}

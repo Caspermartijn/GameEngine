@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
 import animation.Joint;
 import components.ArmatureComponent;
@@ -202,22 +202,22 @@ public class DFModelLoader {
 			floatValues[i] = Float.valueOf(stringValues[i]);
 		}
 		Matrix4f matrix = new Matrix4f();
-		matrix.m00(floatValues[0]);
-		matrix.m01(floatValues[1]);
-		matrix.m02(floatValues[2]);
-		matrix.m03(floatValues[3]);
-		matrix.m10(floatValues[4]);
-		matrix.m11(floatValues[5]);
-		matrix.m12(floatValues[6]);
-		matrix.m13(floatValues[7]);
-		matrix.m20(floatValues[8]);
-		matrix.m21(floatValues[9]);
-		matrix.m22(floatValues[10]);
-		matrix.m23(floatValues[11]);
-		matrix.m30(floatValues[12]);
-		matrix.m31(floatValues[13]);
-		matrix.m32(floatValues[14]);
-		matrix.m33(floatValues[15]);
+		matrix.m00 = floatValues[0];
+		matrix.m01 = floatValues[1];
+		matrix.m02 = floatValues[2];
+		matrix.m03 = floatValues[3];
+		matrix.m10 = floatValues[4];
+		matrix.m11 = floatValues[5];
+		matrix.m12 = floatValues[6];
+		matrix.m13 = floatValues[7];
+		matrix.m20 = floatValues[8];
+		matrix.m21 = floatValues[9];
+		matrix.m22 = floatValues[10];
+		matrix.m23 = floatValues[11];
+		matrix.m30 = floatValues[12];
+		matrix.m31 = floatValues[13];
+		matrix.m32 = floatValues[14];
+		matrix.m33 = floatValues[15];
 		return matrix;
 	}
 
