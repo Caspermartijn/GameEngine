@@ -1,8 +1,25 @@
 package loader.dfmeshLoader;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
+
+import animation.Joint;
+import components.ArmatureComponent;
+import entities.Entity;
+import objects.Vao;
+import utils.SourceFile;
+
 public class DFModelLoader {
-/*
-	public static Model_3D loadDFMeshModel(SourceFile file, boolean loadJointData) {
+
+	public static Vao loadDFMeshModel(SourceFile file, boolean loadJointData) {
 		try {
 			BufferedReader br = file.openFileReader();
 
@@ -101,35 +118,34 @@ public class DFModelLoader {
 			vao.createStaticAttribute(2, normals, 3);
 
 			if (loadJointData) {
-				int[] jointIDs = new int[vertices.size() * GlobalConstants.MAX_WEIGHTS];
-				float[] weightValues = new float[vertices.size() * GlobalConstants.MAX_WEIGHTS];
+				int[] jointIDs = new int[vertices.size() * Joint.MAX_WEIGHTS];
+				float[] weightValues = new float[vertices.size() * Joint.MAX_WEIGHTS];
 				for (int i = 0; i < vertices.size(); i++) {
 					Vertex v = vertices.get(i);
 					List<Weight> weights = v.getWeights();
-					for (int j = 0; j < GlobalConstants.MAX_WEIGHTS; j++) {
+					for (int j = 0; j < Joint.MAX_WEIGHTS; j++) {
 						if (weights.size() < j + 1) {
-							jointIDs[i * GlobalConstants.MAX_WEIGHTS + j] = 0;
-							weightValues[i * GlobalConstants.MAX_WEIGHTS + j] = 0f;
+							jointIDs[i * Joint.MAX_WEIGHTS + j] = 0;
+							weightValues[i * Joint.MAX_WEIGHTS + j] = 0f;
 						} else {
-							jointIDs[i * GlobalConstants.MAX_WEIGHTS + j] = weights.get(j).getJoint();
-							weightValues[i * GlobalConstants.MAX_WEIGHTS + j] = weights.get(j).getValue();
+							jointIDs[i * Joint.MAX_WEIGHTS + j] = weights.get(j).getJoint();
+							weightValues[i * Joint.MAX_WEIGHTS + j] = weights.get(j).getValue();
 						}
 					}
 				}
-				vao.createStaticIntAttribute(3, jointIDs, GlobalConstants.MAX_WEIGHTS);
-				vao.createStaticAttribute(4, weightValues, GlobalConstants.MAX_WEIGHTS);
+				vao.createStaticIntAttribute(3, jointIDs, Joint.MAX_WEIGHTS);
+				vao.createStaticAttribute(4, weightValues, Joint.MAX_WEIGHTS);
 			}
 
 			vao.unbind();
-			Model m = new Model(vao, indices.length);
-			return m;
+			return vao;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	public static void addArmatureComponent(SourceFile file, Model_3D m) {
+	public static void addArmatureComponent(SourceFile file, Entity e) {
 		try {
 			BufferedReader br = file.openFileReader();
 			int numJoints = 0;
@@ -172,10 +188,10 @@ public class DFModelLoader {
 					}
 				}
 			}
-			m.addComponent(new ArmatureComponent(numJoints, root, joints));
-		} catch (IOException e) {
+			e.addComponent(new ArmatureComponent(numJoints, root, joints));
+		} catch (IOException e2) {
 			System.err.println("Error Reading file: " + file.getPath());
-			e.printStackTrace();
+			e2.printStackTrace();
 		}
 	}
 
@@ -240,10 +256,10 @@ class Vertex {
 	};
 
 	public List<Weight> getWeights() {
-		if (weights.size() > GlobalConstants.MAX_WEIGHTS) {
+		if (weights.size() > Joint.MAX_WEIGHTS) {
 			Collections.sort(weights, comp);
-			List<Weight> allWeights = weights.subList(0, GlobalConstants.MAX_WEIGHTS);
-			return weights;
+			List<Weight> allWeights = weights.subList(0, Joint.MAX_WEIGHTS);
+			return allWeights;
 		} else {
 			return weights;
 		}
@@ -283,5 +299,5 @@ class Weight {
 
 	public void setValue(float value) {
 		this.value = value;
-	}*/
+	}
 }

@@ -2,8 +2,8 @@ package utils.maths;
 
 import java.util.Random;
 
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 import engine.Display;
 
@@ -139,6 +139,10 @@ public class Maths {
 		float x = size.x / 1280;
 		float y = size.y / 720;
 		return new Vector2f(Display.getWidth() * x, Display.getHeight() * y);
+	}
+
+	public static Vector3f linearInterpolation(Vector3f v1, Vector3f v2, float blend) {
+		return new Vector3f(linearInterpolation(v1.x, v2.x, blend), linearInterpolation(v1.y, v2.y, blend), linearInterpolation(v1.z, v2.z, blend));
 	}
 
 }
