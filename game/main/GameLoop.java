@@ -146,6 +146,8 @@ public class GameLoop {
 		ent.addChild(timeship_2);
 		ent.addChild(timeship_3);
 
+		ent.addComponent(new TracerComponent());
+		
 		Entity inner = new Entity(timeship_1_inner, new Vector3f(0, 0, -0), new Vector3f(), 4);
 
 		float uppderDeck_ymin = 12.5f;
@@ -184,7 +186,7 @@ public class GameLoop {
 
 			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
-			
+
 			GameLoader.init();
 
 			Fonts.addFont("pdark", new SourceFile("/res/fonts/pdark.png"), new SourceFile("/res/fonts/pdark.fnt"));
@@ -206,7 +208,7 @@ public class GameLoop {
 
 				@Override
 				public void render() {
-					TracerComponent.update(camera);
+					master.linerenderer.renderTracers(camera, TracerComponent.allComponents);
 					renderScene(camera);
 				}
 

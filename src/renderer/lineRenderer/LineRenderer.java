@@ -50,25 +50,15 @@ public class LineRenderer extends Cleanup {
 		for (TracerComponent tracer : tracers) {
 			tracer.setOrigen(new Vector3f(camera.x, camera.y, camera.z));
 			tracer.updateVao();
-			prepareTracer(tracer);
-			
-			
-			
-			unbind(tracer);
+			tracer.vao.bind(0);
+
+			shader.location_transformationMatrix.loadMatrix(Matrix.createTransformationMatrix());
+			shader.location__viewMatrix.loadMatrix(camera.getViewMatrix());
+			shader.color.loadVec4(1, 0, 0, 1);// 100% red
+			glDrawArrays(GL_LINE_STRIP, 0, tracer.vao.getVertexCount());
+			tracer.vao.unbind(0);
 		}
 		shader.start();
-	}
-	/*
-	 * private float distance(Camera c, Vector3f p) { float xOff = p.x - c.x; float
-	 * zOff = p.z - c.z; return (float) Math.sqrt((xOff * xOff) + (zOff * zOff)); }
-	 */
-
-	private void prepareTracer(TracerComponent tracer) {
-		tracer.vao.bind(0);
-	}
-
-	private void unbind(TracerComponent tracer) {
-		tracer.vao.unbind(0);
 	}
 
 	private void prepareHitBox(HBox box) {

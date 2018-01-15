@@ -26,6 +26,14 @@ public class Matrix {
 		Matrix4f.scale(new Vector3f(scale.x, scale.y, 1f), matrix, matrix);
 		return matrix;
 	}
+
+	public static Matrix4f createTransformationMatrix() {
+		Matrix4f matrix = new Matrix4f();
+		matrix.setIdentity();
+		Matrix4f.translate(new Vector3f(), matrix, matrix);
+		return matrix;
+	}
+	
 	// public static void store(Matrix3f matrix, FloatBuffer buffer) {
 	// buffer.put(0, matrix.m00());
 	// buffer.put(1, matrix.m01());
@@ -101,5 +109,4 @@ public class Matrix {
 	 * 
 	 * return dest;}
 	 */
-
 }

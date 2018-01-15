@@ -34,6 +34,14 @@ public class Entity implements IEntity {
 		this.model = model;
 	}
 
+	public void addComponent(Component comp) {
+		components.add(comp);
+	}
+
+	public List<Component> getComponents() {
+		return components;
+	}
+
 	public void addHitBox(HBox box) {
 		hitboxes.add(box);
 	}
@@ -98,7 +106,7 @@ public class Entity implements IEntity {
 	public boolean hasComponentType(Component.Type type) {
 		return getComponent(type) != null;
 	}
-	
+
 	public Component getComponent(Component.Type type) {
 		for (Component c : components) {
 			if (c.getType() == type)
