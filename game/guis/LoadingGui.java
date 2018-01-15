@@ -16,6 +16,15 @@ public abstract class LoadingGui extends GUI {
 	private static boolean hasInited = false;
 
 	public LoadingGui(float timeInMilisecconds) {
+		if (hourglass != null) {
+			hourglass.delete();
+		}
+		if (background != null) {
+			background.delete();
+		}
+		if (circle != null) {
+			circle.delete();
+		}
 		images();
 		init();
 		new Task(timeInMilisecconds / 2) {
@@ -61,7 +70,9 @@ public abstract class LoadingGui extends GUI {
 		}
 	}
 
-	private ImageComponent hourglass;
+	private static ImageComponent hourglass;
+	private static ImageComponent background;
+	private static ImageComponent circle;
 
 	SourceFile loading_1 = new SourceFile("/res/guis/loading/background_1.png");
 	SourceFile loading_2 = new SourceFile("/res/guis/loading/background_2.png");
@@ -84,7 +95,7 @@ public abstract class LoadingGui extends GUI {
 			break;
 		}
 
-		ImageComponent background = new ImageComponent(this, file);
+		background = new ImageComponent(this, file);
 		Vector2f size = Maths.getFrom720toCurrentDisplaySize(new Vector2f(1280, 720));
 		background.setSize(new Vector2f(size.x, size.y));
 		background.setPosition(0.5f, 0.5f);
@@ -94,7 +105,7 @@ public abstract class LoadingGui extends GUI {
 		hourglass.setSize(new Vector2f(size_1.x, size_1.y));
 		hourglass.setPosition(0.90f, 0.85f);
 
-		ImageComponent circle = new ImageComponent(this, new SourceFile("/res/guis/loading/ring_1.png"));
+		circle = new ImageComponent(this, new SourceFile("/res/guis/loading/ring_1.png"));
 		Vector2f size_3 = Maths.getFrom720toCurrentDisplaySize(new Vector2f(95, 95));
 		circle.setSize(new Vector2f(size_3.x, size_3.y));
 		circle.setPosition(0.90f, 0.85f);
