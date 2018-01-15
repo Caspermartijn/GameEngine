@@ -6,12 +6,14 @@ import org.lwjgl.opengl.GL13;
 import utils.SourceFile;
 import utils.tasks.Cleanup;
 
-public class Texture extends Cleanup{
+public class Texture extends Cleanup {
 
 	public int id;
 	private int width, height;
-	
+
 	public static int created, deleted;
+
+	private boolean deletedB = false;
 
 	protected Texture(int id) {
 		created++;
@@ -32,7 +34,10 @@ public class Texture extends Cleanup{
 	}
 
 	public void delete() {
-		deleteTexture(id);
+		if (!deletedB) {
+			deleteTexture(id);
+			deletedB = true;
+		}
 	}
 
 	public void setDimensions(int width, int height) {
@@ -52,8 +57,8 @@ public class Texture extends Cleanup{
 		deleted++;
 		GL11.glDeleteTextures(id);
 	}
-	
+
 	public static void printLog() {
-		System.out.println("Texture_Log[created: " + created + " , deleted: " + deleted + "]" );
+		System.out.println("Texture_Log[created: " + created + " , deleted: " + deleted + "]");
 	}
 }

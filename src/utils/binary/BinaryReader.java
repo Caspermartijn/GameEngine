@@ -1,4 +1,4 @@
-package utils;
+package utils.binary;
 
 import java.io.DataInputStream;
 import java.io.File;
