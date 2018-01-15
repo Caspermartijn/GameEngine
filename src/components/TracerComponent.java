@@ -7,7 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import objects.Vao;
 
-public class TracerComponent extends Component {
+public class TracerComponent implements Component {
 
 	public static List<TracerComponent> allComponents = new ArrayList<TracerComponent>();
 
@@ -52,6 +52,11 @@ public class TracerComponent extends Component {
 
 	public void setEnd(Vector3f end) {
 		this.end = end;
+	}
+
+	@Override
+	public Type getType() {
+		return Type.TRACER;
 	}
 
 }

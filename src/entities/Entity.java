@@ -95,4 +95,15 @@ public class Entity implements IEntity {
 		return children;
 	}
 
+	public boolean hasComponentType(Component.Type type) {
+		return getComponent(type) != null;
+	}
+	
+	public Component getComponent(Component.Type type) {
+		for (Component c : components) {
+			if (c.getType() == type)
+				return c;
+		}
+		return null;
+	}
 }
