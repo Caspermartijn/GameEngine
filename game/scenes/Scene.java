@@ -11,6 +11,7 @@ import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import terrains.Terrain;
+import textures.Texture;
 
 public abstract class Scene implements IScene {
 
@@ -37,13 +38,43 @@ public abstract class Scene implements IScene {
 
 	private String base_name;
 
+	private String displayName = "test";
+	
+	private String[] objective;
+	
 	private MasterRenderer masterRenderer;
 	private SkyboxRenderer skyboxRenderer;
 
+	private Texture preview;
+	
 	public Scene(String base_name, MasterRenderer masterRenderer, SkyboxRenderer skyboxRenderer) {
 		this.base_name = base_name;
 		this.masterRenderer = masterRenderer;
 		this.skyboxRenderer = skyboxRenderer;
+	}
+	
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	public Texture getPreview() {
+		return preview;
+	}
+
+	public void setPreview(Texture preview) {
+		this.preview = preview;
+	}
+
+	public String[] getObjective() {
+		return objective;
+	}
+
+	public void setObjective(String[] objective) {
+		this.objective = objective;
 	}
 
 	public void addHitBox(HBox box) {

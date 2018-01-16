@@ -18,7 +18,6 @@ public class HitBoxMaster {
 				if (!inbox) {
 					inbox = HitBoxMaths.isColliding(hitbox, box);
 					if (inbox) {
-						System.out.println("tests");
 					}
 				}
 			}

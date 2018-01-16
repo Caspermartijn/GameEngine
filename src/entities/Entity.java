@@ -2,12 +2,12 @@ package entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import components.Component;
-import components.TracerComponent;
 import hitbox.HBox;
 import objects.Model_3D;
 import utils.transformations.EulerTransform;
@@ -26,12 +26,36 @@ public class Entity implements IEntity {
 
 	private List<Component> components = new ArrayList<Component>();
 
+	private UUID uuid;
+	private UUID parent_uuid;
+
 	public Entity(Model_3D model, Vector3f position, Vector3f rotation, float scale) {
 		transform = new EulerTransform();
 		transform.setPosition(position);
 		transform.setRotation(rotation);
 		transform.setScale(scale);
 		this.model = model;
+		uuid = UUID.randomUUID();
+	}
+
+	public List<Entity> getChildren() {
+		return children;
+	}
+
+	public UUID getParent_uuid() {
+		return parent_uuid;
+	}
+
+	public void setParent_uuid(UUID parent_uuid) {
+		this.parent_uuid = parent_uuid;
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
+
+	public UUID getUuid() {
+		return uuid;
 	}
 
 	public void addComponent(Component comp) {
@@ -70,11 +94,6 @@ public class Entity implements IEntity {
 		}
 		for (Component component : components) {
 			component.update();
-
-			if (component instanceof TracerComponent) {
-				TracerComponent comp = (TracerComponent) component;
-				comp.setOrigen(getTransform().getPosition());
-			}
 		}
 	}
 
