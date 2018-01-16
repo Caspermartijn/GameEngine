@@ -1,19 +1,23 @@
 package scenes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import entities.Entity;
 import entities.Light;
 import hitbox.HBox;
 import objects.Camera;
+import objects.Model_3D;
 import objects.Skybox;
+import objects.Vao;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import terrains.Terrain;
 import textures.Texture;
+import utils.tasks.Cleanup;
 
-public abstract class Scene implements IScene {
+public abstract class Scene extends Cleanup implements IScene {
 
 	private static Scene current_scene;
 
@@ -29,30 +33,43 @@ public abstract class Scene implements IScene {
 		current_scene.render(camera);
 	}
 
+	public HashMap<String, Model_3D> models = new HashMap<String, Model_3D>();
 	public List<Entity> entities = new ArrayList<Entity>();
-
 	public List<Light> lights = new ArrayList<Light>();
 	public List<HBox> hitboxes = new ArrayList<HBox>();
 	public List<Terrain> terrains = new ArrayList<Terrain>();
+
 	public Skybox skybox;
 
 	private String base_name;
 
 	private String displayName = "test";
-	
+
 	private String[] objective;
-	
+
 	private MasterRenderer masterRenderer;
 	private SkyboxRenderer skyboxRenderer;
 
 	private Texture preview;
-	
+
 	public Scene(String base_name, MasterRenderer masterRenderer, SkyboxRenderer skyboxRenderer) {
 		this.base_name = base_name;
 		this.masterRenderer = masterRenderer;
 		this.skyboxRenderer = skyboxRenderer;
 	}
-	
+
+	public void addModel(String model_name, Model_3D model) {
+		models.put(model_name, model);
+	}
+
+	@Override
+	public void delete() {
+		for(Model_3D model : models.values()) {
+			model.getMesh().delete();
+			model.getTexture().delete();
+		}
+	}
+
 	public String getDisplayName() {
 		return displayName;
 	}

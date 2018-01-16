@@ -30,18 +30,26 @@ public class SceneLoader {
 		SourceFile sceneDataFile = new SourceFile(scene_dataFolder, "data.dat");
 		SourceFile objectivFile = new SourceFile(scene_dataFolder, "objective.dat");
 
-		SourceFile modelsFile = new SourceFile(modelsFolder, "models.dat");
-
 		SourceFile entitiesFile = new SourceFile(worldFolder, "entities.dat");
 		SourceFile hitboxesFile = new SourceFile(worldFolder, "hitboxes.dat");
 		SourceFile terrainFile = new SourceFile(worldFolder, "terrains.dat");
 		SourceFile othersFile = new SourceFile(worldFolder, "others.dat");
+
+		scene = loadModels(scene, modelsFolder);
 
 		scene.setObjective(getObjective(objectivFile));
 		scene.entities = getEntities(entitiesFile);
 
 		scene = loadSceneDataIntoScene(scene, scene_name, sceneDataFile);
 
+		return scene;
+	}
+
+	private static Scene loadModels(Scene scene, SourceFile modelsFolder) {
+		List<String> models = FileScanner.getStringList(new SourceFile(modelsFolder, "models.dat"));
+		for (String s : models) {
+			SourceFile datafile = new SourceFile(modelsFolder, "/" + s + "/data.dat");
+		}
 		return scene;
 	}
 
