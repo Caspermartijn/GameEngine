@@ -247,10 +247,10 @@ public class GameLoop {
 				renderGameState();
 
 				debug.update(camera);
-				debug.renderComponents();
+				debug.renderComponents(); 
 
 				swapBuffers();
-				updateEvents();
+				updateEvents();  
 			}
 
 			Settings.save();
