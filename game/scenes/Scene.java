@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Entity;
 import entities.Light;
+import guis.LoadingGui;
 import hitbox.HBox;
 import objects.Camera;
 import objects.Model_3D;
@@ -23,7 +24,19 @@ public abstract class Scene extends Cleanup implements IScene {
 	private static Scene current_scene;
 
 	public static void setCurrentScene(Scene scene) {
-		Scene.current_scene = scene;
+		Scene.current_scene.unload();
+		new LoadingGui(5000) {
+
+			@Override
+			public void midLoad() {
+				scene.load();
+			}
+
+			@Override
+			public void afterLoad() {
+				Scene.current_scene = scene;
+			}
+		};
 	}
 
 	public static Scene getCurrentscene() {
@@ -59,13 +72,21 @@ public abstract class Scene extends Cleanup implements IScene {
 		this.skyboxRenderer = skyboxRenderer;
 	}
 
+	private void unload() {
+
+	}
+
+	protected void load() {
+
+	}
+
 	public void addModel(String model_name, Model_3D model) {
 		models.put(model_name, model);
 	}
 
 	@Override
 	public void delete() {
-		for(Model_3D model : models.values()) {
+		for (Model_3D model : models.values()) {
 			model.getMesh().delete();
 			model.getTexture().delete();
 		}
@@ -138,7 +159,7 @@ public abstract class Scene extends Cleanup implements IScene {
 	@Override
 	public void render(Camera camera) {
 		skyboxRenderer.render(skybox, camera);
-		if(this.lights.size() < 1) {
+		if (this.lights.size() < 1) {
 			Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 			lights.add(sun);
 		}

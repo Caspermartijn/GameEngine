@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -43,6 +45,23 @@ public class Terrain {
 
 		try {
 			this.model = generateTerrain(heightMap, rows, new Vector2f(gridX, gridZ));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Terrain(int gridX, int gridZ, TerrainPack pack, int rows) {
+		this.pack = pack;
+		this.x = gridX * SIZE;
+		this.z = gridZ * SIZE;
+		this.gridX = gridX;
+		this.gridZ = gridZ;
+		this.actuallX = gridX * SIZE + (SIZE / 2);
+		this.actuallZ = gridZ * SIZE + (SIZE / 2);
+
+		try {
+			this.model = generateTerrain(ImageIO.read(Class.class.getResourceAsStream(pack.getHeight())), rows,
+					new Vector2f(gridX, gridZ));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -13,6 +13,10 @@ import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
+import terrains.Terrain;
+import terrains.terrainTexture.TerrainPack;
+import terrains.terrainTexture.TerrainTexture;
+import terrains.terrainTexture.TerrainTexturePack;
 import utils.SourceFile;
 import utils.models.ModelLoader;
 import utils.models.ModelMaster;
@@ -23,11 +27,12 @@ public class SceneLoader {
 	public static Scene getScene(MasterRenderer master, SkyboxRenderer skybrener, String scene_name) {
 		Scene scene = new Scene(scene_name, master, skybrener) {
 		};
-		
+
 		Log.append("", false);
 		Log.append("Loading scene : " + scene_name, true);
 		SourceFile folder = new SourceFile("/scenes/" + scene_name + "/");
 		SourceFile modelsFolder = new SourceFile(folder, "models/");
+		SourceFile terrainFolder = new SourceFile(folder, "terrain/");
 		SourceFile scene_dataFolder = new SourceFile(folder, "scene_data/");
 		SourceFile worldFolder = new SourceFile(folder, "world/");
 
@@ -44,9 +49,66 @@ public class SceneLoader {
 
 		scene.setObjective(getObjective(objectivFile));
 		scene = getEntities(scene, entitiesFile);
-
+		scene = getTerrain(scene, terrainFolder);
 		scene = loadSceneDataIntoScene(scene, scene_name, sceneDataFile);
 		// TODO hitboxes
+		return scene;
+	}
+
+	private static Scene getTerrain(Scene scene, SourceFile terrainFolder) {
+		List<String> ss = FileScanner.getStringList(new SourceFile(terrainFolder, "/data.dat"));
+		float size = 0;
+		for (String s : ss) {
+			if (s.startsWith("size")) {
+				size = Float.parseFloat(s.split(":")[1]);
+			}
+		}
+		boolean redNormal = false;
+		boolean blueNormal = false;
+		boolean greenNormal = false;
+		boolean backNormal = false;
+
+		List<String> data = FileScanner.getStringList(new SourceFile(terrainFolder, "/mapdata/data.dat"));
+		for (String s : data) {
+			String[] a = s.split("=");
+			backNormal = Boolean.parseBoolean(a[0]);
+			redNormal = Boolean.parseBoolean(a[1]);
+			greenNormal = Boolean.parseBoolean(a[2]);
+			blueNormal = Boolean.parseBoolean(a[3]);
+		}
+		TerrainTexture back = new TerrainTexture(
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/black/texture.png")));
+		TerrainTexture red = new TerrainTexture(
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/red/texture.png")));
+		TerrainTexture green = new TerrainTexture(
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/green/texture.png")));
+		TerrainTexture blue = new TerrainTexture(
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/blue/texture.png")));
+		
+		if (redNormal) {
+			red.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/red/normal.png")));
+		}
+		if (blueNormal) {
+			blue.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/blue/normal.png")));
+		}
+		if (greenNormal) {
+			green.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/green/normal.png")));
+		}
+		if (backNormal) {
+			back.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/back/normal.png")));
+		}
+
+
+
+		TerrainTexture blend = new TerrainTexture(
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/mapdat/blend.png")));
+
+		TerrainTexturePack pack = new TerrainTexturePack(back, red, green, blue);
+
+		TerrainPack tpack = new TerrainPack(pack, blend, terrainFolder.getPath() + "/mapdat/height.png");
+
+		Terrain terrain = new Terrain(0, 0, tpack, null, 1);
+		scene.terrains.add(terrain);
 		return scene;
 	}
 
@@ -119,7 +181,8 @@ public class SceneLoader {
 		for (String string : strings) {
 			Log.append("          - " + string, true);
 		}
-		Log.append("========================================", true);Log.append("", true);
+		Log.append("========================================", true);
+		Log.append("", true);
 		return strings;
 	}
 
