@@ -14,7 +14,7 @@ public class TimeCube extends Entity {
 	private float y = 0;
 	private float x = 0;
 	
-	private static Model_3D model = ModelMaster.getModel("timecube_1");
+	private static Model_3D model = ModelMaster.getOBJModel("timecube_1");
 
 	public TimeCube(Model_3D model, Vector3f position, Vector3f rotation, float scale) {
 		super(model, position, rotation, scale);

@@ -44,19 +44,19 @@ public class TimeShip extends Entity {
 	private static final float TOLERANCE = 3;
 
 	public TimeShip(Vector3f position, Vector3f rotation) {
-		super(ModelMaster.getModel("timeship_1"), position, rotation, 1f);
+		super(ModelMaster.getOBJModel("timeship_1"), position, rotation, 1f);
 		loadTimeCubes(0.6f);
 		super.getTransform().setType(RotationType.YXZ);
 	}
 
 	public TimeShip(Vector3f position, Vector3f rotation, float scale) {
-		super(ModelMaster.getModel("timeship_1"), position, rotation, scale);
+		super(ModelMaster.getOBJModel("timeship_1"), position, rotation, scale);
 		loadTimeCubes(scale);
 		super.getTransform().setType(RotationType.YXZ);
 	}
 
 	public TimeShip(Vector3f position, Vector3f rotation, float scale, float timecube_scale) {
-		super(ModelMaster.getModel("timeship_1"), position, rotation, scale);
+		super(ModelMaster.getOBJModel("timeship_1"), position, rotation, scale);
 		loadTimeCubes(timecube_scale);
 		super.getTransform().setType(RotationType.YXZ);
 	}

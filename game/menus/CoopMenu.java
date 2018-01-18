@@ -80,7 +80,7 @@ public class CoopMenu extends GUI {
 				new SourceFile(ame_nebula, "face_front.png") }, 512);
 		this.skybox = skybox;
 
-		Model_3D timemastersHQ = ModelMaster.getModel("timemasters_hq_1");
+		Model_3D timemastersHQ = ModelMaster.getOBJModel("timemasters_hq_1");
 		timeship_1 = new TimeShip(new Vector3f(0, -2f, 0f), new Vector3f(-35, -180 + 10, 10), 0.4f);
 		timeship_2 = new TimeShip(new Vector3f(0, -10f, 0f), new Vector3f(-20, -180 + 10, 15), 0.4f);
 

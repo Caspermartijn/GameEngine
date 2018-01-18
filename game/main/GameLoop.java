@@ -1,18 +1,25 @@
 package main;
 
+import static audio.Sound2DMaster.getSong;
+import static audio.Sound2DMaster.loadSound;
+import static audio.Sound2DMaster.playSound;
+import static audio.Sound2DMaster.setGeneralVolume;
+import static audio.Sound2DMaster.setVolume;
+import static engine.Display.createDisplay;
+import static engine.Display.disposeDisplay;
+import static engine.Display.swapBuffers;
+import static engine.Display.updateEvents;
+import static engine.GLSettings.setClearColor;
+import static engine.GLSettings.setDepthTesting;
+import static engine.Mouse.setMouseEnabled;
+import static gamestates.GamePerspective.renderGameState;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
-import static utils.tasks.Cleanup.cleanAll;
-
 import static scenes.Scene.renderScene;
 import static scenes.Scene.setCurrentScene;
 import static utils.RenderItem.renderItems;
-import static gamestates.GamePerspective.renderGameState;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static engine.GLSettings.*;
-import static engine.Display.*;
-import static audio.Sound2DMaster.*;
-import static engine.Mouse.*;
+import static utils.tasks.Cleanup.cleanAll;
 
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
@@ -113,7 +120,7 @@ public class GameLoop {
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
 		ship.setControllable(true);
 		HitBox playerHitBox = new HitBox(-3, 3, 0, 7, -3, 3);
-		FPS_Player player = new FPS_Player(ModelMaster.getModel("timecube_1"), new Vector3f(2000, 100, 2000),
+		FPS_Player player = new FPS_Player(ModelMaster.getOBJModel("timecube_1"), new Vector3f(2000, 100, 2000),
 				new Vector3f(), playerHitBox, 0);
 		FreeCam freecam = new FreeCam();
 		GameLoop.camera = freecam;
@@ -136,8 +143,8 @@ public class GameLoop {
 
 		scene.skybox = skybox;
 
-		Model_3D timemastersHQ = ModelMaster.getModel("timemasters_hq_1");
-		Model_3D timeship_1_inner = ModelMaster.getModel("timeship_1_inner").setBackfaceCullingEnabled(true);
+		Model_3D timemastersHQ = ModelMaster.getOBJModel("timemasters_hq_1");
+		Model_3D timeship_1_inner = ModelMaster.getOBJModel("timeship_1_inner").setBackfaceCullingEnabled(true);
 
 		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 5);
 		TimeShip timeship_1 = new TimeShip(new Vector3f(0, -20.5f, 10f), new Vector3f(0, 90, 0), 0.4f);
