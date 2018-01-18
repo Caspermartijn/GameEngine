@@ -24,7 +24,7 @@ public class ModelMaster {
 		if (models.containsKey(modelName)) {
 			return models.get(modelName);
 		} else {
-			Model_3D model = ModelLoader.getModel(new SourceFile("/res/models/" + modelName + "/model.dfmesh"),
+			Model_3D model = ModelLoader.getModel(new SourceFile("/res/models/" + modelName + "/model.dfmesh"), 
 					new SourceFile("/res/models/" + modelName + "/texture.png"));
 			models.put(modelName, model);
 			return model;

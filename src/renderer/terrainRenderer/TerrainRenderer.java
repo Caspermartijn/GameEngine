@@ -40,7 +40,7 @@ public class TerrainRenderer extends Cleanup {
 
 		for (Terrain terrain : terrains) {
 			bindTextures(terrain.getPack().getPack());
-			bindBlendMap(terrain.getBlendMapID());
+			bindBlendMap(terrain.getBlendMapID()); 
 			prepareTerrain(terrain);
 			GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel(terrain.getModel());
