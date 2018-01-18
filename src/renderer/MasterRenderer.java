@@ -26,7 +26,6 @@ import renderer.terrainRenderer.TerrainRenderer;
 import renderer.terrainRenderer.TerrainShader;
 import renderer.textRendering.FontRenderer;
 import terrains.Terrain;
-import terrains.terrainTexture.TerrainTexturePack;
 import utils.tasks.Cleanup;
 
 public class MasterRenderer extends Cleanup {
@@ -47,7 +46,7 @@ public class MasterRenderer extends Cleanup {
 	public LineRenderer linerenderer;
 
 	private Map<Model_3D, List<Entity>> entities = new HashMap<Model_3D, List<Entity>>();
-	private Map<TerrainTexturePack, List<Terrain>> terrains = new HashMap<TerrainTexturePack, List<Terrain>>();
+	private List<Terrain> terrains = new ArrayList<Terrain>();
 
 	public MasterRenderer() {
 		ENGINE_RES.init();
@@ -75,6 +74,26 @@ public class MasterRenderer extends Cleanup {
 		}
 	}
 
+	private void updateTerrains(List<Terrain> terrains2) {
+		for(Terrain terrain : terrains2) {
+			terrainsAmount++;
+			processTerrain(terrain);
+		}
+	}
+
+	private void processTerrain(Terrain terrain) {
+		terrains.add(terrain);		
+	}
+
+	public void render(Camera camera, List<Light> light, List<Entity> entities, List<Terrain> terrains) {
+		if (terrains != null) {
+			updateTerrains(terrains);
+		}
+		updateEntities(entities);
+		render(light, camera, new Vector4f(0, 0, 1, 0));
+		lightsAmount = light.size();
+	}
+
 	public void render(Camera camera, List<Light> light, List<Entity> entities) {
 		updateEntities(entities);
 		render(light, camera, new Vector4f(0, 0, 1, 0));
@@ -90,8 +109,8 @@ public class MasterRenderer extends Cleanup {
 		entityShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());
 		entityRenderer.render(entities);
 		entityShader.stop();
-		if(HitBoxMaster.renderHitBoxes == true) {
-		linerenderer.renderHitBoxes(camera, HitBoxMaster.hitBoxes);
+		if (HitBoxMaster.renderHitBoxes == true) {
+			linerenderer.renderHitBoxes(camera, HitBoxMaster.hitBoxes);
 		}
 		terrainShader.start();
 		terrainShader.loadLights(lights);

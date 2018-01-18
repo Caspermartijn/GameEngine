@@ -24,7 +24,9 @@ public abstract class Scene extends Cleanup implements IScene {
 	private static Scene current_scene;
 
 	public static void setCurrentScene(Scene scene) {
-		Scene.current_scene.unload();
+		if (current_scene != null) {
+			Scene.current_scene.unload();
+		}
 		new LoadingGui(5000) {
 
 			@Override
@@ -163,7 +165,7 @@ public abstract class Scene extends Cleanup implements IScene {
 			Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
 			lights.add(sun);
 		}
-		masterRenderer.render(camera, lights, entities);
+		masterRenderer.render(camera, lights, entities, terrains);
 		masterRenderer.unprepare();
 	}
 

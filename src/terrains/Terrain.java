@@ -18,7 +18,7 @@ import utils.maths.Maths;
 
 public class Terrain {
 
-	public static final float SIZE = 6400;
+	public static final float SIZE = 500;
 	public static final float MAX_HEIGHT = 200;
 	private static final float MAX_PIXEL_COLOR = 256 * 256 * 256;
 	public float[][] heights;
@@ -31,24 +31,11 @@ public class Terrain {
 	private float actuallZ;
 	private Vao model;
 	private TerrainPack pack;
+	private int rows;
 
 	private Matrix4f transformationMatrix;
 
-	public Terrain(int gridX, int gridZ, TerrainPack pack, BufferedImage heightMap, int rows) {
-		this.pack = pack;
-		this.x = gridX * SIZE;
-		this.z = gridZ * SIZE;
-		this.gridX = gridX;
-		this.gridZ = gridZ;
-		this.actuallX = gridX * SIZE + (SIZE / 2);
-		this.actuallZ = gridZ * SIZE + (SIZE / 2);
-
-		try {
-			this.model = generateTerrain(heightMap, rows, new Vector2f(gridX, gridZ));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	private BufferedImage heightMap;
 
 	public Terrain(int gridX, int gridZ, TerrainPack pack, int rows) {
 		this.pack = pack;
@@ -58,13 +45,13 @@ public class Terrain {
 		this.gridZ = gridZ;
 		this.actuallX = gridX * SIZE + (SIZE / 2);
 		this.actuallZ = gridZ * SIZE + (SIZE / 2);
-
+		this.rows = rows;
 		try {
-			this.model = generateTerrain(ImageIO.read(Class.class.getResourceAsStream(pack.getHeight())), rows,
-					new Vector2f(gridX, gridZ));
+			heightMap = ImageIO.read(Class.class.getResourceAsStream(pack.getHeight()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		generateTerrain();
 	}
 
 	public Matrix4f getTransMatrix() {
@@ -97,6 +84,14 @@ public class Terrain {
 
 	public TerrainPack getPack() {
 		return this.pack;
+	}
+
+	public void generateTerrain() {
+		try {
+			this.model = generateTerrain(heightMap, rows, new Vector2f(gridX, gridZ));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private Vector3f calculateNormal(int x, int z, BufferedImage image) {

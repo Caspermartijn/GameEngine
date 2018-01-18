@@ -30,9 +30,9 @@ public class SceneLoader {
 
 		Log.append("", false);
 		Log.append("Loading scene : " + scene_name, true);
-		SourceFile folder = new SourceFile("/scenes/" + scene_name + "/");
+		SourceFile folder = new SourceFile("/scenes/" + scene_name);
 		SourceFile modelsFolder = new SourceFile(folder, "models/");
-		SourceFile terrainFolder = new SourceFile(folder, "terrain/");
+		SourceFile terrainFolder = new SourceFile(folder, "terrain");
 		SourceFile scene_dataFolder = new SourceFile(folder, "scene_data/");
 		SourceFile worldFolder = new SourceFile(folder, "world/");
 
@@ -68,7 +68,7 @@ public class SceneLoader {
 		boolean greenNormal = false;
 		boolean backNormal = false;
 
-		List<String> data = FileScanner.getStringList(new SourceFile(terrainFolder, "/mapdata/data.dat"));
+		List<String> data = FileScanner.getStringList(new SourceFile(terrainFolder, "/mapdat/data.dat"));
 		for (String s : data) {
 			String[] a = s.split("=");
 			backNormal = Boolean.parseBoolean(a[0]);
@@ -77,7 +77,7 @@ public class SceneLoader {
 			blueNormal = Boolean.parseBoolean(a[3]);
 		}
 		TerrainTexture back = new TerrainTexture(
-				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/black/texture.png")));
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "back/texture.png")));
 		TerrainTexture red = new TerrainTexture(
 				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/red/texture.png")));
 		TerrainTexture green = new TerrainTexture(
@@ -107,9 +107,9 @@ public class SceneLoader {
 
 		TerrainPack tpack = new TerrainPack(pack, blend, terrainFolder.getPath() + "/mapdat/height.png");
 
-		Terrain terrain = new Terrain(0, 0, tpack, null, 1);
+		Terrain terrain = new Terrain(0, 0, tpack, 1);
 		scene.terrains.add(terrain);
-		return scene;
+		return scene; 
 	}
 
 	private static Scene loadModels(Scene scene, SourceFile modelsFolder) {
@@ -134,7 +134,7 @@ public class SceneLoader {
 					specularMap = Boolean.getBoolean(s2.split(":")[1]);
 				}
 				if (s2.startsWith("backfaceculling")) {
-					backfaceculling = Boolean.getBoolean(s2.split(":")[1]);
+					backfaceculling = !Boolean.getBoolean(s2.split(":")[1]);
 				}
 			}
 			Model_3D model = ModelMaster.getModel(s, new SourceFile(modelsFolder, "/" + s));

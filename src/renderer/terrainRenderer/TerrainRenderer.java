@@ -1,7 +1,6 @@
 package renderer.terrainRenderer;
 
 import java.util.List;
-import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
@@ -37,15 +36,14 @@ public class TerrainRenderer extends Cleanup {
 		shader.stop();
 	}
 
-	public void render(Map<TerrainTexturePack, List<Terrain>> terrains, Matrix4f toShadowSpace, Vector4f clipplane) {
-		for (TerrainTexturePack pack : terrains.keySet()) {
-			bindTextures(pack);
-			for (Terrain terrain : terrains.get(pack)) {
-				bindBlendMap(terrain.getBlendMapID());
-				prepareTerrain(terrain);
-				GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
-				unbindTexturedModel(terrain.getModel());
-			}
+	public void render(List<Terrain> terrains, Matrix4f toShadowSpace, Vector4f clipplane) {
+
+		for (Terrain terrain : terrains) {
+			bindTextures(terrain.getPack().getPack());
+			bindBlendMap(terrain.getBlendMapID());
+			prepareTerrain(terrain);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			unbindTexturedModel(terrain.getModel());
 		}
 	}
 
@@ -94,5 +92,5 @@ public class TerrainRenderer extends Cleanup {
 	public void delete() {
 		shader.delete();
 	}
-	
+
 }

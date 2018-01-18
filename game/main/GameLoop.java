@@ -196,13 +196,25 @@ public class GameLoop {
 
 			spaceScene(master, skyboxRenderer);
 			setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "test_scene"));
-			
+
 			master.setProjectionMatrix(camera.getProjectionMatrix());
 
 			MainMenu main = new MainMenu(master, skyboxRenderer);
 			SettingsMenu settings = new SettingsMenu(master, skyboxRenderer);
 			CoopMenu coop = new CoopMenu(master, skyboxRenderer);
 
+			new LoadingGui(1000) {
+
+				@Override
+				public void afterLoad() {
+					GamePerspective.switchGameState("main_menu");
+				}
+
+				@Override
+				public void midLoad() {
+				}
+			};
+		
 			GamePerspective inGame = new GamePerspective("ingame") {
 
 				@Override
@@ -217,18 +229,6 @@ public class GameLoop {
 
 				@Override
 				public void stop() {
-
-				}
-			};
-			new LoadingGui(1000) {
-
-				@Override
-				public void afterLoad() {
-					GamePerspective.switchGameState("main_menu");
-				}
-
-				@Override
-				public void midLoad() {
 
 				}
 			};
