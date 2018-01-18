@@ -9,11 +9,22 @@ public class ModelMaster {
 
 	private static HashMap<String, Model_3D> models = new HashMap<String, Model_3D>();
 
-	public static Model_3D getModel(String modelName) {
+	public static Model_3D getOBJModel(String modelName) {
 		if (models.containsKey(modelName)) {
 			return models.get(modelName);
 		} else {
 			Model_3D model = ModelLoader.getModel(new SourceFile("/res/models/" + modelName + "/model.obj"),
+					new SourceFile("/res/models/" + modelName + "/texture.png"));
+			models.put(modelName, model);
+			return model;
+		}
+	}
+	
+	public static Model_3D getDFModel(String modelName) {
+		if (models.containsKey(modelName)) {
+			return models.get(modelName);
+		} else {
+			Model_3D model = ModelLoader.getModel(new SourceFile("/res/models/" + modelName + "/model.dfmesh"),
 					new SourceFile("/res/models/" + modelName + "/texture.png"));
 			models.put(modelName, model);
 			return model;
