@@ -39,10 +39,10 @@ public class SceneLoader {
 		scene = loadModels(scene, modelsFolder);
 
 		scene.setObjective(getObjective(objectivFile));
-		scene.entities = getEntities(entitiesFile);
+		scene = getEntities(scene, entitiesFile);
 
 		scene = loadSceneDataIntoScene(scene, scene_name, sceneDataFile);
-
+		// TODO hitboxes
 		return scene;
 	}
 
@@ -69,16 +69,14 @@ public class SceneLoader {
 			model.setBackfaceCullingEnabled(backfaceculling);
 
 			if (colorMap) {
-				
-			} else {
-
+				model.setColorMap(ModelLoader.loadTexture(new SourceFile(modelsFolder, s + "/colormap.png")));
 			}
-			
+
 			if (specularMap) {
-
-			} else {
-
+				model.setColorMap(ModelLoader.loadTexture(new SourceFile(modelsFolder, s + "/specularmap.png")));
 			}
+
+			scene.models.put(s.toLowerCase(), model);
 
 		}
 		return scene;
@@ -97,7 +95,7 @@ public class SceneLoader {
 		return strings;
 	}
 
-	private static List<Entity> getEntities(SourceFile file) {
+	private static Scene getEntities(Scene scene, SourceFile file) {
 		List<Entity> entities = new ArrayList<Entity>();
 		List<String> ss = FileScanner.getStringList(file);
 		for (String s : ss) {
@@ -128,12 +126,13 @@ public class SceneLoader {
 			if (ent.length > 8) {
 				parentUUID = UUID.fromString(ent[10]);
 			}
-			Entity entity = new Entity(ModelMaster.getModel(model_name), new Vector3f(x, y, z),
+			Entity entity = new Entity(scene.getModel(model_name), new Vector3f(x, y, z),
 					new Vector3f(rotX, rotY, rotZ), scale);
 			entity.setUuid(uuid);
 			entity.setParent_uuid(parentUUID);
 		}
-		return entities;
+		scene.entities.addAll(entities);
+		return scene;
 	}
 
 	private static Scene loadSceneDataIntoScene(Scene scene, String scene_name, SourceFile dataFile) {

@@ -35,4 +35,8 @@ public class ModelMaster {
 
 	}
 
+	public static void loadModel(String modelName, Model_3D model) {
+		models.put(modelName, model);
+	}
+
 }

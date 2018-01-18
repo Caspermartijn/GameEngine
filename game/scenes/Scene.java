@@ -140,4 +140,8 @@ public abstract class Scene extends Cleanup implements IScene {
 		masterRenderer.unprepare();
 	}
 
+	public Model_3D getModel(String model_name) {
+		return models.get(model_name.toLowerCase());
+	}
+
 }
