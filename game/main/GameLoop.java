@@ -2,6 +2,7 @@ package main;
 
 import static org.lwjgl.opengl.GL11.glClear;
 import static utils.tasks.Cleanup.cleanAll;
+
 import static scenes.Scene.renderScene;
 import static scenes.Scene.setCurrentScene;
 import static utils.RenderItem.renderItems;
@@ -109,7 +110,7 @@ public class GameLoop {
 		};
 		setMouseEnabled(false);
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
-		ship.setControllable(false);
+		ship.setControllable(true);
 		HitBox playerHitBox = new HitBox(-3, 3, 0, 7, -3, 3);
 		FPS_Player player = new FPS_Player(ModelMaster.getModel("timecube_1"), new Vector3f(2000, 100, 2000),
 				new Vector3f(), playerHitBox, 0);
@@ -177,12 +178,11 @@ public class GameLoop {
 			Settings.load();
 			createDisplay(new DisplayBuilder(Settings.windowSizeValues[0], Settings.windowSizeValues[1]).setTitle(title)
 					.setFullscreen(Settings.fullscreenValue).setVsync(Settings.vsyncValue).setSamples(8).setFpsCap(60));
-
 			setClearColor(new Vector4f(0, 0.25f, 1, 1));
 			setDepthTesting(true);
 
-			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 			MasterRenderer master = new MasterRenderer();
+			SkyboxRenderer skyboxRenderer = new SkyboxRenderer();
 
 			GameLoader.init();
 

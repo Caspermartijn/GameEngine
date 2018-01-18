@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Entity;
 import files.FileScanner;
+import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
@@ -49,6 +50,36 @@ public class SceneLoader {
 		List<String> models = FileScanner.getStringList(new SourceFile(modelsFolder, "models.dat"));
 		for (String s : models) {
 			SourceFile datafile = new SourceFile(modelsFolder, "/" + s + "/data.dat");
+			List<String> data = FileScanner.getStringList(datafile);
+			boolean colorMap = false;
+			boolean specularMap = false;
+			boolean backfaceculling = false;
+			for (String s2 : data) {
+				if (s2.startsWith("colormap")) {
+					colorMap = Boolean.getBoolean(s2.split(":")[1]);
+				}
+				if (s2.startsWith("specularmap")) {
+					specularMap = Boolean.getBoolean(s2.split(":")[1]);
+				}
+				if (s2.startsWith("backfaceculling")) {
+					backfaceculling = Boolean.getBoolean(s2.split(":")[1]);
+				}
+			}
+			Model_3D model = ModelMaster.getModel(s, new SourceFile(modelsFolder, s));
+			model.setBackfaceCullingEnabled(backfaceculling);
+
+			if (colorMap) {
+				
+			} else {
+
+			}
+			
+			if (specularMap) {
+
+			} else {
+
+			}
+
 		}
 		return scene;
 	}

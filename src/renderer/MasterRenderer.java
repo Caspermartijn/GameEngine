@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector4f;
 
 import engine.GLSettings;
+import engine.res.ENGINE_RES;
 import entities.Entity;
 import entities.Light;
 import hitbox.HitBoxMaster;
@@ -49,6 +50,7 @@ public class MasterRenderer extends Cleanup {
 	private Map<TerrainTexturePack, List<Terrain>> terrains = new HashMap<TerrainTexturePack, List<Terrain>>();
 
 	public MasterRenderer() {
+		ENGINE_RES.init();
 		entityRenderer = new EntityRenderer(entityShader);
 		terrainRenderer = new TerrainRenderer(terrainShader);
 		linerenderer = new LineRenderer();

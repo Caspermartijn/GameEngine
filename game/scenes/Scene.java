@@ -10,7 +10,6 @@ import hitbox.HBox;
 import objects.Camera;
 import objects.Model_3D;
 import objects.Skybox;
-import objects.Vao;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import terrains.Terrain;

@@ -106,8 +106,8 @@ public class TimeShip extends Entity {
 				float yaw = angle[0];
 				float pitch = angle[1];
 
-				float yawOffset = -(float) (MOUSE_SENSITY * Display.getFrameTime());
-				float pitchOffset = (float) (MOUSE_SENSITY * Display.getFrameTime());
+				float yawOffset = -(float) (MOUSE_SENSITY);
+				float pitchOffset = (float) (MOUSE_SENSITY);
 
 				if (!(this.yaw <= yaw + TOLERANCE && this.yaw >= yaw - TOLERANCE)) {
 					this.yaw += yawOffset;
@@ -270,8 +270,6 @@ public class TimeShip extends Entity {
 	private void moveKeyboard() {
 		float yawOffset = -(float) (Mouse.getMouseDX() * MOUSE_SENSITY);
 		float pitchOffset = (float) (Mouse.getMouseDY() * MOUSE_SENSITY);
-
-		System.out.println(yawOffset);
 
 		float maxRot = (float) (MAX_ROTATION * Display.getFrameTime());
 		yaw += Maths.clamp(-maxRot, maxRot, yawOffset);

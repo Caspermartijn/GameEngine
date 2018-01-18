@@ -20,8 +20,15 @@ public class ModelMaster {
 		}
 	}
 
-	public static void loadModels(String path) { 
-		
+	public static Model_3D getModel(String modelName, SourceFile folder) {
+		Model_3D model = ModelLoader.getModel(new SourceFile(folder, "model.obj"),
+				new SourceFile(folder, "texture.png"));
+		models.put(modelName, model);
+		return null;
+	}
+
+	public static void loadModels(String path) {
+
 	}
 
 	public static void loadModels(SourceFile modelsFile) {

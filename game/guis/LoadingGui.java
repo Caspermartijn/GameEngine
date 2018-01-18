@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector2f;
 
 import engine.Display;
 import gamestates.GamePerspective;
+import utils.RenderItem;
 import utils.SourceFile;
 import utils.maths.Maths;
 import utils.tasks.Task;
@@ -15,17 +16,14 @@ public abstract class LoadingGui extends GUI {
 
 	private static boolean hasInited = false;
 
+	@SuppressWarnings("unused")
+	private RenderItem renderItem;
+
 	public LoadingGui(float timeInMilisecconds) {
-		if (hourglass != null) {
-			hourglass.delete();
-		}
-		if (background != null) {
+		if(background != null) {
 			background.delete();
 		}
-		if (circle != null) {
-			circle.delete();
-		}
-		images();
+		background();
 		init();
 		new Task(timeInMilisecconds / 2) {
 
@@ -49,6 +47,7 @@ public abstract class LoadingGui extends GUI {
 	@SuppressWarnings("unused")
 	private void init() {
 		if (!hasInited) {
+			images();
 			GamePerspective loading = new GamePerspective("loading") {
 
 				@Override
@@ -78,8 +77,7 @@ public abstract class LoadingGui extends GUI {
 	SourceFile loading_2 = new SourceFile("/res/guis/loading/background_2.png");
 	SourceFile loading_3 = new SourceFile("/res/guis/loading/background_3.png");
 
-	private void images() {
-
+	private void background() {
 		SourceFile file = null;
 		int image = Maths.RANDOM.nextInt(3);
 
@@ -99,21 +97,32 @@ public abstract class LoadingGui extends GUI {
 		Vector2f size = Maths.getFrom720toCurrentDisplaySize(new Vector2f(1280, 720));
 		background.setSize(new Vector2f(size.x, size.y));
 		background.setPosition(0.5f, 0.5f);
+	}
+	
+	private void images() {
 
-		hourglass = new ImageComponent(this, new SourceFile("/res/guis/loading/hourglass.png"));
-		Vector2f size_1 = Maths.getFrom720toCurrentDisplaySize(new Vector2f(37.5f, 37.5f));
-		hourglass.setSize(new Vector2f(size_1.x, size_1.y));
-		hourglass.setPosition(0.90f, 0.85f);
+	
 
 		circle = new ImageComponent(this, new SourceFile("/res/guis/loading/ring_1.png"));
 		Vector2f size_3 = Maths.getFrom720toCurrentDisplaySize(new Vector2f(95, 95));
 		circle.setSize(new Vector2f(size_3.x, size_3.y));
 		circle.setPosition(0.90f, 0.85f);
+		
+		hourglass = new ImageComponent(this, new SourceFile("/res/guis/loading/hourglass.png"));
+		Vector2f size_1 = Maths.getFrom720toCurrentDisplaySize(new Vector2f(37.5f, 37.5f));
+		hourglass.setSize(new Vector2f(size_1.x, size_1.y));
+		hourglass.setPosition(0.90f, 0.85f);
+		renderItem = new RenderItem() {
+
+			@Override
+			public void render() {
+				hourglass.setRotation((float) (hourglass.getRotation() + 180 * Display.getFrameTime()));
+			}
+		};
 	}
 
 	public void renderComps() {
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		hourglass.setRotation((float) (hourglass.getRotation() + 180 * Display.getFrameTime()));
 		super.renderComponents();
 	}
 
