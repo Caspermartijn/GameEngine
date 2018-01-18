@@ -78,7 +78,7 @@ public class SettingsMenu extends GUI {
 				new SourceFile(ame_nebula, "face_front.png") }, 512);
 		this.skybox = skybox;
 
-		Model_3D timemastersHQ = ModelMaster.getModel("timemasters_hq_1");
+		Model_3D timemastersHQ = ModelMaster.getOBJModel("timemasters_hq_1");
 		timematers = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 4.6f);
 		TimeShip timeship_1 = new TimeShip(new Vector3f(0, -20.5f, 10f), new Vector3f(0, 90, 0), 0.4f);
 		TimeShip timeship_2 = new TimeShip(new Vector3f(0, -20.5f, -10f), new Vector3f(0, -90, 0), 0.4f);
