@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import entities.Entity;
 import entities.Light;
 import hitbox.HBox;
@@ -136,6 +138,10 @@ public abstract class Scene extends Cleanup implements IScene {
 	@Override
 	public void render(Camera camera) {
 		skyboxRenderer.render(skybox, camera);
+		if(this.lights.size() < 1) {
+			Light sun = new Light(new Vector3f(2000, 2000, 2000), new Vector3f(1, 1, 1));
+			lights.add(sun);
+		}
 		masterRenderer.render(camera, lights, entities);
 		masterRenderer.unprepare();
 	}

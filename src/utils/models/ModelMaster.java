@@ -24,7 +24,7 @@ public class ModelMaster {
 		Model_3D model = ModelLoader.getModel(new SourceFile(folder, "model.obj"),
 				new SourceFile(folder, "texture.png"));
 		models.put(modelName, model);
-		return null;
+		return model;
 	}
 
 	public static void loadModels(String path) {

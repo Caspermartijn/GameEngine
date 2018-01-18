@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Entity;
 import files.FileScanner;
+import log.Log;
 import objects.Model_3D;
 import objects.Skybox;
 import renderer.MasterRenderer;
@@ -22,6 +23,9 @@ public class SceneLoader {
 	public static Scene getScene(MasterRenderer master, SkyboxRenderer skybrener, String scene_name) {
 		Scene scene = new Scene(scene_name, master, skybrener) {
 		};
+		
+		Log.append("", false);
+		Log.append("Loading scene : " + scene_name, true);
 		SourceFile folder = new SourceFile("/scenes/" + scene_name + "/");
 		SourceFile modelsFolder = new SourceFile(folder, "models/");
 		SourceFile scene_dataFolder = new SourceFile(folder, "scene_data/");
@@ -48,9 +52,15 @@ public class SceneLoader {
 
 	private static Scene loadModels(Scene scene, SourceFile modelsFolder) {
 		List<String> models = FileScanner.getStringList(new SourceFile(modelsFolder, "models.dat"));
+		Log.append("Loading scene models : " + models.size(), true);
 		for (String s : models) {
+			String appendText = "========== model : " + s + " ==========";
+			Log.append(appendText, true);
 			SourceFile datafile = new SourceFile(modelsFolder, "/" + s + "/data.dat");
 			List<String> data = FileScanner.getStringList(datafile);
+			for (String a : data) {
+				Log.append("          - " + a, true);
+			}
 			boolean colorMap = false;
 			boolean specularMap = false;
 			boolean backfaceculling = false;
@@ -65,7 +75,7 @@ public class SceneLoader {
 					backfaceculling = Boolean.getBoolean(s2.split(":")[1]);
 				}
 			}
-			Model_3D model = ModelMaster.getModel(s, new SourceFile(modelsFolder, s));
+			Model_3D model = ModelMaster.getModel(s, new SourceFile(modelsFolder, "/" + s));
 			model.setBackfaceCullingEnabled(backfaceculling);
 
 			if (colorMap) {
@@ -78,11 +88,20 @@ public class SceneLoader {
 
 			scene.models.put(s.toLowerCase(), model);
 
+			String appendText2 = "";
+			for (int i = 0; i < appendText.length(); i++) {
+				appendText2 += "=";
+			}
+
+			Log.append(appendText2, true);
+			Log.append("", true);
 		}
 		return scene;
 	}
 
 	private static String[] getObjective(SourceFile file) {
+		Log.append("Loading scene objective", true);
+		Log.append("========================================", true);
 		String[] strings = new String[] { "", "", "" };
 		List<String> ss = FileScanner.getStringList(file);
 		int i = 0;
@@ -92,13 +111,24 @@ public class SceneLoader {
 			}
 			strings[i] += s + " ";
 		}
+
+		for (int ii = 0; ii < 3; ii++) {
+			strings[ii] = strings[ii].replaceFirst("- ", "");
+		}
+
+		for (String string : strings) {
+			Log.append("          - " + string, true);
+		}
+		Log.append("========================================", true);Log.append("", true);
 		return strings;
 	}
 
 	private static Scene getEntities(Scene scene, SourceFile file) {
 		List<Entity> entities = new ArrayList<Entity>();
 		List<String> ss = FileScanner.getStringList(file);
+		Log.append("Loading scene entities : " + ss.size(), true);
 		for (String s : ss) {
+
 			String model_name = "";
 			float x = 0;
 			float y = 0;
@@ -123,13 +153,34 @@ public class SceneLoader {
 			scale = Float.parseFloat(ent[8]);
 
 			uuid = UUID.fromString(ent[9]);
+
 			if (ent.length > 8) {
-				parentUUID = UUID.fromString(ent[10]);
+				// parentUUID = UUID.fromString(ent[10]);
 			}
-			Entity entity = new Entity(scene.getModel(model_name), new Vector3f(x, y, z),
-					new Vector3f(rotX, rotY, rotZ), scale);
+			Vector3f position = new Vector3f(x, y, z);
+			Vector3f rotation = new Vector3f(rotX, rotY, rotZ);
+
+			String appendText = "========== entity : " + uuid.toString() + " ==========";
+			Log.append(appendText, true);
+			Log.append("          - model:" + model_name, true);
+			Log.append("", true);
+			Log.append("          - position:" + x + " " + y + " " + z, true);
+			Log.append("          - rotation:" + rotX + " " + rotY + " " + rotZ, true);
+			Log.append("          - scale:" + scale, true);
+			Log.append("", true);
+			Log.append("          - uuid:" + uuid.toString(), true);
+
+			Entity entity = new Entity(scene.getModel(model_name), position, rotation, scale);
 			entity.setUuid(uuid);
 			entity.setParent_uuid(parentUUID);
+			entities.add(entity);
+
+			String appendText2 = "";
+			for (int i = 0; i < appendText.length(); i++) {
+				appendText2 += "=";
+			}
+			Log.append(appendText2, true);
+			Log.append("", true);
 		}
 		scene.entities.addAll(entities);
 		return scene;
@@ -138,6 +189,7 @@ public class SceneLoader {
 	private static Scene loadSceneDataIntoScene(Scene scene, String scene_name, SourceFile dataFile) {
 
 		List<String> ss = FileScanner.getStringList(dataFile);
+		Log.append("Loading scene data", true);
 
 		for (String s : ss) {
 			if (s.startsWith("data")) {
@@ -146,7 +198,8 @@ public class SceneLoader {
 					scene.setDisplayName(s2.split(":")[1]);
 				}
 				if (s2.startsWith("preview_image:")) {
-					SourceFile preview_image = new SourceFile("/scenes/" + scene_name + "/" + s2.split(":")[1]);
+					SourceFile preview_image = new SourceFile(
+							"/scenes/" + scene_name + "/" + s2.split(":")[1] + ".png");
 					scene.setPreview(ModelLoader.loadTexture(preview_image));
 				}
 			}

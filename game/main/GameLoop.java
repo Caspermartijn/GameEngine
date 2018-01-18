@@ -40,6 +40,7 @@ import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
+import scenes.SceneLoader;
 import texts.Fonts;
 import utils.RenderItem;
 import utils.SourceFile;
@@ -194,7 +195,8 @@ public class GameLoop {
 			debug.hide();
 
 			spaceScene(master, skyboxRenderer);
-
+			setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "test_scene"));
+			
 			master.setProjectionMatrix(camera.getProjectionMatrix());
 
 			MainMenu main = new MainMenu(master, skyboxRenderer);

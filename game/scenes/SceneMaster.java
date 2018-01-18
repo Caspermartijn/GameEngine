@@ -2,13 +2,7 @@ package scenes;
 
 public class SceneMaster {
 
-	public class SceneManager {
-
+	private static HashMap<String,Scene> scenes 
+	
 	}
-
-	public class SceneLoader {
-
-	}
-
-}
  
