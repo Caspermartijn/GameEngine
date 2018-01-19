@@ -18,7 +18,7 @@ public class GUI {
 	}
 
 	public GUIComponent getByID(String id) {
-		for (GUIComponent c : components) {
+		for (GUIComponent c : components) { 
 			if (c.getID().equals(id))
 				return c;
 		}

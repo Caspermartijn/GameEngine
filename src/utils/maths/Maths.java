@@ -142,7 +142,14 @@ public class Maths {
 	}
 
 	public static Vector3f linearInterpolation(Vector3f v1, Vector3f v2, float blend) {
-		return new Vector3f(linearInterpolation(v1.x, v2.x, blend), linearInterpolation(v1.y, v2.y, blend), linearInterpolation(v1.z, v2.z, blend));
+		return new Vector3f(linearInterpolation(v1.x, v2.x, blend), linearInterpolation(v1.y, v2.y, blend),
+				linearInterpolation(v1.z, v2.z, blend));
+	}
+
+	public static Vector2f getSqaireSize(float i) {
+		float ratio = Display.getHeight() / Display.getWidth();
+		System.out.println(Display.getHeight() / Display.getWidth());
+		return new Vector2f(i * ratio, i);
 	}
 
 }

@@ -35,7 +35,7 @@ public class Log {
 		logTexts[1] = log_2;
 		logTexts[2] = log_3;
 		logTexts[3] = log_4;
-		logTexts[4] = log_5;
+		logTexts[4] = log_5; 
 		logTexts[5] = log_6;
 		logTexts[6] = log_7;
 		logTexts[7] = log_8;

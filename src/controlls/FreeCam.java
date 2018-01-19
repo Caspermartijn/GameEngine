@@ -36,7 +36,7 @@ public class FreeCam extends Camera {
 		float dx = (float) (Mouse.getMouseDX() * MOUSE_SENSITY);
 		float dy = (float) (Mouse.getMouseDY() * MOUSE_SENSITY);
 		super.yaw += dx;
-		super.pitch += dy;
+		super.pitch += dy; 
 		pitch = Maths.clamp(-90, 90, pitch);
 
 		float factor = (pitch / 90);

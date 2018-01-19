@@ -46,7 +46,7 @@ public class TimeShip extends Entity {
 	public TimeShip(Vector3f position, Vector3f rotation) {
 		super(ModelMaster.getOBJModel("timeship_1"), position, rotation, 1f);
 		loadTimeCubes(0.6f);
-		super.getTransform().setType(RotationType.YXZ);
+		super.getTransform().setType(RotationType.YXZ); 
 	}
 
 	public TimeShip(Vector3f position, Vector3f rotation, float scale) {

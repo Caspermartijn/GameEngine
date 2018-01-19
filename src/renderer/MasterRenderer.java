@@ -34,7 +34,7 @@ public class MasterRenderer extends Cleanup {
 	public static final float GREEN = 0.4f;
 	public static final float BLUE = 0.2f;
 
-	public static float density = 0.0035f;
+	public static float density = 0.0035f; 
 	public static float gradient = 5f;
 
 	private EntityShader entityShader = new EntityShader();

@@ -32,6 +32,7 @@ import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
 import gamestates.GamePerspective;
+import guis.FPS_HUD;
 import guis.LoadingGui;
 import hitbox.HitBox;
 import launcher.Launcher;
@@ -240,6 +241,8 @@ public class GameLoop {
 				}
 			};
 
+			FPS_HUD hud = new FPS_HUD();
+			
 			while (!Display.isCloseRequested() && !Display.hasToClose()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -248,7 +251,8 @@ public class GameLoop {
 
 				debug.update(camera);
 				debug.renderComponents(); 
-
+				hud.renderComponents();
+				 
 				swapBuffers();
 				updateEvents();  
 			}

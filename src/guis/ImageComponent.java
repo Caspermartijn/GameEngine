@@ -19,7 +19,7 @@ public class ImageComponent extends GUIComponent {
 	@Override
 	public void render() {
 		img.setPosition(super.getContainer().getPosition().getX() + x, super.getContainer().getPosition().getY() + y);
-		ImageRenderer.renderImage(img); 
+		ImageRenderer.renderImage(img);
 	}
 
 	@Override
@@ -53,10 +53,9 @@ public class ImageComponent extends GUIComponent {
 	public void setRotation(float rotation) {
 		img.setRotation(rotation);
 	}
-	
+
 	public float getRotation() {
 		return img.getRotation();
 	}
-	
 
 }

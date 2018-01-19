@@ -41,10 +41,6 @@ public class ModelLoader {
 
 	public static Texture loadTexture(SourceFile textureFile) {
 		String filename = textureFile.getName();
-		if (filename.contains(".")) {
-			String[] ss = filename.split(".");
-			filename = ss[0];
-		}
 		Texture texture = null;
 		if (!textures.containsKey(filename)) {
 			texture = Texture.getTextureBuilder(textureFile).create();

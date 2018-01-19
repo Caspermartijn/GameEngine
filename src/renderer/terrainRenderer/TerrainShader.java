@@ -42,7 +42,7 @@ public class TerrainShader extends ShaderProgram {
 	public UniformSampler location_normalRed = new UniformSampler("normalRed");
 	public UniformSampler location_normalGreen = new UniformSampler("normalGreen");
 	public UniformSampler location_normalBlue = new UniformSampler("normalBlue");
-	public UniformSampler location_normalBack = new UniformSampler("normalBack");
+	public UniformSampler location_normalBack = new UniformSampler("normalBack"); 
 
 	public UniformSampler location_blend = new UniformSampler("blend");
 	public UniformSampler location_shadowMap = new UniformSampler("shadowMap");

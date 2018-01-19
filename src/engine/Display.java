@@ -124,7 +124,7 @@ public class Display {
 		return id;
 	}
 
-	public static float getAspectRatio() {
+	public static float getAspectRatio() { 
 		return (float) WIDTH / (float) HEIGHT;
 	}
 

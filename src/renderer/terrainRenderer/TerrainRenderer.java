@@ -37,7 +37,6 @@ public class TerrainRenderer extends Cleanup {
 	}
 
 	public void render(List<Terrain> terrains, Matrix4f toShadowSpace, Vector4f clipplane) {
-
 		for (Terrain terrain : terrains) {
 			bindTextures(terrain.getPack().getPack());
 			bindBlendMap(terrain.getBlendMapID()); 

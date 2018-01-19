@@ -30,7 +30,7 @@ public abstract class LoadingGui extends GUI {
 			@Override
 			public void run() {
 				midLoad();
-				new Task(timeInMilisecconds / 2) {
+				new Task(timeInMilisecconds / 2) { 
 
 					@Override
 					public void run() {

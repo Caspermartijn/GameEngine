@@ -15,7 +15,7 @@ public class Image {
 	private float width = 280, height = 280;
 	private Texture texture;
 	private float scale = 1f;
-	private float rotation = 0;
+	public float rotation = 0;
 
 	public Image(SourceFile texture) {
 		this.texture = ModelLoader.loadTexture(texture); 

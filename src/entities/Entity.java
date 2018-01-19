@@ -109,7 +109,7 @@ public class Entity implements IEntity {
 		if (parent != null) {
 			return Matrix4f.mul(parent.getTransformationMatrix(), getLocalTransformationMatrix(), null);
 		} else {
-			return getLocalTransformationMatrix();
+			return getLocalTransformationMatrix(); 
 		}
 
 	}
