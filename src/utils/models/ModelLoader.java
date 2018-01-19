@@ -1,6 +1,7 @@
 package utils.models;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import loader.objLoader.OBJLoader;
 import objects.Model_3D;
@@ -9,6 +10,8 @@ import textures.Texture;
 import utils.SourceFile;
 
 public class ModelLoader {
+
+	public static HashMap<String, Texture> textures = new HashMap<String, Texture>();
 
 	private static Texture tex;
 	private static Vao model;
@@ -37,7 +40,18 @@ public class ModelLoader {
 	}
 
 	public static Texture loadTexture(SourceFile textureFile) {
-		Texture texture = Texture.getTextureBuilder(textureFile).create();
+		String filename = textureFile.getName();
+		if (filename.contains(".")) {
+			String[] ss = filename.split(".");
+			filename = ss[0];
+		}
+		Texture texture = null;
+		if (!textures.containsKey(filename)) {
+			texture = Texture.getTextureBuilder(textureFile).create();
+			textures.put(filename, texture);
+		} else {
+			texture = textures.get(filename);
+		}
 		return texture;
 	}
 

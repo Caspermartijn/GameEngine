@@ -18,7 +18,7 @@ public class Image {
 	private float rotation = 0;
 
 	public Image(SourceFile texture) {
-		this.texture = ModelLoader.loadTexture(texture);
+		this.texture = ModelLoader.loadTexture(texture); 
 	}
 
 	public Image(SourceFile texture, float x, float y) {

@@ -6,7 +6,7 @@ import objects.Model_3D;
 
 public class Models {
 
-	private static HashMap<String, Model_3D> models = new HashMap<String, Model_3D>();
+	private static HashMap<String, Model_3D> models = new HashMap<String, Model_3D>(); 
 
 	public static void addModel(String model_name, Model_3D model) {
 		models.put(model_name, model);

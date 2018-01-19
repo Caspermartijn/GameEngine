@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 
 import utils.SourceFile;
+import utils.models.ModelLoader;
 import utils.tasks.Cleanup;
 
 public class Texture extends Cleanup {
@@ -14,6 +15,8 @@ public class Texture extends Cleanup {
 	public static int created, deleted;
 
 	private boolean deletedB = false;
+
+	private String name;
 
 	protected Texture(int id) {
 		created++;
@@ -33,10 +36,19 @@ public class Texture extends Cleanup {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, id);
 	}
 
+	public void setName(String s) {
+		name = s;
+	}
+
 	public void delete() {
 		if (!deletedB) {
 			deleteTexture(id);
 			deletedB = true;
+		}
+		if (name != null) {
+			if (ModelLoader.textures.containsKey(name)) {
+				ModelLoader.textures.remove(name);
+			}
 		}
 	}
 

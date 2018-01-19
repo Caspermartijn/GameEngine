@@ -56,7 +56,7 @@ public class SourceFile {
 	}
 
 	public String getName() {
-		return name;
+		return name; 
 	}
 
 	public BufferedReader getReader() throws Exception {
