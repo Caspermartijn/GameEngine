@@ -136,6 +136,7 @@ public class MasterRenderer extends Cleanup {
 		terrainShader.stop();
 		entities.clear();
 		terrains.clear();
+		animatedEntity.clear();
 		GLSettings.setBackFaceCulling(false);
 	}
 
