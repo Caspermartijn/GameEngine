@@ -207,7 +207,7 @@ public class GameLoop {
 			debug.hide();
 
 			spaceScene(master, skyboxRenderer);
-			//setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "test_scene"));
+			setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "test_scene"));
 
 			master.setProjectionMatrix(camera.getProjectionMatrix());
 

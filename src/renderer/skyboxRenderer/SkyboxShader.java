@@ -20,7 +20,7 @@ public class SkyboxShader extends ShaderProgram {
 	protected SkyboxShader() {
 		super.init(ShaderProgram.newShaderProgram().addInput(0, "position").addOutput(0, "out_Color"));
 		start();
-		cubeMap.loadTexUnit(0);
+		cubeMap.loadTexUnit(0); 
 		stop();
 	}
 

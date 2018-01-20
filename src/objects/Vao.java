@@ -213,7 +213,7 @@ public class Vao extends Cleanup {
 		createStaticIndexBuffer(indicesArray);
 		createStaticAttribute(0, 3, verticesArray);
 		createStaticAttribute(1, 2, texturesArray);
-		createStaticAttribute(2, 3, normalsArray);
+		createStaticAttribute(2, 3, normalsArray); 
 		unbind();
 		return this;
 	}

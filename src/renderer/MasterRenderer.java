@@ -54,7 +54,7 @@ public class MasterRenderer extends Cleanup {
 	public MasterRenderer() {
 		ENGINE_RES.init();
 		entityRenderer = new EntityRenderer(entityShader);
-		terrainRenderer = new TerrainRenderer(terrainShader);
+		terrainRenderer = new TerrainRenderer(terrainShader,null);
 		linerenderer = new LineRenderer();
 		ArmatureRenderer.init();
 		new FontRenderer();
@@ -65,7 +65,7 @@ public class MasterRenderer extends Cleanup {
 
 	public void setProjectionMatrix(Matrix4f matrix) {
 		entityRenderer.setProjectionMatrix(matrix);
-		terrainRenderer.setProjMat(matrix);
+		terrainRenderer.loadProjMatrix(matrix);
 		linerenderer.setProjectionMatrix(matrix);
 	}
 
@@ -130,10 +130,9 @@ public class MasterRenderer extends Cleanup {
 		terrainShader.start();
 		terrainShader.loadLights(lights);
 		terrainShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());
-		terrainShader.loadTileAmounts(100, 100, 100, 100);
-		terrainRenderer.loadFog(density, gradient, RED, GREEN, BLUE);
-		terrainRenderer.render(terrains, null, new Vector4f(0, 1, 0, -Terrain.MAX_HEIGHT));
+		terrainRenderer.render(terrains);
 		terrainShader.stop();
+		
 		entities.clear();
 		terrains.clear();
 		animatedEntity.clear();

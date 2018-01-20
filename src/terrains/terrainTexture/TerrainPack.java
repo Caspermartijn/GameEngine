@@ -18,7 +18,7 @@ public class TerrainPack {
 	}
 
 	public void setPack(TerrainTexturePack pack) {
-		this.pack = pack;
+		this.pack = pack; 
 	}
 
 	public TerrainTexture getBlend() {
