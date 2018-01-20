@@ -13,7 +13,7 @@ public class ModelMaster {
 		if (models.containsKey(modelName)) {
 			return models.get(modelName);
 		} else {
-			Model_3D model = ModelLoader.getModel(new SourceFile("/res/models/" + modelName + "/model.obj"),
+			Model_3D model = ModelLoader.getOBJModel(new SourceFile("/res/models/" + modelName + "/model.obj"),
 					new SourceFile("/res/models/" + modelName + "/texture.png"));
 			models.put(modelName, model);
 			return model;
@@ -24,7 +24,7 @@ public class ModelMaster {
 		if (models.containsKey(modelName)) {
 			return models.get(modelName);
 		} else {
-			Model_3D model = ModelLoader.getModel(new SourceFile("/res/models/" + modelName + "/model.dfmesh"), 
+			Model_3D model = ModelLoader.getDFModel(new SourceFile("/res/models/" + modelName + "/model.dfmesh"), 
 					new SourceFile("/res/models/" + modelName + "/texture.png"));
 			models.put(modelName, model);
 			return model;
@@ -32,7 +32,7 @@ public class ModelMaster {
 	}
 
 	public static Model_3D getModel(String modelName, SourceFile folder) {
-		Model_3D model = ModelLoader.getModel(new SourceFile(folder, "model.obj"),
+		Model_3D model = ModelLoader.getOBJModel(new SourceFile(folder, "model.obj"),
 				new SourceFile(folder, "texture.png"));
 		models.put(modelName, model);
 		return model;

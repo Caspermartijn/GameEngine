@@ -146,7 +146,8 @@ public class GameLoop {
 
 		Model_3D timemastersHQ = ModelMaster.getOBJModel("timemasters_hq_1");
 		Model_3D timeship_1_inner = ModelMaster.getOBJModel("timeship_1_inner").setBackfaceCullingEnabled(true);
-
+		Model_3D nazi = ModelMaster.getDFModel("nazi_1");
+		
 		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 5);
 		TimeShip timeship_1 = new TimeShip(new Vector3f(0, -20.5f, 10f), new Vector3f(0, 90, 0), 0.4f);
 		TimeShip timeship_2 = new TimeShip(new Vector3f(0, -20.5f, -10f), new Vector3f(0, -90, 0), 0.4f);
