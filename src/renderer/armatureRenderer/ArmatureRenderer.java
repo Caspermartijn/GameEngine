@@ -1,5 +1,7 @@
 package renderer.armatureRenderer;
 
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -16,20 +18,20 @@ public class ArmatureRenderer {
 		shader = new ArmatureShader();
 	}
 
-	public static void render(Vector3f direction,Entity entity, Camera camera) {
+	public static void render(Vector3f direction, List<Entity> animatedEntities, Camera camera) {
 		shader.start();
 		shader.projectionViewMatrix.loadMatrix(camera.getViewMatrix());
 		shader.lightDirection.loadVec3(direction);
-		shader.diffuseMap.bindTexture(entity.getModel().getTexture());
-		shader.modelMatrix.loadMatrix(entity.getTransform().toMatrix());
-		ArmatureComponent c = (ArmatureComponent) entity.getComponent(Component.Type.ARMATURE);
-		shader.jointTransforms.loadMatrixArray(c.getMatrices());
-		
-		entity.getModel().getMesh().bind(0, 1, 2, 3, 4);
-		GL11.glDrawElements(GL11.GL_TRIANGLES, entity.getModel().getMesh().getIndexCount(),
-				GL11.GL_UNSIGNED_INT, 0);
-		entity.getModel().getMesh().unbind(0, 1, 2, 3, 4);
-		
+		for (Entity animatedEntity : animatedEntities) {
+			shader.diffuseMap.bindTexture(animatedEntity.getModel().getTexture());
+			shader.modelMatrix.loadMatrix(animatedEntity.getTransform().toMatrix());
+			ArmatureComponent c = (ArmatureComponent) animatedEntity.getComponent(Component.Type.ARMATURE);
+			shader.jointTransforms.loadMatrixArray(c.getMatrices());
+			animatedEntity.getModel().getMesh().bind(0, 1, 2, 3, 4);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, animatedEntity.getModel().getMesh().getIndexCount(),
+					GL11.GL_UNSIGNED_INT, 0);
+			animatedEntity.getModel().getMesh().unbind(0, 1, 2, 3, 4);
+		}
 		shader.stop();
 	}
 

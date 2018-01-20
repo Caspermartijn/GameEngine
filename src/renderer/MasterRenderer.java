@@ -17,6 +17,7 @@ import hitbox.HitBoxMaster;
 import objects.Camera;
 import objects.Model_3D;
 import objects.Vao;
+import renderer.armatureRenderer.ArmatureRenderer;
 import renderer.entityRenderer.EntityRenderer;
 import renderer.entityRenderer.EntityShader;
 import renderer.imageRenderer.ImageRenderer;
@@ -47,12 +48,15 @@ public class MasterRenderer extends Cleanup {
 
 	private Map<Model_3D, List<Entity>> entities = new HashMap<Model_3D, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
-
+	
+	private List<Entity> animatedEntity = new ArrayList<Entity>();
+	
 	public MasterRenderer() {
 		ENGINE_RES.init();
 		entityRenderer = new EntityRenderer(entityShader);
 		terrainRenderer = new TerrainRenderer(terrainShader);
 		linerenderer = new LineRenderer();
+		ArmatureRenderer.init();
 		new FontRenderer();
 		new QuadRenderer();
 		new ImageRenderer();
@@ -70,12 +74,16 @@ public class MasterRenderer extends Cleanup {
 			entititesAmount++;
 			ent.update();
 			if (ent.hasComponentType(components.Component.Type.ARMATURE)) {
-				// render with animation renderer
+				processAnimatedEntity(ent);
 			} else {
 				processEntity(ent);
 			}
 			updateEntities(ent.getChildrenEntities());
 		}
+	}
+
+	private void processAnimatedEntity(Entity ent) {
+		animatedEntity.add(ent);
 	}
 
 	private void updateTerrains(List<Terrain> terrains2) {
@@ -116,6 +124,9 @@ public class MasterRenderer extends Cleanup {
 		if (HitBoxMaster.renderHitBoxes == true) {
 			linerenderer.renderHitBoxes(camera, HitBoxMaster.hitBoxes);
 		}
+
+		ArmatureRenderer.render(lights.get(0).getPosition(), animatedEntity, camera);
+		
 		terrainShader.start();
 		terrainShader.loadLights(lights);
 		terrainShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());
