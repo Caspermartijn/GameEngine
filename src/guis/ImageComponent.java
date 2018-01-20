@@ -55,7 +55,7 @@ public class ImageComponent extends GUIComponent {
 	}
 
 	public float getRotation() {
-		return img.getRotation();
+		return img.getRotation(); 
 	}
 	
 	public Vector2f getPosition() {

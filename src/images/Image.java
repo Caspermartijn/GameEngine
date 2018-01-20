@@ -119,8 +119,8 @@ public class Image {
 	}
 
 	public Vector2f getSizeOpenGL() {
-		float posX = (getX() - 0.5f) * 2.0f + scale * texture.getWidth() / Display.getWidth();
-		float posY = (getY() - 0.5f) * -2.0f - scale * texture.getHeight() / Display.getHeight();
+		float posX = texture.getWidth() / 1280;
+		float posY = texture.getHeight() / 720;
 		return new Vector2f(posX, posY);
 	}
 

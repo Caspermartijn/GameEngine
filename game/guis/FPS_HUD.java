@@ -38,11 +38,24 @@ public class FPS_HUD extends GUI {
 		right_corner.setPosition(0.8f, 0.9f);
 		right_corner.setSize(cornerSize2.x, cornerSize2.y);
 
-		Vector2f leftMidPosition = new Vector2f(left_mid.getPosition().x - left_corner.getSizeOpenGL().x,
-				left_mid.getPosition().y - left_corner.getSizeOpenGL().y);
-		left_mid.setSize(new Vector2f(300, 300));
-		left_mid.setPosition(leftMidPosition.x, leftMidPosition.y);
-		System.out.println(left_mid.getPosition());
+		float a =  0.234375f/2;
+		
+		float midWidth = 325.3f;
+		float midHeight = 342f;
+		
+		Vector2f leftMidPosition = new Vector2f(left_corner.getPosition().x, left_corner.getPosition().y);
+		left_mid.setSize(new Vector2f(midWidth, midHeight));
+		left_mid.setPosition(leftMidPosition.x - a, (leftMidPosition.y + 0.41666666666f/2));
+		
+		Vector2f rightMidPosition = new Vector2f(right_corner.getPosition().x, right_corner.getPosition().y);
+		right_mid.setSize(new Vector2f(midWidth, midHeight));
+		right_mid.setPosition(rightMidPosition.x + a, (rightMidPosition.y + 0.41666666666f/2));
+		
+		right_top.setSize(midWidth, cornerSize2.y);
+		right_top.setPosition(rightMidPosition.x + a, rightMidPosition.y);
+		
+		left_top.setSize(midWidth, cornerSize2.y);
+		left_top.setPosition(leftMidPosition.x - a, leftMidPosition.y);
 	}
 
 }

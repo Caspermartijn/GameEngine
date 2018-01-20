@@ -21,10 +21,10 @@ public class ModelMaster {
 	}
 	
 	public static Model_3D getDFModel(String modelName) {
-		if (models.containsKey(modelName)) {
+		if (models.containsKey(modelName)) { 
 			return models.get(modelName);
 		} else {
-			Model_3D model = ModelLoader.getDFModel(new SourceFile("/res/models/" + modelName + "/model.dfmesh"), 
+			Model_3D model = ModelLoader.getDFModel(new SourceFile("/res/models/" + modelName + "/model.dfmesh"),
 					new SourceFile("/res/models/" + modelName + "/texture.png"));
 			models.put(modelName, model);
 			return model;
