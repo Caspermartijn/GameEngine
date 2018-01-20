@@ -113,6 +113,7 @@ public class DFModelLoader {
 			Vao vao = Vao.create();
 			vao.bind();
 			vao.createStaticIndexBuffer(indices);
+			vao.setVertexCount(positions.length);
 			vao.createStaticAttribute(0, positions, 3);
 			vao.createStaticAttribute(1, textures, 2);
 			vao.createStaticAttribute(2, normals, 3);

@@ -145,7 +145,7 @@ public class GameLoop {
 		scene.skybox = skybox;
 
 		Model_3D timemastersHQ = ModelMaster.getOBJModel("timemasters_hq_1");
-		Model_3D timeship_1_inner = ModelMaster.getOBJModel("timeship_1_inner").setBackfaceCullingEnabled(true);
+		Model_3D timeship_1_inner = ModelMaster.getOBJModel("timeship_1_inner").setBackfaceCullingEnabled(true); 
 		Model_3D nazi = ModelMaster.getDFModel("nazi_1");
 		
 		Entity naziE = new Entity(nazi, new Vector3f(0,0,0), new Vector3f(0,0,0), 100);
@@ -207,7 +207,7 @@ public class GameLoop {
 			debug.hide();
 
 			spaceScene(master, skyboxRenderer);
-			setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "test_scene"));
+			//setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "test_scene"));
 
 			master.setProjectionMatrix(camera.getProjectionMatrix());
 
