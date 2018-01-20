@@ -5,6 +5,7 @@ in vec3 surfaceNormal;
 in vec3 toLightVector[4];
 in vec3 toCameraVector;
 in float visibility;
+in float do_discard;
 
 out vec4 out_Color;
 
@@ -21,6 +22,10 @@ uniform float reflectivity;
 uniform vec3 skyColour;
 
 void main(void){
+
+	if(do_discard > 0.5){
+		discard;
+	}
 
 	vec4 blendMapColour = texture(blendMap, pass_textureCoordinates);
 	

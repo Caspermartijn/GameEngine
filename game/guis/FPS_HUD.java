@@ -22,6 +22,7 @@ public class FPS_HUD extends GUI {
 		images();
 	}
 
+	@SuppressWarnings("unused")
 	private void images() {
 		List<ImageComponent> comps = new ArrayList<ImageComponent>();
 		ImageComponent left_corner = new ImageComponent(this, corner);

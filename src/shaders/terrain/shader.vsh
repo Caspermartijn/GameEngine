@@ -10,6 +10,8 @@ out vec3 toLightVector[4];
 out vec3 toCameraVector;
 out float visibility;
 
+out float do_discard;
+
 uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform vec3 lightPosition[4];
@@ -26,7 +28,21 @@ void main(void){
 	gl_ClipDistance[0] = dot(worldPosition, plane);
 	
 	vec4 positionRelativeToCam = viewMatrix * worldPosition;
-	gl_Position = projectionMatrix * positionRelativeToCam;
+
+	vec4 pposition = projectionMatrix * positionRelativeToCam;
+	
+	do_discard = 0;
+	
+	if(worldPosition.x < 1){
+		do_discard = 1;
+	}
+	
+	if(worldPosition.z < 1){
+		do_discard = 1;
+	}
+	
+	gl_Position = pposition;
+
 	pass_textureCoordinates = textureCoordinates;
 	
 	surfaceNormal = (vec4(normal,0.0)).xyz;
