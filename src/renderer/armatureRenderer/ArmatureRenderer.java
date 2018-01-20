@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import components.ArmatureComponent;
 import components.Component;
 import entities.Entity;
+import objects.Camera;
 import renderer.MasterRenderer;
 
 public class ArmatureRenderer {
@@ -17,11 +18,11 @@ public class ArmatureRenderer {
 
 	public static void render(Entity entity, Camera camera) {
 		shader.start();
-		shader.projectionViewMatrix.loadMatrix(MasterRenderer.getRenderCamera().getCameraMatrix());
+		shader.projectionViewMatrix.loadMatrix(camera.getViewMatrix());
 		shader.lightDirection.loadVec3(MasterRenderer.getLightDirection());
-		shader.diffuseMap.bindTexture(entity.getTexture());
+		shader.diffuseMap.bindTexture(entity.getModel().getTexture());
 		shader.modelMatrix.loadMatrix(entity.getTransform().toMatrix());
-		ArmatureComponent c = (ArmatureComponent) entity.getModel().getComponent(Component.Type.ARMATURE);
+		ArmatureComponent c = (ArmatureComponent) entity.getComponent(Component.Type.ARMATURE);
 		shader.jointTransforms.loadMatrixArray(c.getMatrices());
 		
 		entity.getModel().getMesh().bind(0, 1, 2, 3, 4);

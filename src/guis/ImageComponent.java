@@ -1,6 +1,7 @@
 package guis;
 
 import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 
 import images.Image;
 import renderer.imageRenderer.ImageRenderer;
@@ -10,6 +11,7 @@ public class ImageComponent extends GUIComponent {
 
 	private Image img;
 	private float x, y;
+	private Vector3f colorOverride = new Vector3f(-1f, -1f, -1f);
 
 	public ImageComponent(GUI container, SourceFile file) {
 		super(container);
@@ -19,7 +21,7 @@ public class ImageComponent extends GUIComponent {
 	@Override
 	public void render() {
 		img.setPosition(super.getContainer().getPosition().getX() + x, super.getContainer().getPosition().getY() + y);
-		ImageRenderer.renderImage(img);
+		ImageRenderer.renderImage(img, colorOverride);
 	}
 
 	@Override
@@ -55,15 +57,19 @@ public class ImageComponent extends GUIComponent {
 	}
 
 	public float getRotation() {
-		return img.getRotation(); 
+		return img.getRotation();
 	}
-	
+
 	public Vector2f getPosition() {
 		return new Vector2f(x, y);
 	}
-	
+
 	public Vector2f getSizeOpenGL() {
 		return img.getSizeOpenGL();
+	}
+
+	public void setOverrideColor(Vector3f vec) {
+		colorOverride = vec;
 	}
 
 }
