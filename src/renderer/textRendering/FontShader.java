@@ -1,9 +1,5 @@
 package renderer.textRendering;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import shaders.uniforms.ShaderProgram;
 import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformSampler;
@@ -43,16 +39,6 @@ public class FontShader extends ShaderProgram {
 	@Override
 	protected Uniform[] getAllUniforms() {
 		return new Uniform[] { color, texture, translation, fontSettings };
-	}
-
-	@Override
-	protected Collection<Uniform> getAllUnis() {
-		List<Uniform> uniforms = new ArrayList<Uniform>();
-		uniforms.add(color);
-		uniforms.add(texture);
-		uniforms.add(translation);
-		uniforms.add(fontSettings);
-		return uniforms;
 	}
 	
 }

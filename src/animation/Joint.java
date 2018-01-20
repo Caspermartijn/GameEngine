@@ -10,6 +10,7 @@ import utils.transformations.QuaternionTransform;
 public class Joint {
 	
 	public static final int MAX_WEIGHTS = 3;
+	public static final int MAX_JOINTS = 50;
 	
 	public final int index;
 	public final String name;

@@ -1,9 +1,5 @@
 package renderer.entityRenderer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import shaders.uniforms.ShaderProgram;
 import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformFloat;
@@ -48,20 +44,6 @@ public class EntityShader extends ShaderProgram {
 	protected Uniform[] getAllUniforms() {
 		return new Uniform[] { texture, location_lightColour, location_lightPosition, location_projectionMatrix,
 				location_reflectivity, location_shineDamper, location_transformationMatrix, location_viewMatrix };
-	}
-
-	@Override
-	protected Collection<Uniform> getAllUnis() {
-		List<Uniform> uniforms = new ArrayList<Uniform>();
-		uniforms.add(texture);
-		uniforms.add(location_lightColour);
-		uniforms.add(location_lightPosition);
-		uniforms.add(location_projectionMatrix);
-		uniforms.add(location_reflectivity);
-		uniforms.add(location_shineDamper);
-		uniforms.add(location_transformationMatrix);
-		uniforms.add(location_viewMatrix);
-		return uniforms;
 	}
 
 }

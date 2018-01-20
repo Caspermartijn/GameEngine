@@ -1,9 +1,5 @@
 package renderer.lineRenderer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import shaders.uniforms.ShaderProgram;
 import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformMat4;
@@ -39,16 +35,6 @@ public class LineShader extends ShaderProgram {
 	protected Uniform[] getAllUniforms() {
 		return new Uniform[] { location__viewMatrix, location_projectionViewMatrix, location_transformationMatrix,
 				color };
-	}
-
-	@Override
-	protected Collection<Uniform> getAllUnis() {
-		List<Uniform> uniforms = new ArrayList<Uniform>();
-		uniforms.add(location_transformationMatrix);
-		uniforms.add(location_projectionViewMatrix);
-		uniforms.add(location__viewMatrix);
-		uniforms.add(color);
-		return uniforms;
 	}
 
 }

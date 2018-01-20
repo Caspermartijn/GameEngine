@@ -2,7 +2,6 @@ package shaders.uniforms;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map.Entry;
 
 import org.lwjgl.opengl.GL11;
@@ -120,7 +119,7 @@ public abstract class ShaderProgram {
 
 	protected abstract Uniform[] getAllUniforms();
 
-	protected abstract Collection<Uniform> getAllUnis();
+//	protected abstract Collection<Uniform> getAllUnis();
 
 	public static ShaderProgramBuilder newShaderProgram() {
 		return new ShaderProgramBuilder();

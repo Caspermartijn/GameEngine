@@ -1,9 +1,5 @@
 package renderer.skyboxRenderer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import shaders.uniforms.ShaderProgram;
 import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformCubeMap;
@@ -41,16 +37,6 @@ public class SkyboxShader extends ShaderProgram {
 	@Override
 	protected Uniform[] getAllUniforms() {
 		return new Uniform[] { cubeMap, projectionMatrix, viewMatrix, size };
-	}
-
-	@Override
-	protected Collection<Uniform> getAllUnis() {
-		List<Uniform> uniforms = new ArrayList<Uniform>();
-		uniforms.add(cubeMap);
-		uniforms.add(projectionMatrix);
-		uniforms.add(viewMatrix);
-		uniforms.add(size);
-		return uniforms;
 	}
 
 }

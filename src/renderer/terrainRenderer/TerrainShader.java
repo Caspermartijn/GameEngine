@@ -1,7 +1,5 @@
 package renderer.terrainRenderer;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.lwjgl.util.vector.Vector3f;
@@ -118,39 +116,6 @@ public class TerrainShader extends ShaderProgram {
 				location_renderDistance, location_shadowDistance, location_shadowMap, location_shadowMapSize,
 				location_shineDamper, location_toShadowMapSpace, location_viewMatrix, location_skyColor, lightColour,
 				lightPosition, attenuation, tileAm };
-	}
-
-	@Override
-	protected Collection<Uniform> getAllUnis() {
-		List<Uniform> uniforms = new ArrayList<Uniform>();
-		uniforms.add(location_back);
-		uniforms.add(location_blend);
-		uniforms.add(location_blue);
-		uniforms.add(location_density);
-		uniforms.add(location_gradient);
-		uniforms.add(location_green);
-		uniforms.add(location_normalBack);
-		uniforms.add(location_normalBlue);
-		uniforms.add(location_normalGreen);
-		uniforms.add(location_normalRed);
-		uniforms.add(location_numberOfRows);
-		uniforms.add(location_offset);
-		uniforms.add(location_projectionMatrix);
-		uniforms.add(location_red);
-		uniforms.add(location_reflectivity);
-		uniforms.add(location_renderDistance);
-		uniforms.add(location_shadowDistance);
-		uniforms.add(location_shadowMap);
-		uniforms.add(location_shadowMapSize);
-		uniforms.add(location_shineDamper);
-		uniforms.add(location_toShadowMapSpace);
-		uniforms.add(location_viewMatrix);
-		uniforms.add(location_skyColor);
-		uniforms.add(lightColour);
-		uniforms.add(lightPosition);
-		uniforms.add(attenuation);
-		uniforms.add(tileAm);
-		return uniforms;
 	}
 
 }
