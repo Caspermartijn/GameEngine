@@ -28,7 +28,7 @@ public class FPS_Player extends Entity {
 		camera.setNewProj();
 	}
 
-	private Camera camera = new Camera();
+	private Camera camera = new Camera(); 
 	private float cameraheight = 7;
 
 	private HBox hitbox;
