@@ -25,7 +25,7 @@ public class ArmatureComponent implements Component {
 
 	public Joint getJointByID(int id) {
 		for (Joint j : joints) {
-			if (j.getID() == id) {
+			if (j.getID() == id) { 
 				return j;
 			}
 		}

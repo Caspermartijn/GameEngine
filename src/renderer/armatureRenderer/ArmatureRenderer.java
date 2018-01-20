@@ -1,12 +1,12 @@
 package renderer.armatureRenderer;
 
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector3f;
 
 import components.ArmatureComponent;
 import components.Component;
 import entities.Entity;
 import objects.Camera;
-import renderer.MasterRenderer;
 
 public class ArmatureRenderer {
 
@@ -16,10 +16,10 @@ public class ArmatureRenderer {
 		shader = new ArmatureShader();
 	}
 
-	public static void render(Entity entity, Camera camera) {
+	public static void render(Vector3f direction,Entity entity, Camera camera) {
 		shader.start();
 		shader.projectionViewMatrix.loadMatrix(camera.getViewMatrix());
-		shader.lightDirection.loadVec3(MasterRenderer.getLightDirection());
+		shader.lightDirection.loadVec3(direction);
 		shader.diffuseMap.bindTexture(entity.getModel().getTexture());
 		shader.modelMatrix.loadMatrix(entity.getTransform().toMatrix());
 		ArmatureComponent c = (ArmatureComponent) entity.getComponent(Component.Type.ARMATURE);

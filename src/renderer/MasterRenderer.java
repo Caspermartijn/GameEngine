@@ -34,7 +34,7 @@ public class MasterRenderer extends Cleanup {
 	public static final float GREEN = 0.4f;
 	public static final float BLUE = 0.2f;
 
-	public static float density = 0.0035f; 
+	public static float density = 0.0035f;
 	public static float gradient = 5f;
 
 	private EntityShader entityShader = new EntityShader();
@@ -69,20 +69,24 @@ public class MasterRenderer extends Cleanup {
 		for (Entity ent : entities) {
 			entititesAmount++;
 			ent.update();
-			processEntity(ent);
+			if (ent.hasComponentType(components.Component.Type.ARMATURE)) {
+				// render with animation renderer
+			} else {
+				processEntity(ent);
+			}
 			updateEntities(ent.getChildrenEntities());
 		}
 	}
 
 	private void updateTerrains(List<Terrain> terrains2) {
-		for(Terrain terrain : terrains2) {
+		for (Terrain terrain : terrains2) {
 			terrainsAmount++;
 			processTerrain(terrain);
 		}
 	}
 
 	private void processTerrain(Terrain terrain) {
-		terrains.add(terrain);		
+		terrains.add(terrain);
 	}
 
 	public void render(Camera camera, List<Light> light, List<Entity> entities, List<Terrain> terrains) {
