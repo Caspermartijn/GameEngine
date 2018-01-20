@@ -18,7 +18,7 @@ public class Image {
 	public float rotation = 0;
 
 	public Image(SourceFile texture) {
-		this.texture = ModelLoader.loadTexture(texture); 
+		this.texture = ModelLoader.loadTexture(texture);
 	}
 
 	public Image(SourceFile texture, float x, float y) {
@@ -116,6 +116,12 @@ public class Image {
 	public void setPosition(float x, float y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public Vector2f getSizeOpenGL() {
+		float posX = (getX() - 0.5f) * 2.0f + scale * texture.getWidth() / Display.getWidth();
+		float posY = (getY() - 0.5f) * -2.0f - scale * texture.getHeight() / Display.getHeight();
+		return new Vector2f(posX, posY);
 	}
 
 }
