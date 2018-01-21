@@ -55,6 +55,7 @@ public class SceneLoader {
 		return scene;
 	}
 
+	@SuppressWarnings("unused")
 	private static Scene getTerrain(Scene scene, SourceFile terrainFolder) {
 		List<String> ss = FileScanner.getStringList(new SourceFile(terrainFolder, "/data.dat"));
 		float size = 0;
