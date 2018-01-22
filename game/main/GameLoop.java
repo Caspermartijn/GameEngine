@@ -48,7 +48,6 @@ import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
-import scenes.SceneLoader;
 import texts.Fonts;
 import utils.RenderItem;
 import utils.SourceFile;

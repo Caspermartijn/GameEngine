@@ -22,6 +22,7 @@ public class FPS_HUD extends GUI {
 	private SourceFile ammo_icon = new SourceFile("/res/guis/hud/ammo_icon.png");
 	private SourceFile armor_icon = new SourceFile("/res/guis/hud/armor_icon.png");
 	private SourceFile health_icon = new SourceFile("/res/guis/hud/health_icon.png");
+	private SourceFile objective_icon = new SourceFile("/res/guis/hud/objective_icon.png");
 
 	public FPS_HUD() {
 		images();
@@ -41,7 +42,7 @@ public class FPS_HUD extends GUI {
 		armor.setPosition(0.95f, 0.935f + heightAddRight);
 
 		objective = new TextComponent(this, "Objective", "candara", 1.2f, 200, false);
-		objective.setPosition(0.005f, 0.855f + heightAdd);
+		objective.setPosition(0.005f + 0.010f + 0.0065f, 0.855f + heightAdd);
 
 		float height_add = .04f;
 
@@ -90,10 +91,12 @@ public class FPS_HUD extends GUI {
 		ImageComponent armor_icon_comp = new ImageComponent(this, armor_icon);
 		ImageComponent health_icon_comp = new ImageComponent(this, health_icon);
 		ImageComponent ammo_icon_comp = new ImageComponent(this, ammo_icon);
+		ImageComponent objective_icon_comp = new ImageComponent(this, objective_icon);
 
-		ammo_icon_comp.setSize(57, 57);
-		armor_icon_comp.setSize(34, 34);
-		health_icon_comp.setSize(30, 30);
+		ammo_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(38, 38));
+		armor_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(22.66666f, 22.66666f));
+		health_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(20, 20));
+		objective_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(28.666f, 28.666f));
 
 		ammo_icon_comp.setOverrideColor(new Vector3f(0.06f, 0.06f, 0.06f), new Vector3f(-0.1f, -0.1f, -0.1f),
 				new Vector3f(0.1f, 0.1f, 0.1f));
@@ -105,6 +108,8 @@ public class FPS_HUD extends GUI {
 		armor_icon_comp.setPosition(0.95f - 0.01f, 0.935f + 0.0225f + heightAddRight);
 		health_icon_comp.setPosition(0.95f - 0.01f, 0.89f + 0.02f + heightAddRight);
 		ammo_icon_comp.setPosition(0.8f - 0.0175f, 0.89f + 0.046f + heightAddRight);
+
+		objective_icon_comp.setPosition(0.005f + 0.008f, 0.855f + 0.003f + 0.013f + heightAdd);
 
 		Vector2f cornerSize = Maths.getFrom720toCurrentDisplaySize(new Vector2f(1280 * 0.1f, 720 * 0.065f));
 		Vector2f cornerSize2 = Maths.getFrom720toCurrentDisplaySize(new Vector2f(1280 * 0.065f, 720 * 0.1f));
@@ -122,8 +127,10 @@ public class FPS_HUD extends GUI {
 		float a = 0.234375f / 2;
 		float b = 0.41666666666f / 2;
 
-		float midWidth = 325.3f;
-		float midHeight = 342f;
+		Vector2f vec = Maths.getFrom1920toCurrentDisplaySize(325.3f, 342f);
+
+		float midWidth = vec.x;
+		float midHeight = vec.y;
 
 		Vector2f leftMidPosition = new Vector2f(left_corner.getPosition().x, left_corner.getPosition().y);
 		left_mid.setSize(new Vector2f(midWidth, midHeight));
@@ -144,11 +151,15 @@ public class FPS_HUD extends GUI {
 		comps.add(right_mid);
 
 		right_top.setSize(midWidth, cornerSize2.y);
+
 		right_top.setPosition(rightMidPosition.x + a, rightMidPosition.y);
+
 		comps.add(right_top);
 
 		right_side.setSize(cornerSize2.x, midHeight);
+
 		right_side.setPosition(rightMidPosition.x, rightMidPosition.y + b);
+
 		comps.add(right_side);
 
 		Vector3f blueoption = new Vector3f(0.290196078f, 0.49019607f, 0.807843f);

@@ -145,4 +145,16 @@ public class Maths {
 				linearInterpolation(v1.z, v2.z, blend));
 	}
 
+	public static Vector2f getFrom720toCurrentDisplaySize(float x, float y) {
+		x = x / 1280;
+		y = y / 720;
+		return new Vector2f(Display.getWidth() * x, Display.getHeight() * y);
+	}
+
+	public static Vector2f getFrom1920toCurrentDisplaySize(float x, float y) {
+		x = x / 1920;
+		y = y / 1080;
+		return new Vector2f(Display.getWidth() * x, Display.getHeight() * y);
+	}
+
 }
