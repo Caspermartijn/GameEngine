@@ -52,6 +52,22 @@ public class ModelLoader {
 		return texture;
 	}
 
+	public static Texture loadTexture(SourceFile textureFile, boolean antiDupe) {
+		String filename = textureFile.getName();
+		Texture texture = null;
+		if (antiDupe) {
+			if (!textures.containsKey(filename)) {
+				texture = Texture.getTextureBuilder(textureFile).create();
+				textures.put(filename, texture);
+			} else {
+				texture = textures.get(filename);
+			}
+		} else {
+			texture = Texture.getTextureBuilder(textureFile).create();
+		}
+		return texture;
+	}
+
 	public static Model_3D getDFModel(SourceFile model, SourceFile textureFile) {
 		if (!errorModelB) {
 			try {

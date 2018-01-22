@@ -5,4 +5,4 @@ s:postproccesing:medium
 s:shadows:medium
 s:terrain:medium
 s:water:medium
-s:displaymode:fullscreen
+s:displaymode:windowed

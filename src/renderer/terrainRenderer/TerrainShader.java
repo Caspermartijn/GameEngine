@@ -33,8 +33,9 @@ public class TerrainShader extends ShaderProgram {
 	public UniformSampler location_bTexture = new UniformSampler("bTexture");
 	public UniformSampler location_blendMap = new UniformSampler("blendMap");
 
+
 	public TerrainShader() {
-		super.init(ShaderProgram.newShaderProgram());
+		super.init(ShaderProgram.newShaderProgram().addInput(0, "position").addInput(1, "textureCoordinates").addInput(2, "normal").addOutput(0, "out_Color"));
 		start();
 		location_backgroundTexture.loadTexUnit(0);
 		location_rTexture.loadTexUnit(1);

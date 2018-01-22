@@ -1,10 +1,14 @@
 package renderer.imageRenderer;
 
+import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engine.Display;
 import engine.GLSettings;
 import images.Image;
 import renderer.MasterRenderer;
+import textures.Texture;
 import utils.tasks.Cleanup;
 
 public class ImageRenderer extends Cleanup {
@@ -19,6 +23,34 @@ public class ImageRenderer extends Cleanup {
 		shader = new ImageShader();
 	}
 
+	public static Matrix4f getMatrix() {
+		Matrix4f matrix = new Matrix4f();
+		matrix.setIdentity();
+		float posX = 0;
+		float posY = 0;
+		Matrix4f.translate(new Vector2f(posX, posY), matrix, matrix);
+		Matrix4f.scale(new Vector3f(1, 1, 1),
+				matrix, matrix);
+		return matrix;
+	}
+	
+
+	public static void renderImage(Texture image) {
+		GLSettings.enableAlphaBlending();
+		// GLSettings.setDepthTesting(true);
+
+		shader.start();
+		shader.matrix.loadMatrix(getMatrix());
+		shader.color_override.loadVec3(new Vector3f(-1f, -1f, -1f));
+		shader.texture.bindTexture(image);
+		MasterRenderer.renderQuad();
+		shader.stop();
+
+		GLSettings.disableBlending();
+		// GLSettings.setDepthTesting(false);
+	}
+
+	
 	public static void renderImage(Image image) {
 		GLSettings.enableAlphaBlending();
 		// GLSettings.setDepthTesting(true);

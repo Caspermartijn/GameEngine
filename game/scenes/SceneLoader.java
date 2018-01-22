@@ -78,31 +78,29 @@ public class SceneLoader {
 			blueNormal = Boolean.parseBoolean(a[3]);
 		}
 		TerrainTexture back = new TerrainTexture(
-				ModelLoader.loadTexture(new SourceFile(terrainFolder, "back/texture.png")));
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "back/texture.png"), false));
 		TerrainTexture red = new TerrainTexture(
-				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/red/texture.png")));
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/red/texture.png"), false));
 		TerrainTexture green = new TerrainTexture(
-				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/green/texture.png")));
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/green/texture.png"), false));
 		TerrainTexture blue = new TerrainTexture(
-				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/blue/texture.png")));
-		
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/blue/texture.png"), false));
+
 		if (redNormal) {
-			red.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/red/normal.png")));
+			red.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/red/normal.png"), false));
 		}
 		if (blueNormal) {
-			blue.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/blue/normal.png")));
+			blue.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/blue/normal.png"), false));
 		}
 		if (greenNormal) {
-			green.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/green/normal.png")));
+			green.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/green/normal.png"), false));
 		}
 		if (backNormal) {
-			back.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/back/normal.png")));
+			back.setNormalMap(ModelLoader.loadTexture(new SourceFile(terrainFolder, "/back/normal.png"), false));
 		}
 
-
-
 		TerrainTexture blend = new TerrainTexture(
-				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/mapdat/blend.png")));
+				ModelLoader.loadTexture(new SourceFile(terrainFolder, "/mapdat/blend.png"), false));
 
 		TerrainTexturePack pack = new TerrainTexturePack(back, red, green, blue);
 
@@ -110,7 +108,7 @@ public class SceneLoader {
 
 		Terrain terrain = new Terrain(0, 0, tpack, 1);
 		scene.terrains.add(terrain);
-		return scene; 
+		return scene;
 	}
 
 	private static Scene loadModels(Scene scene, SourceFile modelsFolder) {

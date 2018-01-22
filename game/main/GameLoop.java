@@ -226,9 +226,9 @@ public class GameLoop {
 				public void midLoad() {
 				}
 			};
-			
+
 			FPS_HUD hud = new FPS_HUD();
-			
+
 			GamePerspective inGame = new GamePerspective("ingame") {
 
 				@Override
@@ -248,8 +248,6 @@ public class GameLoop {
 				}
 			};
 
-			
-
 			while (!Display.isCloseRequested() && !Display.hasToClose()) {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -258,7 +256,7 @@ public class GameLoop {
 
 				debug.update(camera);
 				debug.renderComponents();
-
+				
 				swapBuffers();
 				updateEvents();
 			}

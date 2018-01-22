@@ -1,4 +1,4 @@
-#version 140
+#version 400 core
 
 in vec2 pass_textureCoordinates;
 in vec3 surfaceNormal;
@@ -37,7 +37,7 @@ void main(void){
 	vec4 bTextureColour = texture(bTexture,tiledCoords) * blendMapColour.b;
 	
 	vec4 totalColour = backgroundTextureColour + rTextureColour + gTextureColour + bTextureColour;
-
+	
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitVectorToCamera = normalize(toCameraVector);
 	

@@ -42,10 +42,11 @@ public class TerrainRenderer {
 	private void bindTextures(Terrain terrain) {
 		TerrainPack texturePack = terrain.getPack();
 		terrains.terrainTexture.TerrainTexturePack textureP = texturePack.getPack();
+		shader.location_backgroundTexture.bindTexture(textureP.getBack().getTexture());
 		shader.location_rTexture.bindTexture(textureP.getRed().getTexture());
 		shader.location_gTexture.bindTexture(textureP.getGreen().getTexture());
 		shader.location_bTexture.bindTexture(textureP.getBlue().getTexture());
-		shader.location_blendMap.bindTexture(texturePack.getBlend().getTexture());
+		shader.location_blendMap.bindTexture(terrain.getBlendMapID());
 	}
 
 	private void unbindTexturedModel(Terrain terrain) {
