@@ -61,7 +61,7 @@ public abstract class Scene extends Cleanup implements IScene {
 
 	private String displayName = "test";
 
-	private String[] objective;
+	private String[] objective = new String[] {"No objective set","", ""};
 
 	private MasterRenderer masterRenderer;
 	private SkyboxRenderer skyboxRenderer;

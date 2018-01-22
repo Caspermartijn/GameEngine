@@ -48,15 +48,14 @@ public class MasterRenderer extends Cleanup {
 
 	private Map<Model_3D, List<Entity>> entities = new HashMap<Model_3D, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
-	
+
 	private List<Entity> animatedEntity = new ArrayList<Entity>();
-	
+
 	public MasterRenderer() {
 		ENGINE_RES.init();
 		entityRenderer = new EntityRenderer(entityShader);
-		terrainRenderer = new TerrainRenderer(terrainShader,null);
+		terrainRenderer = new TerrainRenderer(terrainShader, null);
 		linerenderer = new LineRenderer();
-		ArmatureRenderer.init();
 		new FontRenderer();
 		new QuadRenderer();
 		new ImageRenderer();
@@ -126,13 +125,13 @@ public class MasterRenderer extends Cleanup {
 		}
 
 		ArmatureRenderer.render(lights.get(0).getPosition(), animatedEntity, camera);
-		
+
 		terrainShader.start();
 		terrainShader.loadLights(lights);
 		terrainShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());
 		terrainRenderer.render(terrains);
 		terrainShader.stop();
-		
+
 		entities.clear();
 		terrains.clear();
 		animatedEntity.clear();
@@ -160,6 +159,7 @@ public class MasterRenderer extends Cleanup {
 	}
 
 	public void delete() {
+		ArmatureRenderer.delete();
 	}
 
 	private static Vao quad;
@@ -190,6 +190,7 @@ public class MasterRenderer extends Cleanup {
 		FontRenderer.init();
 		QuadRenderer.init();
 		ImageRenderer.init();
+		ArmatureRenderer.init();
 		quad = Vao.create();
 		float[] positions = { -1, 1, -1, -1, 1, 1, 1, -1 };
 		quad = quad.loadToVAO(positions, 2);

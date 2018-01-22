@@ -12,6 +12,8 @@ public class ImageComponent extends GUIComponent {
 	private Image img;
 	private float x, y;
 	private Vector3f colorOverride = new Vector3f(-1f, -1f, -1f);
+	private Vector3f[] colorToOVerride = new Vector3f[] { new Vector3f(-0.1f, -0.1f, -0.1f),
+			new Vector3f(1.3f, 1.3f, 1.3f) };
 
 	public ImageComponent(GUI container, SourceFile file) {
 		super(container);
@@ -21,7 +23,7 @@ public class ImageComponent extends GUIComponent {
 	@Override
 	public void render() {
 		img.setPosition(super.getContainer().getPosition().getX() + x, super.getContainer().getPosition().getY() + y);
-		ImageRenderer.renderImage(img, colorOverride);
+		ImageRenderer.renderImage(img, colorOverride, colorToOVerride);
 	}
 
 	@Override
@@ -71,5 +73,9 @@ public class ImageComponent extends GUIComponent {
 	public void setOverrideColor(Vector3f vec) {
 		colorOverride = vec;
 	}
-
+	public void setOverrideColor(Vector3f vec, Vector3f minColor, Vector3f maxColor) {
+		colorOverride = vec;
+		colorToOVerride[0] = minColor;
+		colorToOVerride[1] = maxColor;
+	}
 }

@@ -5,6 +5,7 @@ import shaders.uniforms.Uniform;
 import shaders.uniforms.UniformMat4;
 import shaders.uniforms.UniformSampler;
 import shaders.uniforms.UniformVec3;
+import shaders.uniforms.UniformVec3Array;
 import utils.SourceFile;
 
 public class ImageShader extends ShaderProgram {
@@ -16,10 +17,11 @@ public class ImageShader extends ShaderProgram {
 	public UniformMat4 matrix = new UniformMat4("matrix");
 
 	public UniformVec3 color_override = new UniformVec3("color_override");
-	
+	public UniformVec3Array color_override_picker = new UniformVec3Array("color_override_picker", 2);
+
 	protected ImageShader() {
-		super.init(ShaderProgram.newShaderProgram().addInput(0, "in_Position").addInput(1, "in_TextureCoords").addOutput(0,
-				"out_Color")); 
+		super.init(ShaderProgram.newShaderProgram().addInput(0, "in_Position").addInput(1, "in_TextureCoords")
+				.addOutput(0, "out_Color"));
 	}
 
 	protected SourceFile getVertexFile() {
@@ -31,7 +33,7 @@ public class ImageShader extends ShaderProgram {
 	}
 
 	protected Uniform[] getAllUniforms() {
-		return new Uniform[] { texture, matrix };
+		return new Uniform[] { texture, matrix, color_override, color_override_picker };
 	}
 
 }
