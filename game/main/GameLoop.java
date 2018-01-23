@@ -21,6 +21,7 @@ import static scenes.Scene.setCurrentScene;
 import static utils.RenderItem.renderItems;
 import static utils.tasks.Cleanup.cleanAll;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -28,6 +29,7 @@ import controlls.FreeCam;
 import debug.DebugGui;
 import engine.Display;
 import engine.DisplayBuilder;
+import engine.Keyboard;
 import entities.Entity;
 import entities.Light;
 import entities.TimeShip;
@@ -48,6 +50,7 @@ import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
+import scenes.SceneLoader;
 import texts.Fonts;
 import utils.RenderItem;
 import utils.SourceFile;
@@ -119,21 +122,36 @@ public class GameLoop {
 		setMouseEnabled(false);
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
 		ship.setControllable(true);
-		HitBox playerHitBox = new HitBox(-3, 3, 0, 7, -3, 3);
-		FPS_Player player = new FPS_Player(ModelMaster.getOBJModel("timecube_1"), new Vector3f(2000, 100, 2000),
-				new Vector3f(), playerHitBox, 0);
+		FPS_Player player = new FPS_Player(new Vector3f(0, 0, 0));
 		FreeCam freecam = new FreeCam();
-		GameLoop.camera = freecam;
+		GameLoop.camera = player;
 		new RenderItem() {
+			boolean b = false;
 
 			@Override
 			public void render() {
 				if (GamePerspective.currentState.getGameStateName().equalsIgnoreCase("ingame")) {
-					freecam.updateInputs();
+					if (GameLoop.camera == freecam) {
+						freecam.updateInputs();
+					} else {
+						player.updateInputs();
+					}
+				}
+				if (Keyboard.isKeyDown(GLFW.GLFW_KEY_F2)) {
+					if (!b) {
+						if (GameLoop.camera == freecam) {
+							GameLoop.camera = player;
+							b = true;
+						} else {
+							GameLoop.camera = freecam;
+							b = true;
+						}
+					}
+				} else {
+					b = false;
 				}
 			}
 		};
-		player.getTransform().setPosition(new Vector3f(0, 100, 0));
 
 		SourceFile ame_nebula = new SourceFile("/res/skybox/space_1");
 		Skybox skybox = new Skybox(new SourceFile[] { new SourceFile(ame_nebula, "face_right.png"),
@@ -206,7 +224,7 @@ public class GameLoop {
 			debug.hide();
 
 			spaceScene(master, skyboxRenderer);
-			//setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "test_scene"));
+			setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "test_scene"));
 
 			master.setProjectionMatrix(camera.getProjectionMatrix());
 
@@ -255,7 +273,7 @@ public class GameLoop {
 
 				debug.update(camera);
 				debug.renderComponents();
-				
+
 				swapBuffers();
 				updateEvents();
 			}

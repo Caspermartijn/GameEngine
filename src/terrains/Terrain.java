@@ -6,11 +6,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import objects.FPS_Player;
 import objects.Vao;
 import terrains.terrainTexture.TerrainPack;
 import textures.Texture;
+import utils.maths.Maths;
 
 public class Terrain {
 
@@ -110,10 +113,10 @@ public class Terrain {
 					normals[vertexPointer * 3] = normal.x;
 					normals[vertexPointer * 3 + 1] = normal.y;
 					normals[vertexPointer * 3 + 2] = normal.z;
-					
+
 					textureCoords[vertexPointer * 2] = (float) j2 / ((float) VERTEX_COUNT - 1);
 					textureCoords[vertexPointer * 2 + 1] = (float) i / ((float) VERTEX_COUNT - 1);
-					
+
 					vertexPointer++;
 				}
 			}
@@ -183,6 +186,35 @@ public class Terrain {
 
 	public float getTextureYOffset() {
 		return getGridZ();
+	}
+
+	public float getHeightOfTerrain(float worldX, float worldZ) {// TODO CLEAN
+		// IT UP
+		float terrainX = worldX;
+		float terrainZ = worldZ;
+		float gridSquareSize = SIZE / ((float) heights.length - 1);
+		int gridX = (int) Math.floor(terrainX / gridSquareSize);
+		int gridZ = (int) Math.floor(terrainZ / gridSquareSize);
+
+		if (gridX >= heights.length - 1 || gridZ >= heights.length - 1 || gridX < 0 || gridZ < 0) {
+			return 0;
+		}
+
+		float xCoord = (terrainX % gridSquareSize) / gridSquareSize;
+		float zCoord = (terrainZ % gridSquareSize) / gridSquareSize;
+		float answer;
+
+		if (xCoord <= (1 - zCoord)) {
+			answer = Maths.barryCentric(new Vector3f(0, heights[gridX][gridZ], 0),
+					new Vector3f(1, heights[gridX + 1][gridZ], 0), new Vector3f(0, heights[gridX][gridZ + 1], 1),
+					new Vector2f(xCoord, zCoord));
+		} else {
+			answer = Maths.barryCentric(new Vector3f(1, heights[gridX + 1][gridZ], 0),
+					new Vector3f(1, heights[gridX + 1][gridZ + 1], 1), new Vector3f(0, heights[gridX][gridZ + 1], 1),
+					new Vector2f(xCoord, zCoord));
+		}
+
+		return answer;
 	}
 
 }

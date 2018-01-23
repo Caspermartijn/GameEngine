@@ -7,13 +7,11 @@ import org.lwjgl.util.vector.Vector3f;
 import engine.Display;
 import engine.Keyboard;
 import engine.Mouse;
-import entities.Entity;
-import hitbox.HBox;
-import hitbox.HitBox;
-import hitbox.HitBoxMaster;
+import guis.FPS_HUD;
+import scenes.Scene;
 import utils.maths.Maths;
 
-public class FPS_Player extends Entity {
+public class FPS_Player extends Camera {
 
 	private final static float FOV = 90;
 	private final static float NEAR_PLANE = 0.1f;
@@ -22,20 +20,25 @@ public class FPS_Player extends Entity {
 	private static final float MOUSE_SENSITY = 100;
 	private static final float SPEED = 20;
 
-	public FPS_Player(Model_3D model, Vector3f position, Vector3f rotation, HitBox playerHitBox, float scale) {
-		super(model, position, rotation, scale);
-		hitbox = playerHitBox;
-		camera.setNewProj();
+	public static final float GRAFITY = -10;
+	private static final float JUMP_POWER = 2;
+
+	private FPS_HUD hud;
+
+	public FPS_Player(Vector3f start_position) {
+		super.x = start_position.x;
+		super.y = start_position.y + 5;
+		super.z = start_position.z;
+		hud = new FPS_HUD();
 	}
 
-	private Camera camera = new Camera(); 
-	private float cameraheight = 7;
-
-	private HBox hitbox;
-
-	private boolean b = false;
-
 	private float upSpeed = 0;
+
+	private boolean isInAir = false;
+
+	public FPS_HUD getFPS_HUD() {
+		return hud;
+	}
 
 	protected void setProjectionMatrix(Matrix4f projection) {
 		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
@@ -52,64 +55,62 @@ public class FPS_Player extends Entity {
 	}
 
 	public void updateInputs() {
-
 		float dx = (float) (Mouse.getMouseDX() * MOUSE_SENSITY);
 		float dy = (float) (Mouse.getMouseDY() * MOUSE_SENSITY);
-		camera.yaw += dx;
+		super.yaw += dx;
+		super.pitch += dy;
+		pitch = Maths.clamp(-70, 80, pitch);
 
-		camera.pitch += dy;
-		camera.pitch = Maths.clamp(-90, 90, camera.pitch);
+		float xIncr = 0;
+		float zIncr = 0;
 
-		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_H)) {
-			b = true;
-		}
+		float xIncr2 = 0;
+		float zIncr2 = 0;
 
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_W)) {
-			super.getTransform().posX += Math.sin(Math.toRadians(camera.yaw + 90)) * Display.getFrameTime() * SPEED;
-			super.getTransform().posZ -= Math.cos(Math.toRadians(camera.yaw + 90)) * Display.getFrameTime() * SPEED;
+			xIncr += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;
+			zIncr -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * SPEED;
 		}
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_S)) {
-			super.getTransform().posX += Math.sin(Math.toRadians(camera.yaw + 90)) * Display.getFrameTime() * -SPEED;
-			super.getTransform().posZ -= Math.cos(Math.toRadians(camera.yaw + 90)) * Display.getFrameTime() * -SPEED;
+			xIncr += Math.sin(Math.toRadians(yaw)) * Display.getFrameTime() * -SPEED;
+			zIncr -= Math.cos(Math.toRadians(yaw)) * Display.getFrameTime() * -SPEED;
 		}
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_A)) {
-			super.getTransform().posX -= Math.sin(Math.toRadians(camera.yaw)) * Display.getFrameTime() * SPEED;
-			super.getTransform().posZ += Math.cos(Math.toRadians(camera.yaw)) * Display.getFrameTime() * SPEED;
+			xIncr2 -= Math.sin(Math.toRadians(yaw + 90)) * Display.getFrameTime() * SPEED;
+			zIncr2 += Math.cos(Math.toRadians(yaw + 90)) * Display.getFrameTime() * SPEED;
 		}
 		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_D)) {
-			super.getTransform().posX -= Math.sin(Math.toRadians(camera.yaw)) * Display.getFrameTime() * -SPEED;
-			super.getTransform().posZ += Math.cos(Math.toRadians(camera.yaw)) * Display.getFrameTime() * -SPEED;
+			xIncr2 -= Math.sin(Math.toRadians(yaw + 90)) * Display.getFrameTime() * -SPEED;
+			zIncr2 += Math.cos(Math.toRadians(yaw + 90)) * Display.getFrameTime() * -SPEED;
+		}
+		if (Keyboard.isKeyDown(GLFW.GLFW_KEY_SPACE)) {
+			jump();
 		}
 
-		float actualY = cameraheight + getTransform().posY;
+		super.x += xIncr;
+		super.x += xIncr2;
 
-		super.getTransform().rotY = camera.yaw;
+		super.z += zIncr;
+		super.z += zIncr2;
 
-		camera.x = getTransform().posX;
-		camera.y = actualY;
-		camera.x = getTransform().posZ;
+		upSpeed += GRAFITY * Display.getFrameTime();
+		super.y += upSpeed;
 
-		if (b) {
-			upSpeed += WorldSettings.GRAFITY / 100 * Display.getFrameTime();
-		}
-		super.getTransform().posY += upSpeed;
-
-		if (HitBoxMaster.isInBox(hitbox)) {
-			System.out.println("hey");
-			super.getTransform().posY -= upSpeed;
+		float terrainH = Scene.getCurrentscene().getTerrains().get(0).getHeightOfTerrain(this.x, this.z);
+		if (super.y < terrainH + 5) {
 			upSpeed = 0;
+			isInAir = false;
+			super.y = terrainH + 5;
 		}
 
-		camera.updateMatrix();
+		super.updateMatrix();
 	}
 
-	public Camera getCamera() {
-		return camera;
-	}
-	
-	@Override
-	public void update() {
-		hitbox.setPosition(getTransform().getPosition());
+	private void jump() {
+		if (!isInAir) {
+			this.upSpeed = JUMP_POWER;
+			isInAir = true;
+		}
 	}
 
 }

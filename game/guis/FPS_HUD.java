@@ -23,7 +23,7 @@ public class FPS_HUD extends GUI {
 	private SourceFile armor_icon = new SourceFile("/res/guis/hud/armor_icon.png");
 	private SourceFile health_icon = new SourceFile("/res/guis/hud/health_icon.png");
 	private SourceFile objective_icon = new SourceFile("/res/guis/hud/objective_icon.png");
-
+	private SourceFile aim_icon = new SourceFile("/res/guis/hud/aim.png");
 	public FPS_HUD() {
 		images();
 		texts();
@@ -93,6 +93,8 @@ public class FPS_HUD extends GUI {
 		ImageComponent ammo_icon_comp = new ImageComponent(this, ammo_icon);
 		ImageComponent objective_icon_comp = new ImageComponent(this, objective_icon);
 
+		ImageComponent aim = new ImageComponent(this, aim_icon);
+		aim.setSize(Maths.getFrom720toCurrentDisplaySize(25, 25));aim.setPosition(0.5f, 0.5f);
 		ammo_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(38, 38));
 		armor_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(22.66666f, 22.66666f));
 		health_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(20, 20));
