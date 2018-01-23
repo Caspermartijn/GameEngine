@@ -20,8 +20,8 @@ public class FPS_Player extends Camera {
 	private static final float MOUSE_SENSITY = 100;
 	private static final float SPEED = 20;
 
-	public static final float GRAFITY = -10;
-	private static final float JUMP_POWER = 2;
+	public static final float GRAFITY = -7.5f;
+	private static final float JUMP_POWER = 1.3f;
 
 	private FPS_HUD hud;
 
