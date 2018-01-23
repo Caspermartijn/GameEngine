@@ -4,7 +4,6 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import engine.Display;
 import engine.GLSettings;
 import images.Image;
 import renderer.MasterRenderer;

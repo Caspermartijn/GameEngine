@@ -9,7 +9,6 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import objects.FPS_Player;
 import objects.Vao;
 import terrains.terrainTexture.TerrainPack;
 import textures.Texture;
