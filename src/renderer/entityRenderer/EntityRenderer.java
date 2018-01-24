@@ -8,8 +8,10 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import engine.GLSettings;
 import entities.Entity;
+import objects.Camera;
 import objects.Model_3D;
 import objects.Vao;
+import utils.maths.Matrix;
 import utils.tasks.Cleanup;
 
 public class EntityRenderer extends Cleanup {
@@ -21,12 +23,12 @@ public class EntityRenderer extends Cleanup {
 		this.shader = shader;
 	}
 
-	public void render(Map<Model_3D, List<Entity>> entities) {
+	public void render(Camera camera, Map<Model_3D, List<Entity>> entities) {
 		for (Model_3D model : entities.keySet()) {
 			prepareTexturedModel(model);
 			List<Entity> batch = entities.get(model);
 			for (Entity entity : batch) {
-				prepareInstance(entity);
+				prepareInstance(camera, entity);
 				GL11.glDrawElements(GL11.GL_TRIANGLES, model.getMesh().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 				GLSettings.setBackFaceCulling(true);
 			}
@@ -50,8 +52,14 @@ public class EntityRenderer extends Cleanup {
 		GLSettings.setBackFaceCulling(true);
 	}
 
-	private void prepareInstance(Entity entity) {
+	private void prepareInstance(Camera camera, Entity entity) {
 		Matrix4f transformationMatrix = entity.getTransformationMatrix();
+		if (entity.getType() == Entity.Type.Camera) {
+			transformationMatrix = Matrix.createTransformationMatrixRelativeCam(camera,
+					entity.getTransform().getPosition(), entity.getTransform().rotX, entity.getTransform().posY,
+					entity.getTransform().rotZ,
+					(entity.getTransform().scaleX + entity.getTransform().scaleY + entity.getTransform().scaleZ) / 3f);
+		}
 		shader.location_transformationMatrix.loadMatrix(transformationMatrix);
 	}
 

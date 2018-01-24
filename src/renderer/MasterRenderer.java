@@ -13,6 +13,7 @@ import engine.GLSettings;
 import engine.res.ENGINE_RES;
 import entities.Entity;
 import entities.Light;
+import guis.EntityComponent;
 import hitbox.HitBoxMaster;
 import objects.Camera;
 import objects.Model_3D;
@@ -46,10 +47,12 @@ public class MasterRenderer extends Cleanup {
 
 	public LineRenderer linerenderer;
 
-	private Map<Model_3D, List<Entity>> entities = new HashMap<Model_3D, List<Entity>>();
+	public static Map<Model_3D, List<Entity>> entities = new HashMap<Model_3D, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 
 	private List<Entity> animatedEntity = new ArrayList<Entity>();
+
+	private static List<EntityComponent> entityComponents = new ArrayList<EntityComponent>();
 
 	public MasterRenderer() {
 		ENGINE_RES.init();
@@ -66,6 +69,10 @@ public class MasterRenderer extends Cleanup {
 		entityRenderer.setProjectionMatrix(matrix);
 		terrainRenderer.loadProjMatrix(matrix);
 		linerenderer.setProjectionMatrix(matrix);
+	}
+
+	public static void addEntityComponents(EntityComponent comp) {
+		entityComponents.add(comp);
 	}
 
 	private void updateEntities(List<Entity> entities) {
@@ -112,13 +119,20 @@ public class MasterRenderer extends Cleanup {
 	}
 
 	public void render(List<Light> lights, Camera camera, Vector4f clipPlane) {
+		for (EntityComponent component : entityComponents) {
+			if (camera != null) {
+				component.updateEntity(camera);
+				processEntity(component.getEntity());
+			}
+		}
+
 		GLSettings.setBackFaceCulling(true);
 		prepare();
 		entityShader.start();
 		entityShader.location_lightColour.loadVec3(lights.get(0).getColour());
 		entityShader.location_lightPosition.loadVec3(lights.get(0).getPosition());
 		entityShader.location_viewMatrix.loadMatrix(camera.getViewMatrix());
-		entityRenderer.render(entities);
+		entityRenderer.render(camera, entities);
 		entityShader.stop();
 		if (HitBoxMaster.renderHitBoxes == true) {
 			linerenderer.renderHitBoxes(camera, HitBoxMaster.hitBoxes);
@@ -132,13 +146,14 @@ public class MasterRenderer extends Cleanup {
 		terrainRenderer.render(terrains);
 		terrainShader.stop();
 
+		entityComponents.clear();
 		entities.clear();
 		terrains.clear();
 		animatedEntity.clear();
 		GLSettings.setBackFaceCulling(false);
 	}
 
-	public void processEntity(Entity entity) {
+	public static void processEntity(Entity entity) {
 		Model_3D entityModel = entity.getModel();
 		List<Entity> batch = entities.get(entityModel);
 		if (batch != null) {

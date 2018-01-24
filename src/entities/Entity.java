@@ -28,6 +28,8 @@ public class Entity implements IEntity {
 
 	private UUID uuid;
 	private UUID parent_uuid;
+	
+	private Type entityType = Type.Normal;
 
 	public Entity(Model_3D model, Vector3f position, Vector3f rotation, float scale) {
 		transform = new EulerTransform();
@@ -38,6 +40,14 @@ public class Entity implements IEntity {
 		uuid = UUID.randomUUID();
 	}
 
+	public void setType(Type type) {
+		this.entityType = type;
+	}
+	
+	public Type getType() {
+		return entityType;
+	}
+	
 	public List<Entity> getChildren() {
 		return children;
 	}
@@ -109,7 +119,7 @@ public class Entity implements IEntity {
 		if (parent != null) {
 			return Matrix4f.mul(parent.getTransformationMatrix(), getLocalTransformationMatrix(), null);
 		} else {
-			return getLocalTransformationMatrix(); 
+			return getLocalTransformationMatrix();
 		}
 
 	}
@@ -133,4 +143,9 @@ public class Entity implements IEntity {
 		}
 		return null;
 	}
+
+	public static enum Type {
+		Normal, Camera;
+	}
+
 }

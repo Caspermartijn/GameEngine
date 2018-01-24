@@ -83,6 +83,12 @@ public class EulerTransform {
 		posZ = pos.z;
 	}
 
+	public void setPosition(float x, float y, float z) {
+		posX = x;
+		posY = y;
+		posZ = z;
+	}
+	
 	public void setRotation(Vector3f rot) {
 		this.rotX = rot.x;
 		this.rotY = rot.y;

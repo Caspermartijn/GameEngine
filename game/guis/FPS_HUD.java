@@ -9,6 +9,7 @@ import org.lwjgl.util.vector.Vector3f;
 import scenes.Scene;
 import utils.SourceFile;
 import utils.maths.Maths;
+import utils.models.ModelLoader;
 
 public class FPS_HUD extends GUI {
 
@@ -24,9 +25,19 @@ public class FPS_HUD extends GUI {
 	private SourceFile health_icon = new SourceFile("/res/guis/hud/health_icon.png");
 	private SourceFile objective_icon = new SourceFile("/res/guis/hud/objective_icon.png");
 	private SourceFile aim_icon = new SourceFile("/res/guis/hud/aim.png");
+
+	private SourceFile test_gun_model = new SourceFile("/res/models/gun_1/model.obj");
+	private SourceFile test_gun_texture = new SourceFile("/res/models/gun_1/texture.png");
+
 	public FPS_HUD() {
 		images();
 		texts();
+		entitycomponents();
+	}
+
+	private void entitycomponents() {
+		EntityComponent gun = new EntityComponent(this, ModelLoader.getOBJModel(test_gun_model, test_gun_texture),
+				new Vector2f(0, -3), new Vector3f(0, 0, 0), 1f);
 	}
 
 	private void texts() {
@@ -94,7 +105,8 @@ public class FPS_HUD extends GUI {
 		ImageComponent objective_icon_comp = new ImageComponent(this, objective_icon);
 
 		ImageComponent aim = new ImageComponent(this, aim_icon);
-		aim.setSize(Maths.getFrom720toCurrentDisplaySize(25, 25));aim.setPosition(0.5f, 0.5f);
+		aim.setSize(Maths.getFrom720toCurrentDisplaySize(25, 25));
+		aim.setPosition(0.5f, 0.5f);
 		ammo_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(38, 38));
 		armor_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(22.66666f, 22.66666f));
 		health_icon_comp.setSize(Maths.getFrom720toCurrentDisplaySize(20, 20));

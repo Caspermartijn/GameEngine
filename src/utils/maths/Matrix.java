@@ -4,8 +4,14 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import objects.Camera;
+
 public class Matrix {
 
+	public static Vector3f rotMat1 = new Vector3f(1, 0, 0);
+	public static Vector3f rotMat2 = new Vector3f(0, 1, 0);
+	public static Vector3f rotMat3 = new Vector3f(0, 0, 1);
+	
 	public static Matrix4f createTransformationMatrix(Vector3f position, float rotX, float rotY, float rotZ,
 			float scale) {
 		Matrix4f matrix = new Matrix4f();
@@ -16,6 +22,24 @@ public class Matrix {
 		Matrix4f.rotate((float) Math.toRadians(rotZ), new Vector3f(0, 0, 1), matrix, matrix);
 		Matrix4f.scale(new Vector3f(scale, scale, scale), matrix, matrix);
 		return matrix;
+	}
+
+	public static Matrix4f createTransformationMatrixRelativeCam(Camera cam, Vector3f translation, float rx, float ry,
+			float rz, float scale) {
+		Matrix4f transMatrixRelCam = new Matrix4f();
+		transMatrixRelCam.setIdentity();
+		Matrix4f.translate(translation, transMatrixRelCam, transMatrixRelCam);
+
+		Matrix4f.rotate((float) Math.toRadians(-cam.yaw), rotMat2, transMatrixRelCam,
+				transMatrixRelCam);
+		Matrix4f.rotate((float) Math.toRadians(-cam.pitch), rotMat1, transMatrixRelCam,
+				transMatrixRelCam);
+
+		Matrix4f.rotate((float) Math.toRadians(rx), rotMat1, transMatrixRelCam, transMatrixRelCam);
+		Matrix4f.rotate((float) Math.toRadians(ry), rotMat2, transMatrixRelCam, transMatrixRelCam);
+		Matrix4f.rotate((float) Math.toRadians(rz), rotMat3, transMatrixRelCam, transMatrixRelCam);
+		Matrix4f.scale(new Vector3f(scale, scale, scale), transMatrixRelCam, transMatrixRelCam);
+		return transMatrixRelCam;
 	}
 
 	public static Matrix4f createTransformationMatrix(Vector2f translation, Vector2f scale, float rotation) {
@@ -33,7 +57,7 @@ public class Matrix {
 		Matrix4f.translate(new Vector3f(), matrix, matrix);
 		return matrix;
 	}
-	
+
 	// public static void store(Matrix3f matrix, FloatBuffer buffer) {
 	// buffer.put(0, matrix.m00());
 	// buffer.put(1, matrix.m01());
