@@ -56,7 +56,7 @@ public class EntityRenderer extends Cleanup {
 		Matrix4f transformationMatrix = entity.getTransformationMatrix();
 		if (entity.getType() == Entity.Type.Camera) {
 			transformationMatrix = Matrix.createTransformationMatrixRelativeCam(camera,
-					entity.getTransform().getPosition(), entity.getTransform().rotX, entity.getTransform().posY,
+					entity.getTransform().getPosition(), entity.getTransform().rotX, entity.getTransform().rotY,
 					entity.getTransform().rotZ,
 					(entity.getTransform().scaleX + entity.getTransform().scaleY + entity.getTransform().scaleZ) / 3f);
 		}

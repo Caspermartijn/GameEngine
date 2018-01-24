@@ -35,9 +35,10 @@ public class FPS_HUD extends GUI {
 		entitycomponents();
 	}
 
+	@SuppressWarnings("unused")
 	private void entitycomponents() {
 		EntityComponent gun = new EntityComponent(this, ModelLoader.getOBJModel(test_gun_model, test_gun_texture),
-				new Vector2f(0, -3), new Vector3f(0, 0, 0), 1f);
+				new Vector2f(0.3f, -1.3f), new Vector3f(0, 0, 0), 0.3f);
 	}
 
 	private void texts() {
