@@ -36,7 +36,7 @@ public class EngineFileWriter {
 
 	public void writeBooleans(Collection<ConfigBoolean> b) throws IOException {
 		for (ConfigBoolean bool : b) {
-			writer.write("b:" + ":" + bool.getDat() + ":" + Boolean.toString(bool.isData()));
+			writer.write("b" + ":" + bool.getDat() + ":" + Boolean.toString(bool.isData()));
 			writer.write(System.lineSeparator());
 		}
 	}

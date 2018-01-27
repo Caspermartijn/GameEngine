@@ -31,6 +31,8 @@ public class Entity implements IEntity {
 	
 	private Type entityType = Type.Normal;
 
+	private Vector3f colorMapOffsetColor = new Vector3f();
+	
 	public Entity(Model_3D model, Vector3f position, Vector3f rotation, float scale) {
 		transform = new EulerTransform();
 		transform.setPosition(position);
@@ -146,6 +148,14 @@ public class Entity implements IEntity {
 
 	public static enum Type {
 		Normal, Camera;
+	}
+	
+	public void setColorMapOffsetColor(Vector3f colorMapOffsetColor) {
+		this.colorMapOffsetColor = colorMapOffsetColor;
+	}
+
+	public Vector3f getColorMapOffsetColor() {
+		return colorMapOffsetColor;
 	}
 
 }

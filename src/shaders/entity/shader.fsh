@@ -11,6 +11,7 @@ uniform sampler2D modelTexture;
 uniform sampler2D colorMap;
 
 uniform vec3 lightColour;
+uniform vec3 colorMapOffsetColor;
 uniform float shineDamper;
 uniform float reflectivity;
 
@@ -32,7 +33,14 @@ void main(void){
 	float dampedFactor = pow(specularFactor,shineDamper);
 	vec3 finalSpecular = dampedFactor * reflectivity * lightColour;
 	
-
-	out_Color =  vec4(diffuse,1.0) * texture(modelTexture,pass_textureCoordinates) + vec4(finalSpecular,1.0);
+	vec4 vertexColorPre = texture(modelTexture, pass_textureCoordinates);
+	
+	vec4 colorMapColor = texture(colorMap, pass_textureCoordinates);
+	
+	if(colorMapColor.x > 0.5 && colorMapColor.y > 0.5 && colorMapColor.z > 0.5 ){
+		vertexColorPre = vec4(colorMapOffsetColor.xyz, 0.7);
+	}
+	
+	out_Color =  vec4(diffuse,1.0) * vertexColorPre + vec4(finalSpecular,1.0);
 
 }

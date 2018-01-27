@@ -45,6 +45,7 @@ public class EntityRenderer extends Cleanup {
 		shader.location_shineDamper.loadFloat(1);
 		shader.location_reflectivity.loadFloat(0);
 		shader.texture.bindTexture(model.getTexture());
+		shader.colorMap.bindTexture(model.getColorMap());
 	}
 
 	private void unbindTexturedModel(Vao vao) {
@@ -61,6 +62,8 @@ public class EntityRenderer extends Cleanup {
 					(entity.getTransform().scaleX + entity.getTransform().scaleY + entity.getTransform().scaleZ) / 3f);
 		}
 		shader.location_transformationMatrix.loadMatrix(transformationMatrix);
+
+		shader.colorMapOffsetColor.loadVec3(entity.getColorMapOffsetColor());
 	}
 
 	public void setProjectionMatrix(Matrix4f matrix) {

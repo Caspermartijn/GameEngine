@@ -20,9 +20,10 @@ public class EntityShader extends ShaderProgram {
 	public UniformVec3 location_lightColour = new UniformVec3("lightColour");
 	public UniformFloat location_shineDamper = new UniformFloat("shineDamper");
 	public UniformFloat location_reflectivity = new UniformFloat("reflectivity");
-	
+
 	public UniformSampler texture = new UniformSampler("modelTexture");
 	public UniformSampler colorMap = new UniformSampler("colorMap");
+	public UniformVec3 colorMapOffsetColor = new UniformVec3("colorMapOffsetColor");
 
 	public EntityShader() {
 		super.init(ShaderProgram.newShaderProgram().addInput(0, "position").addInput(1, "textureCoords").addOutput(0,
@@ -47,7 +48,7 @@ public class EntityShader extends ShaderProgram {
 	protected Uniform[] getAllUniforms() {
 		return new Uniform[] { texture, location_lightColour, location_lightPosition, location_projectionMatrix,
 				location_reflectivity, location_shineDamper, location_transformationMatrix, location_viewMatrix,
-				colorMap };
+				colorMap, colorMapOffsetColor };
 	}
 
 }

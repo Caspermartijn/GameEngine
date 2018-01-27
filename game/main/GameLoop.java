@@ -58,6 +58,8 @@ import utils.models.ModelMaster;
 
 public class GameLoop {
 
+	public static final boolean DEVELOPERMODE = true;
+	
 	public static Launcher l;
 	private static Camera camera;
 
