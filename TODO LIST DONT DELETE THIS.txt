@@ -33,10 +33,8 @@ ________________________________________________________________________________
 	- Easy model loaders. (1 for in engine models, and the other for modded models etc)
 	- NPC
 	- Video player
-	- 3d GUI items (Should be easy as we already implemented 
 	- Particles
 	- Text particles
-	- 3D UI (Canvas with children, Text image etc)
 	- 3d and first person controlls
 	- Audio system
 	

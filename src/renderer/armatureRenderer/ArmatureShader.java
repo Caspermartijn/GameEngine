@@ -17,11 +17,11 @@ public class ArmatureShader extends ShaderProgram {
 	public UniformVec3 lightDirection = new UniformVec3("lightDirection");
 	public UniformMat4Array jointTransforms = new UniformMat4Array("jointTransforms", MAX_JOINTS);
 	public UniformMat4 modelMatrix = new UniformMat4("modelMatrix");
-	
+
 	public UniformSampler diffuseMap = new UniformSampler("diffuseMap");
 
 	public ArmatureShader() {
-		
+
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class ArmatureShader extends ShaderProgram {
 
 	@Override
 	protected Uniform[] getAllUniforms() {
-		return new Uniform[] {};
+		return new Uniform[] { projectionViewMatrix, lightDirection, jointTransforms, modelMatrix, diffuseMap };
 	}
 
 }

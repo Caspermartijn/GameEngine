@@ -8,6 +8,8 @@ in vec3 toCameraVector;
 out vec4 out_Color;
 
 uniform sampler2D modelTexture;
+uniform sampler2D colorMap;
+
 uniform vec3 lightColour;
 uniform float shineDamper;
 uniform float reflectivity;
