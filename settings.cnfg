@@ -1,8 +1,8 @@
 s:windowsize:1280x720
-s:textures:medium
+s:textures:ultra
 s:vsync:vsyncenabled
 s:postproccesing:medium
-s:shadows:medium
-s:terrain:medium
-s:water:medium
-s:displaymode:windowed
+s:shadows:potatoe
+s:terrain:high
+s:water:ultra
+s:displaymode:fullscreen

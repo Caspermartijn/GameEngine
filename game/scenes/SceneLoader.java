@@ -46,10 +46,11 @@ public class SceneLoader {
 		SourceFile othersFile = new SourceFile(worldFolder, "others.dat");
 
 		scene = loadModels(scene, modelsFolder);
-
 		scene.setObjective(getObjective(objectivFile));
-		scene = getEntities(scene, entitiesFile);
+		
 		scene = getTerrain(scene, terrainFolder);
+		scene = getEntities(scene, entitiesFile);
+
 		scene = loadSceneDataIntoScene(scene, scene_name, sceneDataFile);
 		// TODO hitboxes
 		return scene;
@@ -205,8 +206,12 @@ public class SceneLoader {
 
 			model_name = ent[1];
 			x = Float.parseFloat(ent[2]);
-			y = Float.parseFloat(ent[3]);
 			z = Float.parseFloat(ent[4]);
+			if (!ent[3].equalsIgnoreCase("th")) {
+				y = Float.parseFloat(ent[3]);
+			} else {
+				y = scene.terrains.get(0).getHeightOfTerrain(x, z);
+			}
 
 			rotX = Float.parseFloat(ent[5]);
 			rotY = Float.parseFloat(ent[6]);

@@ -129,7 +129,10 @@ public class FPS_Player extends Camera {
 		upSpeed += GRAFITY * Display.getFrameTime();
 		super.y += upSpeed;
 
-		float terrainH = Scene.getCurrentscene().getTerrains().get(0).getHeightOfTerrain(this.x, this.z);
+		float terrainH = 0;
+		if (Scene.getCurrentscene().getTerrains().size() >= 1) {
+			terrainH = Scene.getCurrentscene().getTerrains().get(0).getHeightOfTerrain(this.x, this.z);
+		}
 
 		if (super.y < terrainH + playerHeight) {
 			upSpeed = 0;
