@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import animation.Joint;
 
-public class ArmatureComponent implements Component {
+public class AnimationComponent implements Component {
 
 	private int numJoints;
 	private Joint root;
@@ -14,7 +14,7 @@ public class ArmatureComponent implements Component {
 	
 	private Matrix4f[] transforms;
 	
-	public ArmatureComponent(int numJoints, Joint root, ArrayList<Joint> joints) {
+	public AnimationComponent(int numJoints, Joint root, ArrayList<Joint> joints) {
 		super();
 		this.numJoints = numJoints;
 		this.root = root;
@@ -43,7 +43,7 @@ public class ArmatureComponent implements Component {
 
 	@Override
 	public Type getType() {
-		return Component.Type.ARMATURE;
+		return Component.Type.ANIMATION;
 	}
 	
 	public int getNumberJoints() {

@@ -2,6 +2,8 @@ package utils.models;
 
 import java.util.HashMap;
 
+import entities.Entity;
+import loader.dfmeshLoader.DFModelLoader;
 import objects.Model_3D;
 import utils.SourceFile;
 
@@ -15,7 +17,7 @@ public class ModelMaster {
 		} else {
 			Model_3D model = ModelLoader.getOBJModel(new SourceFile("/res/models/" + modelName + "/model.obj"),
 					new SourceFile("/res/models/" + modelName + "/texture.png"));
-			
+
 			String colorMapPath = "/res/models/" + modelName + "/colormap.png";
 			if (Class.class.getResourceAsStream(colorMapPath) != null) {
 				model.setColorMap(ModelLoader.loadTexture(new SourceFile(colorMapPath)));
@@ -42,6 +44,10 @@ public class ModelMaster {
 		// model = loadModelData(model, folder.getPath() + modelName + "\\", modelName);
 		models.put(modelName, model);
 		return model;
+	}
+
+	public static void addAnimationComponentToEntity(String modelName, Entity e) {
+		DFModelLoader.addArmatureComponent(new SourceFile("/res/models/" + modelName + "/model.dfmesh"), e);
 	}
 
 	public static void loadModels(String path) {

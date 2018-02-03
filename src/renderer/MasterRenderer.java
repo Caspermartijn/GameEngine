@@ -79,7 +79,7 @@ public class MasterRenderer extends Cleanup {
 		for (Entity ent : entities) {
 			entititesAmount++;
 			ent.update();
-			if (ent.hasComponentType(components.Component.Type.ARMATURE)) {
+			if (ent.hasComponentType(components.Component.Type.ANIMATION)) {
 				processAnimatedEntity(ent);
 			} else {
 				processEntity(ent);

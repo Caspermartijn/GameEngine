@@ -12,7 +12,7 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import animation.Joint;
-import components.ArmatureComponent;
+import components.AnimationComponent;
 import entities.Entity;
 import objects.Vao;
 import utils.SourceFile;
@@ -189,7 +189,7 @@ public class DFModelLoader {
 					}
 				}
 			}
-			e.addComponent(new ArmatureComponent(numJoints, root, joints));
+			e.addComponent(new AnimationComponent(numJoints, root, joints));
 		} catch (IOException e2) {
 			System.err.println("Error Reading file: " + file.getPath());
 			e2.printStackTrace();

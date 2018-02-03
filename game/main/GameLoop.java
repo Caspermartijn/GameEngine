@@ -25,6 +25,9 @@ import org.lwjgl.glfw.GLFW;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import animation.Joint;
+import components.AnimationComponent;
+import components.Component;
 import controlls.FreeCam;
 import debug.DebugGui;
 import engine.Display;
@@ -50,7 +53,6 @@ import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
-import scenes.SceneLoader;
 import texts.Fonts;
 import utils.RenderItem;
 import utils.SourceFile;
@@ -123,7 +125,7 @@ public class GameLoop {
 		};
 		setMouseEnabled(false);
 		TimeShip ship = new TimeShip(new Vector3f(), new Vector3f());
-		ship.setControllable(true);
+//		ship.setControllable(true);
 		FPS_Player player = new FPS_Player(new Vector3f(0, 0, 0));
 		FreeCam freecam = new FreeCam();
 		GameLoop.camera = player;
@@ -167,8 +169,12 @@ public class GameLoop {
 		Model_3D timeship_1_inner = ModelMaster.getOBJModel("timeship_1_inner").setBackfaceCullingEnabled(true);
 		Model_3D nazi = ModelMaster.getDFModel("nazi_1");
 
-		Entity naziE = new Entity(nazi, new Vector3f(0, 0, 0), new Vector3f(0, 0, 0), 100);
-
+		Entity naziE = new Entity(nazi, new Vector3f(100, -10, 0), new Vector3f(0, 0, 0), 10);
+		ModelMaster.addAnimationComponentToEntity("nazi_1", naziE);
+		AnimationComponent c = (AnimationComponent) naziE.getComponent(Component.Type.ANIMATION);
+		Joint j = c.getJointByID(13);
+//		j.setTransform(new QuaternionTransform(0, 0, 0, 1, 1, 1, 90, 0, 0));
+		
 		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 5);
 		TimeShip timeship_1 = new TimeShip(new Vector3f(0, -20.5f, 10f), new Vector3f(0, 90, 0), 0.4f);
 		TimeShip timeship_2 = new TimeShip(new Vector3f(0, -20.5f, -10f), new Vector3f(0, -90, 0), 0.4f);

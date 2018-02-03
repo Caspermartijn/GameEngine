@@ -5,7 +5,7 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
-import components.ArmatureComponent;
+import components.AnimationComponent;
 import components.Component;
 import entities.Entity;
 import objects.Camera;
@@ -25,7 +25,7 @@ public class ArmatureRenderer {
 		for (Entity animatedEntity : animatedEntities) {
 			shader.diffuseMap.bindTexture(animatedEntity.getModel().getTexture());
 			shader.modelMatrix.loadMatrix(animatedEntity.getTransform().toMatrix());
-			ArmatureComponent c = (ArmatureComponent) animatedEntity.getComponent(Component.Type.ARMATURE);
+			AnimationComponent c = (AnimationComponent) animatedEntity.getComponent(Component.Type.ANIMATION);
 			shader.jointTransforms.loadMatrixArray(c.getMatrices());
 			animatedEntity.getModel().getMesh().bind(0, 1, 2, 3, 4);
 			GL11.glDrawElements(GL11.GL_TRIANGLES, animatedEntity.getModel().getMesh().getIndexCount(),

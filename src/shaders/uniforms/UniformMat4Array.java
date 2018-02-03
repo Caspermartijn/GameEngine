@@ -26,7 +26,11 @@ public class UniformMat4Array extends Uniform{
 
 	public void loadMatrixArray(Matrix4f[] matrices){
 		for(int i=0;i<matrices.length;i++){
-			matrixUniforms[i].loadMatrix(matrices[i]);
+			if (matrices[i] != null) {
+				matrixUniforms[i].loadMatrix(matrices[i]);
+			} else {
+				matrixUniforms[i].loadMatrix((Matrix4f) new Matrix4f().setIdentity());
+			}
 		}
 	}
 	
