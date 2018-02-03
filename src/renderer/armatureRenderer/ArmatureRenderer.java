@@ -7,6 +7,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import components.AnimationComponent;
 import components.Component;
+import engine.GLSettings;
 import entities.Entity;
 import objects.Camera;
 
@@ -19,8 +20,10 @@ public class ArmatureRenderer {
 	}
 
 	public static void render(Vector3f direction, List<Entity> animatedEntities, Camera camera) {
+		GLSettings.disableBlending();
+		
 		shader.start();
-		shader.projectionViewMatrix.loadMatrix(camera.getViewMatrix());
+		shader.projectionViewMatrix.loadMatrix(camera.getCameraMatrix());
 		shader.lightDirection.loadVec3(direction);
 		for (Entity animatedEntity : animatedEntities) {
 			shader.diffuseMap.bindTexture(animatedEntity.getModel().getTexture());
@@ -29,7 +32,7 @@ public class ArmatureRenderer {
 			shader.jointTransforms.loadMatrixArray(c.getMatrices());
 			animatedEntity.getModel().getMesh().bind(0, 1, 2, 3, 4);
 			GL11.glDrawElements(GL11.GL_TRIANGLES, animatedEntity.getModel().getMesh().getIndexCount(),
-					GL11.GL_UNSIGNED_INT, 0);
+					GL11.GL_UNSIGNED_INT, 0);			
 			animatedEntity.getModel().getMesh().unbind(0, 1, 2, 3, 4);
 		}
 		shader.stop();
