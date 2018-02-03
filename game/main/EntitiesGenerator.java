@@ -12,6 +12,7 @@ import terrains.Terrain;
 public class EntitiesGenerator {
 	
 	
+	@SuppressWarnings("unused")
 	public static void main(String[] args) {
 		List<Vector2f> taken = new ArrayList<Vector2f>();
 		
