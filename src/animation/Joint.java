@@ -28,7 +28,6 @@ public class Joint {
 		this.parentName = parentName;
 		this.localBindTransform = localBindTransform;
 		transform = new QuaternionTransform();
-		System.out.println(index + ":" + name);
 	}
 
 	public void addChild(Joint child) {
