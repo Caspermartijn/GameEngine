@@ -11,11 +11,16 @@ import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
+import animation.Animation;
 import animation.Joint;
+import animation.JointAnimation;
+import animation.KeyFrame;
 import components.AnimationComponent;
 import entities.Entity;
 import objects.Vao;
 import utils.SourceFile;
+import utils.transformations.Quaternion;
+import utils.transformations.QuaternionTransform;
 
 public class DFModelLoader {
 
@@ -196,6 +201,63 @@ public class DFModelLoader {
 		}
 	}
 
+	public static Animation loadAnimation(SourceFile file) {
+		float start = 0;
+		float end = 0;
+		String name = null;
+		ArrayList<JointAnimation> animations = new ArrayList<>();
+		JointAnimation lastAnimation = null;
+		try {
+			BufferedReader br = file.openFileReader();
+			String line = br.readLine();
+			while (line != null) {
+				if (line.contains("name:")) {
+					name = line.split(":")[1];
+				} else if (line.contains("start:")) {
+					start = Float.valueOf(line.split(":")[1]);
+				} else if (line.contains("end:")) {
+					end = Float.valueOf(line.split(":")[1]);
+				} else if (line.contains("joint:")) {
+					String valuesLine = line.split(":")[1];
+					String[] values = valuesLine.split(";");
+					JointAnimation anim = new JointAnimation(Integer.valueOf(values[0]));
+					animations.add(anim);
+					lastAnimation = anim;
+				} else if (line.contains("keyframe:")) {
+					if (lastAnimation == null) {
+						line = br.readLine();
+						continue;
+					}
+					String valuesLine = line.split(":")[1];
+					String[] values = valuesLine.split(";");
+					String[] positionString = values[1].split(" ");
+					String[] orientationString = values[2].split(" ");
+
+					Vector3f position = new Vector3f(Float.valueOf(positionString[0]), Float.valueOf(positionString[1]),
+							Float.valueOf(positionString[2]));
+
+					Quaternion orientation = new Quaternion(Float.valueOf(orientationString[1]),
+							Float.valueOf(orientationString[2]), Float.valueOf(orientationString[3]),
+							Float.valueOf(orientationString[0]));
+
+					QuaternionTransform transform = new QuaternionTransform(position, orientation);
+					KeyFrame keyframe = new KeyFrame(Float.valueOf(values[0]) - start, transform);
+					lastAnimation.addKeyFrame(keyframe);
+				}
+				line = br.readLine();
+			}
+			br.close();
+		} catch (IOException e) {
+			System.err.println("Error Reading file " + file.getPath());
+			e.printStackTrace();
+		}
+		Animation animation = new Animation(end - start, name);
+		for (JointAnimation anim : animations) {
+			animation.addJointAnimation(anim);
+		}
+		return animation;
+	}
+
 	private static Matrix4f convertToMatrix(String matrixString, String regex) {
 		String[] stringValues = matrixString.split(regex);
 		float[] floatValues = new float[16];
@@ -221,7 +283,6 @@ public class DFModelLoader {
 		matrix.m33 = floatValues[15];
 		return matrix;
 	}
-
 }
 
 class Vertex {

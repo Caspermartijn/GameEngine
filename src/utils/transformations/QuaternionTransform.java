@@ -60,7 +60,7 @@ public class QuaternionTransform {
 		return quaternion;
 	}
 	
-	public QuaternionTransform interpolate(QuaternionTransform start, QuaternionTransform end, float blend) {
+	public static QuaternionTransform interpolate(QuaternionTransform start, QuaternionTransform end, float blend) {
 		blend = Maths.clamp(0, 1, blend);
 		Vector3f position = Maths.interpolate(start.getTranslation(), end.getTranslation(), blend);
 		Quaternion rot = Quaternion.slerp(start.getRotation(), end.getRotation(), blend);

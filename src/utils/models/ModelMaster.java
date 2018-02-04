@@ -2,6 +2,7 @@ package utils.models;
 
 import java.util.HashMap;
 
+import components.AnimationComponent;
 import entities.Entity;
 import loader.dfmeshLoader.DFModelLoader;
 import objects.Model_3D;
@@ -48,6 +49,10 @@ public class ModelMaster {
 
 	public static void addAnimationComponentToEntity(String modelName, Entity e) {
 		DFModelLoader.addArmatureComponent(new SourceFile("/res/models/" + modelName + "/model.dfmesh"), e);
+	}
+	
+	public static void addAnimation(AnimationComponent c, String name) {
+		c.addAnimation(DFModelLoader.loadAnimation(new SourceFile("/res/models/" + name + ".dfanim")));
 	}
 
 	public static void loadModels(String path) {

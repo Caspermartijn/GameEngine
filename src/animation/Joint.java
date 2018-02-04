@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.lwjgl.util.vector.Matrix4f;
 
-import utils.transformations.QuaternionTransform;
-
 public class Joint {
 	
 	public static final int MAX_WEIGHTS = 3;
@@ -17,7 +15,7 @@ public class Joint {
 	public final String parentName;
 	public final List<Joint> children = new ArrayList<Joint>();
 
-	private QuaternionTransform transform;
+	private Matrix4f transform;
 	
 	public final Matrix4f localBindTransform;
 	private Matrix4f inverseBindTransform = new Matrix4f();
@@ -27,7 +25,7 @@ public class Joint {
 		this.name = name;
 		this.parentName = parentName;
 		this.localBindTransform = localBindTransform;
-		transform = new QuaternionTransform();
+		transform = localBindTransform;
 	}
 
 	public void addChild(Joint child) {
@@ -43,8 +41,7 @@ public class Joint {
 	}
 	
 	public void calculateTotalTransform(Matrix4f[] matrices, Matrix4f parentTransform) {
-		Matrix4f currentTransform = new Matrix4f();
-		Matrix4f.mul(localBindTransform, transform.toMatrix(), currentTransform);
+		Matrix4f currentTransform = new Matrix4f(transform);
 		if (parentTransform != null) {
 			Matrix4f.mul(parentTransform, currentTransform, currentTransform);
 		} 
@@ -54,12 +51,12 @@ public class Joint {
 		matrices[index] = Matrix4f.mul(currentTransform, inverseBindTransform, null);
 	}
 
-	public QuaternionTransform getTransform() {
+	public Matrix4f getTransform() {
 		return transform;
 	}
 
-	public void setTransform(QuaternionTransform transform) {
-		this.transform = transform;
+	public void setTransform(Matrix4f transform) {
+		Matrix4f.mul(localBindTransform, transform, this.transform);
 	}
 
 	public int getID() {
@@ -68,6 +65,13 @@ public class Joint {
 
 	public String getName() {
 		return name;
+	}
+
+	public void load(AnimationPose transforms) {
+		this.transform = transforms.get(index).toMatrix();
+		for (Joint child : children) {
+			child.load(transforms);
+		}
 	}
 	
 	
