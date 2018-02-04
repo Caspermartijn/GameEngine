@@ -17,11 +17,10 @@ public class ArmatureShader extends ShaderProgram {
 	public UniformVec3 lightDirection = new UniformVec3("lightDirection");
 	public UniformMat4Array jointTransforms = new UniformMat4Array("jointTransforms", MAX_JOINTS);
 	public UniformMat4 modelMatrix = new UniformMat4("modelMatrix");
-
 	public UniformSampler diffuseMap = new UniformSampler("diffuseMap");
 
 	public ArmatureShader() {
-
+		init(ShaderProgram.newShaderProgram().addInput(0, "in_Position").addInput(1, "in_TextureCoords").addInput(2, "in_Normals").addInput(3, "in_JointIndices").addInput(4, "in_Weights").addOutput(0, "out_Color"));
 	}
 
 	@Override

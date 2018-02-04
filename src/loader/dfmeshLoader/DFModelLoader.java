@@ -181,6 +181,7 @@ public class DFModelLoader {
 			for (Joint j : joints) {
 				if (j.parentName.equals("*")) {
 					root = j;
+					System.out.println(root.index);
 				} else {
 					for (Joint joint : joints) {
 						if (joint.name.equals(j.parentName)) {

@@ -33,7 +33,4 @@ public class UniformMat4Array extends Uniform{
 			}
 		}
 	}
-	
-	
-
 }

@@ -57,6 +57,7 @@ import texts.Fonts;
 import utils.RenderItem;
 import utils.SourceFile;
 import utils.models.ModelMaster;
+import utils.transformations.QuaternionTransform;
 
 public class GameLoop {
 
@@ -172,8 +173,8 @@ public class GameLoop {
 		Entity naziE = new Entity(nazi, new Vector3f(100, -10, 0), new Vector3f(0, 0, 0), 10);
 		ModelMaster.addAnimationComponentToEntity("nazi_1", naziE);
 		AnimationComponent c = (AnimationComponent) naziE.getComponent(Component.Type.ANIMATION);
-		Joint j = c.getJointByID(13);
-//		j.setTransform(new QuaternionTransform(0, 0, 0, 1, 1, 1, 90, 0, 0));
+		Joint j = c.getJointByID(8);
+		j.setTransform(new QuaternionTransform(0, 0, 0, 45, 0, 70));
 		
 		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 5);
 		TimeShip timeship_1 = new TimeShip(new Vector3f(0, -20.5f, 10f), new Vector3f(0, 90, 0), 0.4f);
