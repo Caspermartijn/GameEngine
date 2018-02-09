@@ -171,9 +171,9 @@ public class GameLoop {
 		Entity naziE = new Entity(nazi, new Vector3f(100, -10, 0), new Vector3f(0, 0, 0), 10);
 		ModelMaster.addAnimationComponentToEntity("nazi_1", naziE);
 		AnimationComponent c = (AnimationComponent) naziE.getComponent(Component.Type.ANIMATION);
-		ModelMaster.addAnimation(c, "nazi_1/animations/nazi");
-		c.startAnimation("ArmatureAction");
-		c.getByName("ArmatureAction").setLooping(true);
+		ModelMaster.addAnimation(c, "nazi_1/animations/running");
+		c.startAnimation("run");
+		c.getByName("run").setLooping(true);
 		
 		
 		Entity ent = new Entity(timemastersHQ, new Vector3f(0, 0, 0), new Vector3f(0, 180 + 40, 0), 5);
