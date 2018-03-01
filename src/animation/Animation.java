@@ -21,6 +21,7 @@ public class Animation {
 		this.name = name;
 	}
 
+	@SuppressWarnings("unused")
 	public void update() {
 		if (!playing) {
 			return;

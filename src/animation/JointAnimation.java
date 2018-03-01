@@ -76,6 +76,7 @@ public class JointAnimation {
 		return null;
 	}
 
+	@SuppressWarnings("unused")
 	private KeyFrame getKeyFrame(float time) {
 		for (KeyFrame f : this.keyFrames) {
 			if (f.getTimeStamp() == time) {
