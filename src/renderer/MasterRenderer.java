@@ -7,8 +7,11 @@ import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
+import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 
+import engine.Display;
 import engine.GLSettings;
 import engine.res.ENGINE_RES;
 import entities.Entity;
@@ -27,6 +30,7 @@ import renderer.quadRenderer.QuadRenderer;
 import renderer.terrainRenderer.TerrainRenderer;
 import renderer.terrainRenderer.TerrainShader;
 import renderer.textRendering.FontRenderer;
+import selector.SelectorManager;
 import terrains.Terrain;
 import utils.tasks.Cleanup;
 
@@ -54,6 +58,10 @@ public class MasterRenderer extends Cleanup {
 
 	private static List<EntityComponent> entityComponents = new ArrayList<EntityComponent>();
 
+	public static Vector3f selectedColor = new Vector3f(255, 255, 255);
+
+	public static List<Entity> allEntsWithHoverEvent = new ArrayList<Entity>();
+
 	public MasterRenderer() {
 		ENGINE_RES.init();
 		entityRenderer = new EntityRenderer(entityShader);
@@ -79,6 +87,9 @@ public class MasterRenderer extends Cleanup {
 		for (Entity ent : entities) {
 			entititesAmount++;
 			ent.update();
+			if (ent.hasHoverEvent()) {
+				allEntsWithHoverEvent.add(ent);
+			}
 			if (ent.hasComponentType(components.Component.Type.ANIMATION)) {
 				processAnimatedEntity(ent);
 			} else {
@@ -113,10 +124,13 @@ public class MasterRenderer extends Cleanup {
 	}
 
 	public void render(Camera camera, List<Light> light, List<Entity> entities) {
+		allEntsWithHoverEvent.clear();
 		updateEntities(entities);
 		render(light, camera, new Vector4f(0, 0, 1, 0));
 		lightsAmount = light.size();
 	}
+
+	private int renderAMcolorRender = 0;
 
 	public void render(List<Light> lights, Camera camera, Vector4f clipPlane) {
 		for (EntityComponent component : entityComponents) {
@@ -126,6 +140,13 @@ public class MasterRenderer extends Cleanup {
 			}
 		}
 
+		renderHoverEntities();
+		renderAMcolorRender++;
+		if (renderAMcolorRender > Display.getFPS()) {
+			selectedColor = SelectorManager.getColorFromFBOPixel(new Vector2f(0, 0), Display.getWidth(),
+					Display.getHeight());
+			renderAMcolorRender = 0;
+		}
 		GLSettings.setBackFaceCulling(true);
 		prepare();
 		entityShader.start();
@@ -151,6 +172,11 @@ public class MasterRenderer extends Cleanup {
 		terrains.clear();
 		animatedEntity.clear();
 		GLSettings.setBackFaceCulling(false);
+	}
+
+	private void renderHoverEntities() {
+		// TODO Auto-generated method stub
+
 	}
 
 	public static void processEntity(Entity entity) {

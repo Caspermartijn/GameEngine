@@ -10,6 +10,8 @@ import org.lwjgl.util.vector.Vector3f;
 import components.Component;
 import hitbox.HBox;
 import objects.Model_3D;
+import renderer.MasterRenderer;
+import selector.SelectorManager;
 import utils.transformations.EulerTransform;
 
 public class Entity implements IEntity {
@@ -28,11 +30,15 @@ public class Entity implements IEntity {
 
 	private UUID uuid;
 	private UUID parent_uuid;
-	
+
 	private Type entityType = Type.Normal;
 
 	private Vector3f colorMapOffsetColor = new Vector3f();
-	
+
+	private Vector3f hoverColor;
+	private float hoverCheckDistance = 0;
+	private Runnable hoverEvent;
+
 	public Entity(Model_3D model, Vector3f position, Vector3f rotation, float scale) {
 		transform = new EulerTransform();
 		transform.setPosition(position);
@@ -42,14 +48,57 @@ public class Entity implements IEntity {
 		uuid = UUID.randomUUID();
 	}
 
+	public void addHoverEvent(float maxDistance, Runnable runnable) {
+		this.hoverEvent = runnable;
+		this.hoverCheckDistance = maxDistance;
+		this.hoverColor = SelectorManager.getNewColor();
+	}
+
+	public void updateHover(Vector3f startPos) {
+		float distance = (float) Math.sqrt(((startPos.x - transform.posX) * (startPos.x - transform.posX))
+				+ ((startPos.y - transform.posY) * (startPos.y - transform.posY))
+				+ ((startPos.z - transform.posZ) * (startPos.z - transform.posZ)));
+		if (hoverEvent != null) {
+			if (distance <= hoverCheckDistance) {
+				if (red() && green() && blue()) {
+					hoverEvent.run();
+				}
+			}
+		}
+	}
+
+	private boolean blue() {
+		if (MasterRenderer.selectedColor.z == hoverColor.z) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean green() {
+		if (MasterRenderer.selectedColor.y == hoverColor.y) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean red() {
+		if (MasterRenderer.selectedColor.x == hoverColor.x) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public void setType(Type type) {
 		this.entityType = type;
 	}
-	
+
 	public Type getType() {
 		return entityType;
 	}
-	
+
 	public List<Entity> getChildren() {
 		return children;
 	}
@@ -149,13 +198,17 @@ public class Entity implements IEntity {
 	public static enum Type {
 		Normal, Camera;
 	}
-	
+
 	public void setColorMapOffsetColor(Vector3f colorMapOffsetColor) {
 		this.colorMapOffsetColor = colorMapOffsetColor;
 	}
 
 	public Vector3f getColorMapOffsetColor() {
 		return colorMapOffsetColor;
+	}
+
+	public boolean hasHoverEvent() {
+		return hoverEvent != null;
 	}
 
 }
