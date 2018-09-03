@@ -10,8 +10,9 @@ import components.Component;
 import engine.GLSettings;
 import entities.Entity;
 import objects.Camera;
+import utils.tasks.Cleanup;
 
-public class ArmatureRenderer {
+public class ArmatureRenderer extends Cleanup {
 
 	private static ArmatureShader shader;
 
@@ -38,7 +39,7 @@ public class ArmatureRenderer {
 		shader.stop();
 	}
 
-	public static void delete() {
+	public void delete() {
 		shader.delete();
 	}
 }

@@ -200,7 +200,7 @@ public class MasterRenderer extends Cleanup {
 	}
 
 	public void delete() {
-		ArmatureRenderer.delete();
+	
 	}
 
 	private static Vao quad;

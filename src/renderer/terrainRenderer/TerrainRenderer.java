@@ -8,8 +8,9 @@ import org.lwjgl.util.vector.Matrix4f;
 import objects.Vao;
 import terrains.Terrain;
 import terrains.terrainTexture.TerrainPack;
+import utils.tasks.Cleanup;
 
-public class TerrainRenderer {
+public class TerrainRenderer extends Cleanup{
 
 	private TerrainShader shader;
 
@@ -51,6 +52,11 @@ public class TerrainRenderer {
 
 	private void unbindTexturedModel(Terrain terrain) {
 		terrain.getModel().unbind(0, 1, 2);
+	}
+
+	@Override
+	public void delete() {
+		shader.delete();
 	}
 
 }
