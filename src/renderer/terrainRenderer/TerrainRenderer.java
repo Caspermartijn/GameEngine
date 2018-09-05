@@ -57,6 +57,7 @@ public class TerrainRenderer extends Cleanup{
 	@Override
 	public void delete() {
 		shader.delete();
+		System.out.println("- TerrainShader");
 	}
 
 }

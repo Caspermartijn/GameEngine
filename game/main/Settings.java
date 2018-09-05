@@ -69,6 +69,7 @@ public class Settings {
 			windowSizeValues = new int[] { 1920, 1080 };
 		} else {
 			fullscreenValue = false;
+			windowSizeValues = new int[] { 1280	, 720 };
 		}
 
 		if (Settings.vsync == main.settings.Display.vSync_true) {

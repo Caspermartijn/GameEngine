@@ -43,6 +43,7 @@ public class QuadRenderer extends Cleanup{
 	public void delete() {
 		shader.delete();
 		quad.delete();
+		System.out.println("- QuadShader");
 	}
 
 }

@@ -52,6 +52,7 @@ public class MasterRenderer extends Cleanup {
 	public LineRenderer linerenderer;
 
 	public static Map<Model_3D, List<Entity>> entities = new HashMap<Model_3D, List<Entity>>();
+	
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 
 	private List<Entity> animatedEntity = new ArrayList<Entity>();
@@ -70,6 +71,7 @@ public class MasterRenderer extends Cleanup {
 		new FontRenderer();
 		new QuadRenderer();
 		new ImageRenderer();
+		new ArmatureRenderer();
 		init();
 	}
 

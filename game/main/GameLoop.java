@@ -52,6 +52,7 @@ import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
+import scenes.SceneLoader;
 import texts.Fonts;
 import utils.RenderItem;
 import utils.SourceFile;
@@ -115,7 +116,7 @@ public class GameLoop {
 			}
 
 		};
-		// l.create();
+		//l.create();
 	}
 
 	public static void spaceScene(MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
@@ -233,7 +234,7 @@ public class GameLoop {
 			debug.hide();
 
 			spaceScene(master, skyboxRenderer);
-			//setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "hitler"));
+			setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "hitler"));
 
 			master.setProjectionMatrix(camera.getProjectionMatrix());
 

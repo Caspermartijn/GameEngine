@@ -62,6 +62,7 @@ public class SkyboxRenderer extends Cleanup {
 	public void delete() {
 		cube.delete();
 		shader.delete();
+		System.out.println("- SkyboxShader");
 	}
 
 	public ShaderProgram getShader() {

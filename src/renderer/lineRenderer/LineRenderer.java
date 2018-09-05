@@ -78,6 +78,7 @@ public class LineRenderer extends Cleanup {
 	@Override
 	public void delete() {
 		shader.delete();
+		System.out.println("- LineShader");
 	}
 
 }

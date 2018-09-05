@@ -75,6 +75,7 @@ public class EntityRenderer extends Cleanup {
 	@Override
 	public void delete() {
 		shader.delete();
+		System.out.println("- EntityShader");
 	}
 
 }

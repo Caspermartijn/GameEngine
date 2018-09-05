@@ -19,6 +19,7 @@ public class FontRenderer extends Cleanup{
 	
 	public static void cleanUp() {
 		shader.delete();
+		
 	}
 
 	public static void renderText(Text text) {
@@ -51,6 +52,7 @@ public class FontRenderer extends Cleanup{
 
 	public void delete() {
 		cleanUp();
+		System.out.println("- FontShader");
 	}
 	
 }

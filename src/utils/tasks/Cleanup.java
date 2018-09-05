@@ -12,6 +12,7 @@ public abstract class Cleanup {
 	public static List<Cleanup> list = new ArrayList<Cleanup>();
 
 	public static void cleanAll() {
+		System.out.println("Starting cleanup:");
 		for (Cleanup cleanup : list) {
 			if (!cleanup.cleaned) { 
 				cleanup.delete();
@@ -26,6 +27,10 @@ public abstract class Cleanup {
 		Cleanup.list.add(this);
 	}
 
+	public static void addCleanup(Cleanup c) {
+		Cleanup.list.add(c);
+	}
+	
 	public abstract void delete(); 
 
 	public boolean cleaned = false;

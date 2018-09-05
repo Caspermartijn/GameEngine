@@ -86,6 +86,7 @@ public class ImageRenderer extends Cleanup {
 
 	public void delete() {
 		shader.delete();
+		System.out.println("- ImageShader");
 	}
 
 	public static void renderImage(Image image, Vector3f colorOverride, Vector3f[] colorToOVerride) {

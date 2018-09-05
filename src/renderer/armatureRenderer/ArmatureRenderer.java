@@ -16,6 +16,10 @@ public class ArmatureRenderer extends Cleanup {
 
 	private static ArmatureShader shader;
 
+	public ArmatureRenderer() {
+		super();
+	}
+	
 	public static void init() {
 		shader = new ArmatureShader();
 	}
@@ -41,5 +45,6 @@ public class ArmatureRenderer extends Cleanup {
 
 	public void delete() {
 		shader.delete();
+		System.out.println("- ArmatureShader");
 	}
 }
