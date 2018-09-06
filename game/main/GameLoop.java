@@ -52,14 +52,13 @@ import objects.Skybox;
 import renderer.MasterRenderer;
 import renderer.skyboxRenderer.SkyboxRenderer;
 import scenes.Scene;
-import scenes.SceneLoader;
 import texts.Fonts;
 import utils.RenderItem;
 import utils.SourceFile;
 import utils.models.ModelMaster;
 
 public class GameLoop {
-
+	
 	public static final boolean DEVELOPERMODE = true;
 	
 	public static Launcher l;
@@ -67,7 +66,7 @@ public class GameLoop {
 
 	public static void main(String[] args) {
 		String title = "VectorEngine";
-		startApplication(title);
+		//startApplication(title);
 
 		l = new Launcher(title) {
 
@@ -116,7 +115,7 @@ public class GameLoop {
 			}
 
 		};
-		//l.create();
+		l.create();
 	}
 
 	public static void spaceScene(MasterRenderer renderer, SkyboxRenderer skyboxRenderer) {
@@ -234,7 +233,7 @@ public class GameLoop {
 			debug.hide();
 
 			spaceScene(master, skyboxRenderer);
-			setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "hitler"));
+			//setCurrentScene(SceneLoader.getScene(master, skyboxRenderer, "TimeMasters"));
 
 			master.setProjectionMatrix(camera.getProjectionMatrix());
 

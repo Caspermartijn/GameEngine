@@ -1,8 +1,8 @@
-s:windowsize:1280x720
+s:windowsize:1920x1080
 s:textures:ultra
-s:vsync:vsyncenabled
+s:vsync:vsyncdisabled
 s:postproccesing:ultra
 s:shadows:ultra
 s:terrain:ultra
 s:water:ultra
-s:displaymode:windowed
+s:displaymode:fullscreen

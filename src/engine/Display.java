@@ -45,7 +45,7 @@ public class Display {
 			throw new RuntimeException("Failed to create the GLFW window");
 
 		Mouse.init();
-		Keyboard.init();
+		Keyboard.init("us");//TODO Here you can choose the keyboard language
 
 		GLFW.glfwMakeContextCurrent(id);
 		GLFW.glfwSwapInterval(builder.vsync ? 1 : 0);
