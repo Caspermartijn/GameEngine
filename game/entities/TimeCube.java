@@ -8,6 +8,12 @@ import engine.Display;
 import objects.Model_3D;
 import utils.models.ModelMaster;
 
+/*
+ * 
+ * This is the class that rotates the time cube and the object timecube
+ * 
+ */
+
 public class TimeCube extends Entity {
 
 	private float z = 0;

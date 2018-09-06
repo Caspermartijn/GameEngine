@@ -17,6 +17,12 @@ import utils.maths.Maths;
 import utils.models.ModelMaster;
 import utils.transformations.EulerTransform.RotationType;
 
+/*
+ * 
+ * This class is the timeship object that makes it so the timeship can be controlled and be used
+ * 
+ */
+
 public class TimeShip extends Entity {
 
 	private TimeShipCamera camera = new TimeShipCamera();
